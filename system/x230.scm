@@ -9,7 +9,7 @@
                      compression linux disk pciutils less man texinfo python-xyz
                      nvi admin wget curl terminals certs libusb w3m guile
 		     web-browsers networking gdb commencement code ncurses
-		     virtualization)
+		     virtualization glib)
 
 (load "../packages/embedded.scm")
 
@@ -54,7 +54,8 @@
 		    procps gdb gcc-toolchain cscope indent ncurses fastboot
 	            guile-3.0-latest gkermit bvi abootimg binwalk adb
 	            singularity (list glibc "static") linux-libre-headers
-		    emacs-geiser-guile virt-manager strace ltrace perf))
+		    emacs-geiser-guile virt-manager strace ltrace perf
+	            dbus))
 
     (services
      (list (service login-service-type)
@@ -87,9 +88,10 @@
            (simple-service 'mtp udev-service-type
                            (list libmtp)) ;my phone
            (service network-manager-service-type)
-           (service wpa-supplicant-service-type) ;needed by NetworkManager
+           (service wpa-supplicant-service-type)
            (service udisks-service-type)
            (service elogind-service-type)
+	   (service polkit-service-type)
            (service dbus-root-service-type)
            (service ntp-service-type)
            (service pulseaudio-service-type)
@@ -101,7 +103,9 @@
                     (list
 		     (pam-limits-entry "luhui" 'both 'core 1048576)
 		     (pam-limits-entry "luhui" 'both 'nproc 1048576)))
-	   (service libvirt-service-type)
+	   (service libvirt-service-type
+		    (libvirt-configuration
+		     (unix-sock-group "libvirt")))
 	   (service virtlog-service-type)
            (service screen-locker-service-type
                     (screen-locker-configuration "hikari-unlocker"
