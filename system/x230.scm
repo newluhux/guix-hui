@@ -50,7 +50,8 @@
                     git gnu-make rtl-sdr gqrx dump1090 psmisc htop bmon iftop
 		    procps gdb gcc-toolchain cscope indent ncurses fastboot
 	            guile-3.0-latest gkermit bvi abootimg binwalk adb
-	            singularity (list glibc "static") linux-libre-headers))
+	            singularity (list glibc "static") linux-libre-headers
+		    emacs-geiser-guile))
 
     (services
      (list (service login-service-type)
