@@ -107,6 +107,10 @@
 		    (libvirt-configuration
 		     (unix-sock-group "libvirt")))
 	   (service virtlog-service-type)
+	   (service qemu-binfmt-service-type
+                    (qemu-binfmt-configuration
+                     (platforms (lookup-qemu-platforms "arm" "aarch64"
+						       "riscv32" "riscv64"))))
            (service screen-locker-service-type
                     (screen-locker-configuration "hikari-unlocker"
                                                  (file-append hikari
