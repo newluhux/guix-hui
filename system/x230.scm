@@ -54,7 +54,7 @@
 		    procps gdb gcc-toolchain cscope indent ncurses fastboot
 	            guile-3.0-latest gkermit bvi abootimg binwalk adb
 	            singularity (list glibc "static") linux-libre-headers
-		    emacs-geiser-guile virt-manager))
+		    emacs-geiser-guile virt-manager strace ltrace perf))
 
     (services
      (list (service login-service-type)
