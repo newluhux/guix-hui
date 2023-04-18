@@ -6,7 +6,7 @@
                      version-control chromium image-viewers xdisorg
                      tls gnupg password-utils radio gawk tmux ssh
                      compression linux disk pciutils less man texinfo
-                     nvi admin wget curl terminals certs libusb w3m
+                     nvi admin wget curl terminals certs libusb w3m guile
 		     web-browsers networking gdb commencement code ncurses)
 
 (define-public x230-os
@@ -46,7 +46,8 @@
                     hikari foot icecat ungoogled-chromium/wayland w3m links
                     imv bemenu pinentry-tty gnupg openssl password-store
                     git gnu-make rtl-sdr gqrx dump1090 psmisc htop bmon iftop
-		    procps gdb gcc-toolchain cscope indent ncurses))
+		    procps gdb gcc-toolchain cscope indent ncurses
+	            guile-3.0-latest))
 
     (services
      (list (service login-service-type)
