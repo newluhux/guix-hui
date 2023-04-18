@@ -48,8 +48,8 @@
                     hikari foot icecat ungoogled-chromium/wayland w3m links
                     imv bemenu pinentry-tty gnupg openssl password-store
                     git gnu-make rtl-sdr gqrx dump1090 psmisc htop bmon iftop
-		    procps gdb gcc-toolchain cscope indent ncurses
-	            guile-3.0-latest gkermit bvi abootimg binwalk))
+		    procps gdb gcc-toolchain cscope indent ncurses fastboot
+	            guile-3.0-latest gkermit bvi abootimg binwalk adb))
 
     (services
      (list (service login-service-type)
