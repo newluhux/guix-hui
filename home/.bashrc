@@ -41,6 +41,9 @@ export STARDICT_DICT=/sdcard/dict/stardict-ecdict-2.4.2/stardict-ecdict-2.4.2.di
 # editor
 export EDITOR=vi
 
+# pager
+export PAGER='less -R'
+
 # graphic
 if [ $(tty) == "/dev/tty1" ]
 then
