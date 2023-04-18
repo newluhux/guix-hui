@@ -1,13 +1,15 @@
 ;;; Copyright (C) Lu Hui <luhux76@gmail.com>
 
 (use-modules (gnu))
-(use-service-modules base dbus desktop networking sound sysctl xorg docker)
+(use-service-modules base dbus desktop networking sound sysctl xorg docker
+		     virtualization)
 (use-package-modules bash emacs emacs-xyz fontutils fonts wm gnuzilla
                      version-control chromium image-viewers xdisorg android
                      tls gnupg password-utils radio gawk tmux ssh hexedit
                      compression linux disk pciutils less man texinfo python-xyz
                      nvi admin wget curl terminals certs libusb w3m guile
-		     web-browsers networking gdb commencement code ncurses)
+		     web-browsers networking gdb commencement code ncurses
+		     virtualization)
 
 (load "../packages/embedded.scm")
 
@@ -32,7 +34,8 @@
                     (comment "Lu Hui")
                     (group "users")
 
-                    (supplementary-groups '("wheel" "dialout" "audio" "video" "docker")))
+                    (supplementary-groups '("wheel" "dialout" "audio" "video"
+					    "docker" "libvirt")))
                   %base-user-accounts))
 
     (skeletons `(("." ,(local-file "../home" "skel" #:recursive? #t))))
@@ -51,7 +54,7 @@
 		    procps gdb gcc-toolchain cscope indent ncurses fastboot
 	            guile-3.0-latest gkermit bvi abootimg binwalk adb
 	            singularity (list glibc "static") linux-libre-headers
-		    emacs-geiser-guile))
+		    emacs-geiser-guile virt-manager))
 
     (services
      (list (service login-service-type)
@@ -98,6 +101,8 @@
                     (list
 		     (pam-limits-entry "luhui" 'both 'core 1048576)
 		     (pam-limits-entry "luhui" 'both 'nproc 1048576)))
+	   (service libvirt-service-type)
+	   (service virtlog-service-type)
            (service screen-locker-service-type
                     (screen-locker-configuration "hikari-unlocker"
                                                  (file-append hikari
