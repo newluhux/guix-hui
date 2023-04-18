@@ -19,6 +19,8 @@ fi
 # Source the system-wide file.
 [ -f /etc/bashrc ] && source /etc/bashrc
 
+# color
+alias 'ls'='ls --color'
 
 # Adjust the prompt depending on whether we're in 'guix environment'.
 if [ -n "$GUIX_ENVIRONMENT" ]
