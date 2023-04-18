@@ -3,9 +3,9 @@
 (use-modules (gnu))
 (use-service-modules base dbus desktop networking sound sysctl xorg docker)
 (use-package-modules bash emacs emacs-xyz fontutils fonts wm gnuzilla
-                     version-control chromium image-viewers xdisorg
-                     tls gnupg password-utils radio gawk tmux ssh
-                     compression linux disk pciutils less man texinfo
+                     version-control chromium image-viewers xdisorg android
+                     tls gnupg password-utils radio gawk tmux ssh hexedit
+                     compression linux disk pciutils less man texinfo python-xyz
                      nvi admin wget curl terminals certs libusb w3m guile
 		     web-browsers networking gdb commencement code ncurses)
 
@@ -49,7 +49,7 @@
                     imv bemenu pinentry-tty gnupg openssl password-store
                     git gnu-make rtl-sdr gqrx dump1090 psmisc htop bmon iftop
 		    procps gdb gcc-toolchain cscope indent ncurses
-	            guile-3.0-latest gkermit))
+	            guile-3.0-latest gkermit bvi abootimg binwalk))
 
     (services
      (list (service login-service-type)
