@@ -9,6 +9,8 @@
                      nvi admin wget curl terminals certs libusb w3m guile
 		     web-browsers networking gdb commencement code ncurses)
 
+(load "../packages/embedded.scm")
+
 (define-public x230-os
   (operating-system
     (host-name "x230")
@@ -47,7 +49,7 @@
                     imv bemenu pinentry-tty gnupg openssl password-store
                     git gnu-make rtl-sdr gqrx dump1090 psmisc htop bmon iftop
 		    procps gdb gcc-toolchain cscope indent ncurses
-	            guile-3.0-latest))
+	            guile-3.0-latest gkermit))
 
     (services
      (list (service login-service-type)
