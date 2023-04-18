@@ -2,7 +2,7 @@
 
 (use-modules (gnu))
 (use-service-modules base dbus desktop networking sound sysctl xorg docker
-		     virtualization)
+		     virtualization pm)
 (use-package-modules bash emacs emacs-xyz fontutils fonts wm gnuzilla
                      version-control chromium image-viewers xdisorg android
                      tls gnupg password-utils radio gawk tmux ssh hexedit
@@ -111,6 +111,10 @@
                     (qemu-binfmt-configuration
                      (platforms (lookup-qemu-platforms "arm" "aarch64"
 						       "riscv32" "riscv64"))))
+	   (service tlp-service-type
+                    (tlp-configuration
+                     (cpu-scaling-governor-on-ac (list "ondenmand"))
+                     (sched-powersave-on-bat? #t)))
            (service screen-locker-service-type
                     (screen-locker-configuration "hikari-unlocker"
                                                  (file-append hikari
