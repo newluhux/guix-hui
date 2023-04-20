@@ -68,7 +68,7 @@
 ;; telegram
 (setq telega-proxies
       (list
-       '(:server "127.0.0.1" :port 7891 :enable t
+       '(:server "127.0.0.1" :port 9050 :enable t
                  :type (:@type "proxyTypeSocks5"))))
 
 ;; lsp mode
