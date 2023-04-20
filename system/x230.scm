@@ -27,8 +27,13 @@
     (file-systems (cons* (file-system
                            (device (file-system-label "x230-root"))
                            (mount-point "/")
-                           (type "btrfs")) %base-file-systems))
-    
+                           (type "btrfs"))
+			 (file-system
+                           (device "/dev/mmcblk0p1")
+                           (mount-point "/sdcard")
+                           (type "vfat"))
+			 %base-file-systems))
+
     (users (cons* (user-account
                     (name "luhui")
                     (comment "Lu Hui")
