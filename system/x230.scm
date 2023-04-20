@@ -99,6 +99,11 @@
 	   (service gpm-service-type)
 	   (service docker-service-type)
 	   (service singularity-service-type)
+	   (service tor-service-type
+                    (tor-configuration
+                     (config-file (plain-file "tor-config"
+                                              "HTTPTunnelPort 127.0.0.1:9250\n
+Socks5Proxy 127.0.0.1:7891"))))
 	   (service pam-limits-service-type
                     (list
 		     (pam-limits-entry "luhui" 'both 'core 1048576)
