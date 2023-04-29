@@ -24,6 +24,7 @@
                   (bootloader grub-bootloader)
                   (targets '("/dev/sda"))))
 
+    (kernel-arguments '("modprobe.blacklist=dvb_usb_rtl28xxu"))
     (file-systems (cons* (file-system
                            (device (file-system-label "x230-root"))
                            (mount-point "/")
@@ -85,7 +86,8 @@
            (service guix-service-type)
            (service nscd-service-type)
            (service udev-service-type
-                    (udev-configuration (rules (list lvm2 fuse alsa-utils crda))))
+                    (udev-configuration (rules (list lvm2 fuse alsa-utils crda
+                                                 rtl-sdr))))
            (service sysctl-service-type)
            (service special-files-service-type
                     `(("/bin/sh" ,(file-append bash "/bin/sh"))
