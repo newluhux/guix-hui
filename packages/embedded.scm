@@ -2,7 +2,9 @@
 
 (use-modules (guix build-system gnu)
 	     (guix build-system cmake)
+             (guix build-system python)
              (guix git-download)
+             (guix download)
              ((guix licenses) #:prefix license:)
              (guix packages)
              (guix utils)
@@ -12,7 +14,13 @@
              (gnu packages m4)
              (gnu packages pkg-config)
              (gnu packages base)
-             (gnu packages genimage))
+             (gnu packages genimage)
+             (gnu packages python-crypto)
+             (gnu packages check)
+             (gnu packages databases)
+             (gnu packages sphinx)
+             (gnu packages python-xyz)
+             )
 
 (define-public gkermit
   (package
@@ -221,3 +229,104 @@ python2.7 subprocess module in dealing with processes.")
       (description "Open Source Version of Allwinner PhoenixCard to
 Dump, Unpack, Flash Allwinner IMG Files on Linux")
       (license license:gpl2))))
+
+(define-public python-bflb-crypto-plus
+  (package
+    (name "python-bflb-crypto-plus")
+    (version "1.0")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "bflb_crypto_plus" version))
+              (sha256
+               (base32
+                "0hk2cv7aav3zczxfjgbvcbwpcjyrb9qmjlpqz54wnbjx9s3q7d5i"))))
+    (build-system python-build-system)
+    (propagated-inputs (list python-pycryptodome))
+    (home-page "https://pypi.org/project/bflb-crypto-plus")
+    (synopsis "PyCrypto Cipher extension(bouffalolab version)")
+    (description "PyCrypto Cipher extension(bouffalolab version)")
+    (license #f))) ; TODO: add license
+
+(define-public python-portalocker
+  (package
+    (name "python-portalocker")
+    (version "2.0.0")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "portalocker" version))
+              (sha256
+               (base32
+                "1r165ll4gnsbgvf9cgdkbg04526aqwllwa7hxlkl34dah7npwj0l"))))
+    (build-system python-build-system)
+    (native-inputs (list python-pytest
+                         python-pytest-cov
+                         python-pytest-mypy
+                         python-pytest-timeout
+                         python-redis
+                         python-sphinx))
+    (arguments
+     `(#:tests? #f))
+    (home-page "https://github.com/WoLpH/portalocker")
+    (synopsis "Wraps the portalocker recipe for easy usage")
+    (description "Wraps the portalocker recipe for easy usage")
+    (license #f))) ; TODO: add license
+
+;; sucks project, bundle a lot of binary, a pice of shit.
+(define-public python-pycklink
+  (package
+    (name "python-pycklink")
+    (version "0.1.1")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "pycklink" version))
+              (sha256
+               (base32
+                "0jzym95kb6ql8mjc82yw99lrygkarjw93lcfr8g5kr3mcppxmgai"))))
+    (build-system python-build-system)
+    ;; TODO: patch binary, :(
+    (home-page "https://pypi.org/project/PyCKLink/")
+    (synopsis "Python interface for the T-HEAD CKLink")
+    (description "Python interface for the T-HEAD CKLink")
+    (license license:expat)))
+
+(define-public python-pylink-square
+  (package
+    (name "python-pylink-square")
+    (version "1.0.0")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "pylink-square" version))
+              (sha256
+               (base32
+                "124zx3gayw71173p456pim8jfar7k3d0ckx2zmq6rvx736p624n9"))))
+    (build-system python-build-system)
+    (propagated-inputs (list python-future python-psutil python-six))
+    (arguments `(#:tests? #f))
+    (home-page "http://www.github.com/Square/pylink")
+    (synopsis "Python interface for SEGGER J-Link.")
+    (description "Python interface for SEGGER J-Link.")
+    (license license:asl2.0)))
+
+(define-public python-bflb-mcu-tool
+  (package
+    (name "python-bflb-mcu-tool")
+    (version "1.8.4")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "bflb-mcu-tool" version))
+              (sha256
+               (base32
+                "0lj9gqdinissw670yf03xaba6ryaz5vqhdm839dhjyasc5vn5f0a"))))
+    (build-system python-build-system)
+    (propagated-inputs (list python-bflb-crypto-plus
+                             python-ecdsa
+                             python-portalocker
+                             ;python-pycklink ; need fix
+                             python-pycryptodome
+                             python-pylink-square
+                             python-pyserial))
+    (arguments `(#:tests? #f))
+    (home-page "https://pypi.org/project/bflb-mcu-tool/")
+    (synopsis "Bouffalolab Mcu Tool")
+    (description "Bouffalolab Mcu Tool")
+    (license #f)))
