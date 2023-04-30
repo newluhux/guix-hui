@@ -10,7 +10,7 @@
                      nvi admin wget curl terminals certs libusb w3m guile
 		     web-browsers networking gdb commencement code ncurses
 		     virtualization glib file graphviz video ccache
-                     task-management)
+	             task-management image)
 
 (load "../packages/embedded.scm")
 
@@ -63,7 +63,7 @@
 	            singularity (list glibc "static") linux-libre-headers
 		    emacs-geiser-guile virt-manager strace ltrace perf ccache
 	            dbus file graphviz squashfs-tools alsa-utils ffmpeg lrzsz
-	            openixcard))
+	            openixcard grim wl-clipboard))
 
     (services
      (list (service login-service-type)
