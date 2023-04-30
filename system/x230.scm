@@ -62,7 +62,8 @@
 	            guile-3.0-latest gkermit bvi abootimg binwalk adb blanket
 	            singularity (list glibc "static") linux-libre-headers
 		    emacs-geiser-guile virt-manager strace ltrace perf ccache
-	            dbus file graphviz squashfs-tools alsa-utils ffmpeg lrzsz))
+	            dbus file graphviz squashfs-tools alsa-utils ffmpeg lrzsz
+	            openixcard))
 
     (services
      (list (service login-service-type)
