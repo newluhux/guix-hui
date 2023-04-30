@@ -9,7 +9,7 @@
                      compression linux disk pciutils less man texinfo python-xyz
                      nvi admin wget curl terminals certs libusb w3m guile
 		     web-browsers networking gdb commencement code ncurses
-		     virtualization glib file graphviz)
+		     virtualization glib file graphviz video)
 
 (load "../packages/embedded.scm")
 
@@ -61,7 +61,7 @@
 	            guile-3.0-latest gkermit bvi abootimg binwalk adb
 	            singularity (list glibc "static") linux-libre-headers
 		    emacs-geiser-guile virt-manager strace ltrace perf
-	            dbus file graphviz squashfs-tools))
+	            dbus file graphviz squashfs-tools alsa-utils ffmpeg))
 
     (services
      (list (service login-service-type)
