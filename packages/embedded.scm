@@ -636,3 +636,20 @@ Microcontrollers and SoCs ")
     (description "Bouffalo Labs ISP (in-system-programming) tool & library:
 an open source tool to flash Bouffalo RISC-V MCUs.")
     (license license:expat)))
+
+(define-public python-extract-dtb
+  (package
+    (name "python-extract-dtb")
+    (version "1.2.3")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "extract-dtb" version))
+              (sha256
+               (base32
+                "1a7rfvwisgri8b00pch6d9pfrl8s93w8g09yzxf4xh0qvmsxmh43"))))
+    (build-system python-build-system)
+    (home-page "https://github.com/PabloCastellano/extract-dtb/")
+    (synopsis "Extract device tree blobs (dtb) from kernel images")
+    (description "Tool to split a kernel image with appended dtbs into
+separated kernel and dtb files.")
+    (license license:gpl3+)))

@@ -32,6 +32,7 @@
 	dbus file graphviz squashfs-tools alsa-utils ffmpeg lrzsz
 	openixcard grim wl-clipboard patchelf emacs-paredit
 	emacs-yasnippet emacs-yasnippet-snippets emacs-magit ccls
-	emacs-ccls bear cmake proxychains-ng adwaita-icon-theme))
+	emacs-ccls bear cmake proxychains-ng adwaita-icon-theme
+	python-extract-dtb))
 
 (packages->manifest %luhui-packages)
