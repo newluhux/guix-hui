@@ -74,6 +74,7 @@
 ;; lsp mode
 (setq lsp-keymap-prefix "s-l")
 (require 'lsp-mode)
+(add-hook 'c-mode-hook #'lsp)
 
 ;; company mode
 (add-hook 'lisp-mode-hook #'company-mode)

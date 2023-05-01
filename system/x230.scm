@@ -10,7 +10,7 @@
                      nvi admin wget curl terminals certs libusb w3m guile
 		     web-browsers networking gdb commencement code ncurses
 		     virtualization glib file graphviz video ccache
-	             task-management image elf embedded)
+	             task-management image elf embedded build-tools)
 
 (load "../packages/embedded.scm")
 
@@ -65,7 +65,7 @@
 	            dbus file graphviz squashfs-tools alsa-utils ffmpeg lrzsz
 	            openixcard grim wl-clipboard patchelf gdb-arm-none-eabi
 	            arm-none-eabi-nano-toolchain-6 emacs-paredit emacs-yasnippet
-	            emacs-yasnippet-snippets emacs-magit))
+	            emacs-yasnippet-snippets emacs-magit ccls emacs-ccls bear))
 
     (services
      (list (service login-service-type)
