@@ -19,8 +19,7 @@
              (gnu packages check)
              (gnu packages databases)
              (gnu packages sphinx)
-             (gnu packages python-xyz)
-             )
+             (gnu packages python-xyz))
 
 (define-public gkermit
   (package
@@ -230,6 +229,20 @@ python2.7 subprocess module in dealing with processes.")
 Dump, Unpack, Flash Allwinner IMG Files on Linux")
       (license license:gpl2))))
 
+
+(define-public python-pycryptodome-3.9.8
+  (package
+    (inherit python-pycryptodome)
+    (version "3.9.8")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "pycryptodome" version))
+       (sha256
+        (base32
+         "195xi12i1vwm3ra64gyccafz0j506d7rsskxq5fvq88hy0f1f90f"))))))
+
+
 (define-public python-bflb-crypto-plus
   (package
     (name "python-bflb-crypto-plus")
@@ -246,6 +259,7 @@ Dump, Unpack, Flash Allwinner IMG Files on Linux")
     (synopsis "PyCrypto Cipher extension(bouffalolab version)")
     (description "PyCrypto Cipher extension(bouffalolab version)")
     (license #f))) ; TODO: add license
+
 
 (define-public python-portalocker
   (package
@@ -284,6 +298,12 @@ Dump, Unpack, Flash Allwinner IMG Files on Linux")
                 "0jzym95kb6ql8mjc82yw99lrygkarjw93lcfr8g5kr3mcppxmgai"))))
     (build-system python-build-system)
     ;; TODO: patch binary, :(
+    (arguments
+     `(#:tests? #f
+       #:phases
+       (modify-phases %standard-phases
+         (delete 'validate-runpath)
+         (delete 'strip))))
     (home-page "https://pypi.org/project/PyCKLink/")
     (synopsis "Python interface for the T-HEAD CKLink")
     (description "Python interface for the T-HEAD CKLink")
@@ -292,21 +312,23 @@ Dump, Unpack, Flash Allwinner IMG Files on Linux")
 (define-public python-pylink-square
   (package
     (name "python-pylink-square")
-    (version "1.0.0")
+    (version "0.5.0")
     (source (origin
               (method url-fetch)
               (uri (pypi-uri "pylink-square" version))
               (sha256
                (base32
-                "124zx3gayw71173p456pim8jfar7k3d0ckx2zmq6rvx736p624n9"))))
+                "0dyz6c4c6bmkgxi1xys495xr889jm55ibbkrawsbz0x2kgq3j12c"))))
     (build-system python-build-system)
     (propagated-inputs (list python-future python-psutil python-six))
-    (arguments `(#:tests? #f))
+    (arguments
+     `(#:tests? #f))
     (home-page "http://www.github.com/Square/pylink")
     (synopsis "Python interface for SEGGER J-Link.")
     (description "Python interface for SEGGER J-Link.")
     (license license:asl2.0)))
 
+;; build is ok, but can't run.
 (define-public python-bflb-mcu-tool
   (package
     (name "python-bflb-mcu-tool")
@@ -321,11 +343,16 @@ Dump, Unpack, Flash Allwinner IMG Files on Linux")
     (propagated-inputs (list python-bflb-crypto-plus
                              python-ecdsa
                              python-portalocker
-                             ;python-pycklink ; need fix
-                             python-pycryptodome
+                             python-pycklink ; need fix
+                             python-pycryptodome-3.9.8
                              python-pylink-square
                              python-pyserial))
-    (arguments `(#:tests? #f))
+    (arguments
+     `(#:tests? #f
+       #:phases
+       (modify-phases %standard-phases
+         (delete 'validate-runpath)
+         (delete 'strip))))
     (home-page "https://pypi.org/project/bflb-mcu-tool/")
     (synopsis "Bouffalolab Mcu Tool")
     (description "Bouffalolab Mcu Tool")
