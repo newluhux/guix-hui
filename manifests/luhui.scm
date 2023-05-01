@@ -30,6 +30,6 @@
 	dbus file graphviz squashfs-tools alsa-utils ffmpeg lrzsz
 	openixcard grim wl-clipboard patchelf emacs-paredit
 	emacs-yasnippet emacs-yasnippet-snippets emacs-magit ccls
-	emacs-ccls bear cmake proxychains-ng blisp))
+	emacs-ccls bear cmake proxychains-ng))
 
 (packages->manifest %luhui-packages)
