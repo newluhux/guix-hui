@@ -7,7 +7,8 @@
  python-xyz nvi admin wget curl terminals certs libusb w3m
  guile web-browsers networking gdb commencement code
  ncurses virtualization glib file graphviz video ccache
- task-management image elf embedded build-tools cmake)
+ task-management image elf embedded build-tools cmake
+ gnome)
 
 (load "../packages/embedded.scm")
 
@@ -30,6 +31,6 @@
 	dbus file graphviz squashfs-tools alsa-utils ffmpeg lrzsz
 	openixcard grim wl-clipboard patchelf emacs-paredit
 	emacs-yasnippet emacs-yasnippet-snippets emacs-magit ccls
-	emacs-ccls bear cmake proxychains-ng))
+	emacs-ccls bear cmake proxychains-ng adwaita-icon-theme))
 
 (packages->manifest %luhui-packages)
