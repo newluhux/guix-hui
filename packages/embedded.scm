@@ -26,7 +26,8 @@
              (gnu packages embedded)
              (gnu packages texinfo)
              (gnu packages gdb)
-             (gnu packages commencement))
+             (gnu packages commencement)
+             (gnu packages electronics))
 
 (define-public gkermit
   (package
@@ -550,3 +551,88 @@ Dump, Unpack, Flash Allwinner IMG Files on Linux")
     (synopsis (package-synopsis gcc-toolchain))
     (description (package-description gcc-toolchain))
     (license (package-license gcc-toolchain))))
+
+(define-public argtable3
+  (package
+    (name "argtable3")
+    (version "3.2.2")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/argtable/argtable3")
+                    (commit "v3.2.2.f25c624")))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "1zkivsaxqh5gbmvjbz0x8jxf1x4n574wpw1wiwhd3s7cn0a73ksz"))))
+    (build-system cmake-build-system)
+    (home-page "https://www.argtable.org/")
+    (synopsis "cross platform single file ansi c command line parsing library")
+    (description "Argtable is an open source ANSI C library that parses
+GNU-style command-line options")
+    (license license:bsd-3)))
+
+(define-public blisp
+  (package
+    (name "blisp")
+    (version "0.0.3")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/pine64/blisp")
+                    (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "0s9asydsm97vi001740wf3pl1q8k8a06vw8knz3b40ahdifrpb69"))))
+    (build-system cmake-build-system)
+    (native-inputs
+     `(("libserialport-src"
+        ,(origin
+           (method git-fetch)
+           (uri (git-reference
+                 (url "https://github.com/sigrokproject/libserialport/")
+                 (commit "6f9b03e597ea7200eb616a4e410add3dd1690cb1")))
+           (file-name "libserialport-src")
+           (sha256
+            (base32
+             "1q3is08k6jwqlhwsw8krrbddhzdkr5x5s1hxcx1f38ij5h256l53"))))
+       ("argtable3-src"
+        ,(origin
+           (method git-fetch)
+           (uri (git-reference
+                 (url "https://github.com/argtable/argtable3")
+                 (commit "6f0e40bc44c99af353ced367c6fafca8705f5fca")))
+           (file-name "argtable3-src")
+           (sha256
+            (base32
+             "0rnam9km53v3wfgdfp9nz67a55ng2sv1ylnyy2dnjy04m3649x19"))))))
+    (arguments
+     `(#:tests? #f
+       #:configure-flags '("-DBLISP_BUILD_CLI=ON")
+       #:phases
+       (modify-phases
+	   %standard-phases
+         (add-after 'unpack 'install-bundle
+           (lambda* (#:key inputs #:allow-other-keys)
+             (let* ((libserialport (assoc-ref inputs "libserialport-src"))
+                    (argtable3 (assoc-ref inputs "argtable3-src")))
+               (delete-file-recursively "vendor/libserialport")
+               (copy-recursively libserialport "vendor/libserialport")
+               (delete-file-recursively "vendor/argtable3")
+               (copy-recursively argtable3 "vendor/argtable3"))))
+         (replace 'install
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let* ((out (assoc-ref outputs "out"))
+                    (bin (string-append out "/bin"))
+                    (lib (string-append out "/lib")))
+               (mkdir-p bin)
+               (copy-file "tools/blisp/blisp" (string-append bin "/blisp"))
+               (copy-recursively "shared" lib)
+               (copy-file "static/libblisp.a" (string-append lib "/libblisp.a"))))))))
+    (home-page "https://github.com/pine64/blisp")
+    (synopsis "ISP tool & library for Bouffalo Labs RISC-V
+Microcontrollers and SoCs ")
+    (description "Bouffalo Labs ISP (in-system-programming) tool & library:
+an open source tool to flash Bouffalo RISC-V MCUs.")
+    (license license:expat)))
