@@ -64,7 +64,8 @@
 		    emacs-geiser-guile virt-manager strace ltrace perf ccache
 	            dbus file graphviz squashfs-tools alsa-utils ffmpeg lrzsz
 	            openixcard grim wl-clipboard patchelf gdb-arm-none-eabi
-	            arm-none-eabi-nano-toolchain-6))
+	            arm-none-eabi-nano-toolchain-6 emacs-paredit emacs-yasnippet
+	            emacs-yasnippet-snippets emacs-magit))
 
     (services
      (list (service login-service-type)
