@@ -3,16 +3,8 @@
 (use-modules (gnu))
 (use-service-modules base dbus desktop networking sound sysctl xorg docker
 		     virtualization pm)
-(use-package-modules bash emacs emacs-xyz fontutils fonts wm gnuzilla
-                     version-control chromium image-viewers xdisorg android
-                     tls gnupg password-utils radio gawk tmux ssh hexedit
-                     compression linux disk pciutils less man texinfo python-xyz
-                     nvi admin wget curl terminals certs libusb w3m guile
-		     web-browsers networking gdb commencement code ncurses
-		     virtualization glib file graphviz video ccache
-	             task-management image elf embedded build-tools cmake)
 
-(load "../packages/embedded.scm")
+(load "../manifests/luhui.scm")
 
 (define-public x230-os
   (operating-system
@@ -22,8 +14,8 @@
     (keyboard-layout (keyboard-layout "us" #:options '("ctrl:nocaps")))
 
     (bootloader (bootloader-configuration
-                  (bootloader grub-bootloader)
-                  (targets '("/dev/sda"))))
+                 (bootloader grub-bootloader)
+                 (targets '("/dev/sda"))))
 
     (kernel-arguments '("modprobe.blacklist=dvb_usb_rtl28xxu"))
     (file-systems (cons* (file-system
@@ -37,35 +29,17 @@
 			 %base-file-systems))
 
     (users (cons* (user-account
-                    (name "luhui")
-                    (comment "Lu Hui")
-                    (group "users")
+                   (name "luhui")
+                   (comment "Lu Hui")
+                   (group "users")
 
-                    (supplementary-groups '("wheel" "dialout" "audio" "video"
-					    "docker" "libvirt")))
+                   (supplementary-groups '("wheel" "dialout" "audio" "video"
+					   "docker" "libvirt")))
                   %base-user-accounts))
 
     (skeletons `(("." ,(local-file "../home" "skel" #:recursive? #t))))
 
-    (packages (list bash coreutils findutils grep sed diffutils patch gawk
-                    tar gzip bzip2 xz e2fsprogs btrfs-progs dosfstools pciutils
-                    usbutils util-linux kmod eudev less mandoc info-reader nvi
-                    bash-completion kbd sudo inetutils iproute wget curl iw
-                    wireless-tools tmux picocom openssh dropbear man-pages
-                    nss-certs emacs-next-pgtk emacs-company emacs-lsp-mode
-                    emacs-lsp-ui emacs-rime emacs-telega fontconfig emacs-geiser
-                    font-gnu-unifont font-terminus font-google-noto-emoji
-                    hikari foot icecat ungoogled-chromium/wayland w3m links
-                    imv bemenu pinentry-tty gnupg openssl password-store
-                    git gnu-make rtl-sdr gqrx dump1090 psmisc htop bmon iftop
-		    procps gdb gcc-toolchain cscope indent ncurses fastboot
-	            guile-3.0-latest gkermit bvi abootimg binwalk adb blanket
-	            singularity (list glibc "static") linux-libre-headers
-		    emacs-geiser-guile virt-manager strace ltrace perf ccache
-	            dbus file graphviz squashfs-tools alsa-utils ffmpeg lrzsz
-	            openixcard grim wl-clipboard patchelf emacs-paredit
-	            emacs-yasnippet emacs-yasnippet-snippets emacs-magit ccls
-	            emacs-ccls bear cmake))
+    (packages %luhui-packages)
 
     (services
      (list (service login-service-type)
@@ -91,7 +65,7 @@
            (service nscd-service-type)
            (service udev-service-type
                     (udev-configuration (rules (list lvm2 fuse alsa-utils crda
-                                                 rtl-sdr))))
+                                                     rtl-sdr))))
            (service sysctl-service-type)
            (service special-files-service-type
                     `(("/bin/sh" ,(file-append bash "/bin/sh"))
@@ -134,7 +108,7 @@ Socks5Proxy 127.0.0.1:7891"))))
            (service screen-locker-service-type
                     (screen-locker-configuration "hikari-unlocker"
                                                  (file-append hikari
-                                                  "/bin/hikari-unlocker") #f))
+                                                              "/bin/hikari-unlocker") #f))
            (service screen-locker-service-type
                     (screen-locker-configuration "vlock"
                                                  (file-append kbd "/bin/vlock")
