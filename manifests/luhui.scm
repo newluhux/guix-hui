@@ -8,10 +8,9 @@
  guile web-browsers networking gdb commencement code
  ncurses virtualization glib file graphviz video ccache
  task-management image elf embedded build-tools cmake
- gnome engineering rust-apps)
+ gnome engineering rust-apps freedesktop gnome-xyz qt)
 
 (load "../packages/embedded.scm")
-(load "../packages/wm.scm")
 
 (define-public %luhui-packages
   (list bash coreutils findutils grep sed diffutils patch gawk
@@ -22,8 +21,8 @@
         nss-certs emacs-next-pgtk emacs-company emacs-lsp-mode
         emacs-lsp-ui emacs-rime emacs-telega fontconfig emacs-geiser
         font-gnu-unifont font-terminus font-google-noto-emoji
-        weston alacritty icecat ungoogled-chromium/wayland w3m links
-        imv bemenu pinentry-tty gnupg openssl password-store
+        weston icecat ungoogled-chromium/wayland w3m links
+        qtwayland imv pinentry-tty gnupg openssl password-store
         git gnu-make rtl-sdr gqrx dump1090 psmisc htop bmon iftop
 	procps gdb gcc-toolchain cscope indent ncurses fastboot
 	guile-3.0-latest gkermit bvi abootimg binwalk adb blanket
@@ -34,6 +33,6 @@
 	emacs-yasnippet emacs-yasnippet-snippets emacs-magit ccls
 	emacs-ccls bear cmake proxychains-ng adwaita-icon-theme
 	python-extract-dtb cutter radare2 blisp openocd xfel
-	ripgrep emacs-ripgrep fzf emacs-fzf neofetch))
+	ripgrep emacs-ripgrep fzf emacs-fzf neofetch tango-icon-theme))
 
 (packages->manifest %luhui-packages)

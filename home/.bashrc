@@ -46,6 +46,9 @@ export PAGER='less -R'
 
 # graphic
 export WLR_NO_HARDWARE_CURSORS=1
+export GDK_BACKEND=wayland
+export QT_QPA_PLATFORM=wayland
+export SDL_VIDEODRIVER=wayland
 if [ $(tty) == "/dev/tty1" ]
 then
 	if [ $(id -u) == "1000" ]
