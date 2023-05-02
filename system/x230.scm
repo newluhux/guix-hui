@@ -107,7 +107,7 @@ Socks5Proxy 127.0.0.1:7891"))))
                      (sched-powersave-on-bat? #t)))
            (service screen-locker-service-type
                     (screen-locker-configuration "hikari-unlocker"
-                                                 (file-append hikari
+                                                 (file-append hikari-fix
                                                               "/bin/hikari-unlocker") #f))
            (service screen-locker-service-type
                     (screen-locker-configuration "vlock"
