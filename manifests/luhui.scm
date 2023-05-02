@@ -22,7 +22,7 @@
         nss-certs emacs-next-pgtk emacs-company emacs-lsp-mode
         emacs-lsp-ui emacs-rime emacs-telega fontconfig emacs-geiser
         font-gnu-unifont font-terminus font-google-noto-emoji
-        hikari-fix foot icecat ungoogled-chromium/wayland w3m links
+        hikari-fix alacritty icecat ungoogled-chromium/wayland w3m links
         imv bemenu pinentry-tty gnupg openssl password-store
         git gnu-make rtl-sdr gqrx dump1090 psmisc htop bmon iftop
 	procps gdb gcc-toolchain cscope indent ncurses fastboot
@@ -34,6 +34,6 @@
 	emacs-yasnippet emacs-yasnippet-snippets emacs-magit ccls
 	emacs-ccls bear cmake proxychains-ng adwaita-icon-theme
 	python-extract-dtb cutter radare2 blisp openocd xfel
-	ripgrep emacs-ripgrep fzf emacs-fzf))
+	ripgrep emacs-ripgrep fzf emacs-fzf neofetch))
 
 (packages->manifest %luhui-packages)
