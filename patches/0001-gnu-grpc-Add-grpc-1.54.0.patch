@@ -1,0 +1,48 @@
+From 9714c22de0359b0e062f85bf714887cb3534e4eb Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Tue, 2 May 2023 08:20:49 +0800
+Subject: [PATCH 1/2] gnu: grpc: Add grpc-1.54.0.
+
+* gnu/packages/rpc.scm (grpc-1.54.0): New variable.
+---
+ gnu/packages/rpc.scm | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/gnu/packages/rpc.scm b/gnu/packages/rpc.scm
+index a88c79f8b9..6dd2e29aed 100644
+--- a/gnu/packages/rpc.scm
++++ b/gnu/packages/rpc.scm
+@@ -6,6 +6,7 @@
+ ;;; Copyright © 2021 Greg Hogan <code@greghogan.com>
+ ;;; Copyright © 2021 Tobias Geerinckx-Rice <me@tobias.gr>
+ ;;; Copyright © 2022 Maxim Cournoyer <maxim.cournoyer@gmail.com>
++;;; Copyright © 2023 Lu Hui <luhux76@gmail.com>
+ ;;;
+ ;;; This file is part of GNU Guix.
+ ;;;
+@@ -142,6 +143,22 @@ (define-public grpc-for-python-grpcio
+     (inputs
+      (list abseil-cpp-20211102.0 c-ares/cmake openssl re2 zlib))))
+ 
++(define-public grpc-1.54.0
++  (package
++    (inherit grpc)
++    (name "grpc")
++    (version "1.54.0")
++    (source (origin
++              (method git-fetch)
++              (uri (git-reference
++                    (url "https://github.com/grpc/grpc")
++                    (commit (string-append "v" version))
++                    (recursive? #true)))
++              (file-name (git-file-name name version))
++              (sha256
++               (base32
++                "1z627932z9p46yirnaaakshaz9z0szb9qbbp0br65iw5ijnznlar"))))))
++
+ ;; Some packages require this older version.
+ (define-public grpc-1.16.1
+   (package
+-- 
+2.39.2
+
