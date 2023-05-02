@@ -34,7 +34,7 @@
                    (group "users")
 
                    (supplementary-groups '("wheel" "dialout" "audio" "video"
-					   "docker" "libvirt")))
+					   "docker" "libvirt" "kvm")))
                   %base-user-accounts))
 
     (skeletons `(("." ,(local-file "../home" "skel" #:recursive? #t))))
