@@ -8,7 +8,7 @@
  guile web-browsers networking gdb commencement code
  ncurses virtualization glib file graphviz video ccache
  task-management image elf embedded build-tools cmake
- gnome)
+ gnome engineering)
 
 (load "../packages/embedded.scm")
 (load "../packages/wm.scm")
