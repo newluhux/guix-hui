@@ -8,7 +8,7 @@
  guile web-browsers networking gdb commencement code
  ncurses virtualization glib file graphviz video ccache
  task-management image elf embedded build-tools cmake
- gnome engineering)
+ gnome engineering rust-apps)
 
 (load "../packages/embedded.scm")
 (load "../packages/wm.scm")
@@ -33,6 +33,7 @@
 	openixcard grim wl-clipboard patchelf emacs-paredit
 	emacs-yasnippet emacs-yasnippet-snippets emacs-magit ccls
 	emacs-ccls bear cmake proxychains-ng adwaita-icon-theme
-	python-extract-dtb cutter radare2 blisp openocd))
+	python-extract-dtb cutter radare2 blisp openocd xfel
+	ripgrep emacs-ripgrep fzf emacs-fzf))
 
 (packages->manifest %luhui-packages)
