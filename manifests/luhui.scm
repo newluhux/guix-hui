@@ -21,7 +21,7 @@
         nss-certs emacs-next-pgtk emacs-company emacs-lsp-mode
         emacs-lsp-ui emacs-rime emacs-telega fontconfig emacs-geiser
         font-gnu-unifont font-terminus font-google-noto-emoji
-        weston icecat ungoogled-chromium/wayland w3m links
+        weston foot icecat ungoogled-chromium/wayland w3m links
         qtwayland imv pinentry-tty gnupg openssl password-store
         git gnu-make rtl-sdr gqrx dump1090 psmisc htop bmon iftop
 	procps gdb gcc-toolchain cscope indent ncurses fastboot
