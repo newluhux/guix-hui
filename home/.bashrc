@@ -50,6 +50,6 @@ if [ $(tty) == "/dev/tty1" ]
 then
 	if [ $(id -u) == "1000" ]
 	then
-		exec hikari
+		exec weston
 	fi
 fi
