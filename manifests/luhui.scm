@@ -33,6 +33,6 @@
 	openixcard grim wl-clipboard patchelf emacs-paredit
 	emacs-yasnippet emacs-yasnippet-snippets emacs-magit ccls
 	emacs-ccls bear cmake proxychains-ng adwaita-icon-theme
-	python-extract-dtb))
+	python-extract-dtb cutter radare2))
 
 (packages->manifest %luhui-packages)
