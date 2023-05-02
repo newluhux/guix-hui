@@ -45,6 +45,7 @@ export EDITOR=vi
 export PAGER='less -R'
 
 # graphic
+export WLR_NO_HARDWARE_CURSORS=1
 if [ $(tty) == "/dev/tty1" ]
 then
 	if [ $(id -u) == "1000" ]
