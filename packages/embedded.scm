@@ -27,7 +27,10 @@
              (gnu packages texinfo)
              (gnu packages gdb)
              (gnu packages commencement)
-             (gnu packages electronics))
+             (gnu packages electronics)
+             (gnu packages compression)
+             (gnu packages crypto)
+             (gnu packages ncurses))
 
 (define-public gkermit
   (package
@@ -653,3 +656,110 @@ an open source tool to flash Bouffalo RISC-V MCUs.")
     (description "Tool to split a kernel image with appended dtbs into
 separated kernel and dtb files.")
     (license license:gpl3+)))
+
+(define-public ek
+  (package
+    (name "ek")
+    (version "1.8")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://www.kermitproject.org/ftp/kermit/archives/ek18.tar"))
+              (sha256
+               (base32
+                "06yslag2hckm6xd6g0yvhv78p4qqsmf91fgvqgi7ly85xqzlziar"))))
+    (build-system gnu-build-system)
+    (arguments
+     `(#:tests? #f
+       #:make-flags (list (string-append "CC="
+                                         ,(cc-for-target))
+                          (string-append "PREFIX="
+                                         (assoc-ref %outputs "out")))
+       #:phases (modify-phases %standard-phases
+                  (delete 'configure)
+                  (replace 'install
+                    (lambda* (#:key outputs #:allow-other-keys)
+                      (let* ((out (assoc-ref outputs "out"))
+                             (bin (string-append out "/bin")))
+                        (mkdir-p bin)
+                        (copy-file "ek" (string-append bin "/ek"))))))))
+    (home-page "https://kermitproject.org/ek.html")
+    (synopsis "Compact, fast, robust, portable Kermit file transfer source code to embed in devices or C programs")
+    (description "EK (Embedded Kermit, E-Kermit) is an implementation of the Kermit file transfer protocol
+written in ANSI C and designed for embedding in devices or firmware, for use in realtime applications,
+or for construction of DLLs and libraries.")
+    (license license:bsd-3)))
+
+(define-public eksw
+  (package
+    (name "eksw")
+    (version "0.94")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://kermitproject.org/ftp/kermit/archives/eksw094.zip"))
+              (sha256
+               (base32
+                "0hb8ipbcvrl4jys0hph7yf5ayn33gal13isksz8ycxnjfgf58591"))))
+    (build-system gnu-build-system)
+    (native-inputs (list unzip))
+    (arguments
+     `(#:tests? #f
+       #:make-flags (list (string-append "CC="
+                                         ,(cc-for-target))
+                          (string-append "PREFIX="
+                                         (assoc-ref %outputs "out")))
+       #:phases (modify-phases %standard-phases
+                  (delete 'configure)
+                  (replace 'install
+                    (lambda* (#:key outputs #:allow-other-keys)
+                      (let* ((out (assoc-ref outputs "out"))
+                             (bin (string-append out "/bin")))
+                        (mkdir-p bin)
+                        (copy-file "eksw" (string-append bin "/eksw"))))))))
+    (home-page "https://kermitproject.org/ek.html")
+    (synopsis "Compact, fast, robust, portable Kermit file transfer source code to embed in devices or C programs")
+    (description "EKSW is a new version of E-Kermit that includes true sliding windows packet transport.")
+    (license license:bsd-3)))
+
+(define-public ckermit
+  (package
+    (name "ckermit")
+    (version "9.0.302")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "http://www.columbia.edu/kermit/ftp/archives/cku302.tar.gz"))
+              (sha256
+               (base32
+                "0487mh6s99ijqf1pfmbm302pa5i4pzmm8s439hdl1ffs5g8jqpqd"))))
+    (build-system gnu-build-system)
+    (inputs (list ncurses))
+    (arguments
+     `(#:tests? #f
+       #:make-flags (list (string-append "CC="
+                                         ,(cc-for-target))
+                          (string-append "PREFIX="
+                                         (assoc-ref %outputs "out")))
+       #:phases (modify-phases %standard-phases
+                  (delete 'configure)
+                  (add-after 'unpack 'fix-build
+                    (lambda _
+                      (substitute* "ckucmd.c"
+                        (("IO_file_flags") "IO_EOF_SEEN"))))
+                  (replace 'build
+                    (lambda* (#:key make-flags #:allow-other-keys)
+                      (apply invoke "make" "linux" "LNKFLAGS=-lcrypt" "KFLAGS=-DOPENSSL_097" make-flags)))
+                  (replace 'install
+                    (lambda* (#:key outputs #:allow-other-keys)
+                      (let* ((out (assoc-ref outputs "out"))
+                             (bin (string-append out "/bin"))
+                             (man1 (string-append out "/man/man1")))
+                        (mkdir-p bin)
+                        (copy-file "wermit" (string-append bin "/ckermit"))
+                        (mkdir-p man1)
+                        (copy-file "ckuker.nr" (string-append man1 "/ckermit.1"))))))))
+    (home-page "https://www.kermitproject.org/ckermit.html")
+    (synopsis "Portable scriptable network and serial communication software")
+    (description "C-Kermit is a combined network and serial communication software package offering a consistent,
+ transport-independent, cross-platform approach to connection establishment, terminal sessions, file transfer,
+file management, character-set translation, numeric and alphanumeric paging, and automation of file transfer
+and management, dialogs, and communication tasks through its built-in scripting language.")
+    (license #f))) ; custom license

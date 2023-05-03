@@ -8,7 +8,8 @@
  guile web-browsers networking gdb commencement code
  ncurses virtualization glib file graphviz video ccache
  task-management image elf embedded build-tools cmake
- gnome engineering rust-apps freedesktop gnome-xyz qt)
+ gnome engineering rust-apps freedesktop gnome-xyz qt
+ screen)
 
 (load "../packages/embedded.scm")
 
@@ -33,6 +34,7 @@
 	emacs-yasnippet emacs-yasnippet-snippets emacs-magit ccls
 	emacs-ccls bear cmake proxychains-ng adwaita-icon-theme
 	python-extract-dtb cutter radare2 blisp openocd xfel
-	ripgrep emacs-ripgrep fzf emacs-fzf neofetch tango-icon-theme))
+	ripgrep emacs-ripgrep fzf emacs-fzf neofetch tango-icon-theme
+        ek eksw ckermit screen))
 
 (packages->manifest %luhui-packages)
