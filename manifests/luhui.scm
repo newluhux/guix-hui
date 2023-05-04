@@ -17,7 +17,7 @@
   (list bash coreutils findutils grep sed diffutils patch gawk
         tar gzip bzip2 xz e2fsprogs btrfs-progs dosfstools pciutils
         usbutils util-linux kmod eudev less mandoc info-reader nvi
-        bash-completion kbd inetutils iproute wget curl iw
+        bash-completion kbd inetutils iproute wget curl iw glibc-locales
         wireless-tools tmux picocom openssh dropbear man-pages
         nss-certs emacs-next-pgtk emacs-company emacs-lsp-mode
         emacs-lsp-ui emacs-rime emacs-telega fontconfig emacs-geiser
