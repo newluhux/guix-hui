@@ -35,6 +35,6 @@
 	emacs-ccls bear cmake proxychains-ng adwaita-icon-theme
 	python-extract-dtb cutter radare2 blisp openocd xfel
 	ripgrep emacs-ripgrep fzf emacs-fzf neofetch tango-icon-theme
-        ek eksw ckermit screen))
+        ek eksw ckermit screen qtbase))
 
 (packages->manifest %luhui-packages)
