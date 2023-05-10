@@ -12,6 +12,7 @@
  screen)
 
 (load "../packages/embedded.scm")
+(load "../packages/dict.scm")
 
 (define-public %luhui-packages
   (list bash coreutils findutils grep sed diffutils patch gawk
@@ -32,6 +33,7 @@
 	emacs-yasnippet emacs-yasnippet-snippets emacs-magit ccls
 	emacs-ccls cmake proxychains-ng python-extract-dtb cutter
 	radare2 blisp openocd xfel ripgrep emacs-ripgrep fzf emacs-fzf
-	neofetch ek eksw ckermit screen bear iperf unzip unrar-free))
+	neofetch ek eksw ckermit screen bear iperf unzip unrar-free
+	stardict-ecdict))
 
 (packages->manifest %luhui-packages)
