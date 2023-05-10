@@ -18,7 +18,7 @@
         tar gzip bzip2 xz util-linux less mandoc info-reader nvi
         bash-completion wget curl iw glibc-locales wireless-tools
 	tmux picocom openssh dropbear man-pages nss-certs
-	emacs-next-pgtk emacs-company emacs-lsp-mode emacs-lsp-ui
+	emacs-next emacs-company emacs-lsp-mode emacs-lsp-ui
 	emacs-rime emacs-telega fontconfig emacs-geiser font-gnu-unifont
 	font-terminus font-google-noto-emoji weston foot icecat
 	ungoogled-chromium w3m links pinentry-tty gnupg
