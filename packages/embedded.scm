@@ -729,7 +729,7 @@ or for construction of DLLs and libraries.")
               (uri (string-append "http://www.columbia.edu/kermit/ftp/archives/cku302.tar.gz"))
               (sha256
                (base32
-                "0487mh6s99ijqf1pfmbm302pa5i4pzmm8s439hdl1ffs5g8jqpqd"))))
+                "06r7vrhmi76qvg30bynqfpyq958j8xwsjvrmm25k72q6w0gqihx7"))))
     (build-system gnu-build-system)
     (inputs (list ncurses))
     (arguments
