@@ -32,6 +32,6 @@
 	emacs-yasnippet emacs-yasnippet-snippets emacs-magit ccls
 	emacs-ccls cmake proxychains-ng python-extract-dtb cutter
 	radare2 blisp openocd xfel ripgrep emacs-ripgrep fzf emacs-fzf
-	neofetch ek eksw ckermit screen bear iperf))
+	neofetch ek eksw ckermit screen bear iperf unzip unrar-free))
 
 (packages->manifest %luhui-packages)
