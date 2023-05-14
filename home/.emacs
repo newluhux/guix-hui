@@ -30,8 +30,8 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
-;; ido mode
-(ido-mode 1)
+;; ivy mode
+(ivy-mode 1)
 
 ;; my blog
 (require 'ox-publish)
@@ -85,11 +85,15 @@
 ;; company mode
 (setq company-idle-delay 0.0
       company-minimum-prefix-length 2)
+(add-hook 'prog-mode-hook #'company-mode)
+(add-hook 'c-mode-hook #'company-mode)
 (add-hook 'lisp-mode-hook #'company-mode)
 (add-hook 'scheme-mode-hook #'company-mode)
 
 ;; yasnippet
 (add-hook 'prog-mode-hook #'yas-minor-mode)
+(add-hook 'c-mode-hook #'yas-minor-mode)
+(add-hook 'lisp-mode-hook #'yas-minor-mode)
 (add-hook 'scheme-mode-hook #'yas-minor-mode)
 
 ;; scheme
