@@ -34,6 +34,6 @@
 	emacs-ccls cmake proxychains-ng python-extract-dtb cutter
 	radare2 blisp openocd xfel ripgrep emacs-ripgrep fzf emacs-fzf
 	neofetch ek eksw screen bear iperf unzip unrar-free
-	stardict-ecdict))
+	stardict-ecdict rizin))
 
 (packages->manifest %luhui-packages)
