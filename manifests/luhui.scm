@@ -12,6 +12,7 @@
  screen)
 
 (load "../packages/embedded.scm")
+(load "../packages/engineering.scm")
 (load "../packages/dict.scm")
 
 (define-public %luhui-packages
@@ -31,9 +32,9 @@
 	dbus file graphviz squashfs-tools alsa-utils ffmpeg lrzsz
 	openixcard grim wl-clipboard patchelf emacs-paredit
 	emacs-yasnippet emacs-yasnippet-snippets emacs-magit ccls
-	emacs-ccls cmake proxychains-ng python-extract-dtb cutter
-	radare2 blisp openocd xfel ripgrep emacs-ripgrep fzf emacs-fzf
+	emacs-ccls cmake proxychains-ng python-extract-dtb
+	blisp openocd xfel ripgrep emacs-ripgrep fzf emacs-fzf
 	neofetch ek eksw screen bear iperf unzip unrar-free
-	stardict-ecdict rizin emacs-ivy))
+	stardict-ecdict rizin emacs-ivy cutter-rizin))
 
 (packages->manifest %luhui-packages)
