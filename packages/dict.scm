@@ -15,7 +15,7 @@
     (version "2017")
     (source (origin
               (method url-fetch)
-              (uri (string-append "https://https://github.com/"
+              (uri (string-append "https://github.com/"
                                   "skywind3000/ECDICT/releases/download/"
                                   "1.0.28/ecdict-stardict-28.zip"))
               (sha256
