@@ -11,9 +11,14 @@
  gnome engineering rust-apps freedesktop gnome-xyz qt
  screen)
 
-(load "../packages/embedded.scm")
-(load "../packages/engineering.scm")
-(load "../packages/dict.scm")
+(define load-list
+  (list
+   "../packages/dict.scm"
+   "../packages/embedded.scm"
+   "../packages/engineering.scm"
+   "../packages/proxy.scm"))
+
+(map load load-list)
 
 (define-public %luhui-packages
   (list bash coreutils findutils grep sed diffutils patch gawk
@@ -22,7 +27,7 @@
 	tmux picocom openssh dropbear man-pages nss-certs
 	emacs-next emacs-company emacs-lsp-mode emacs-lsp-ui
 	emacs-rime emacs-telega fontconfig emacs-geiser font-gnu-unifont
-	font-terminus font-google-noto-emoji weston foot icecat
+	font-terminus font-google-noto-emoji icecat
 	ungoogled-chromium w3m links pinentry-tty gnupg
 	openssl password-store git gnu-make rtl-sdr gqrx dump1090
 	psmisc htop bmon iftop procps gdb gcc-toolchain cscope indent
@@ -35,6 +40,6 @@
 	emacs-ccls cmake proxychains-ng python-extract-dtb
 	blisp openocd xfel ripgrep emacs-ripgrep fzf emacs-fzf
 	neofetch ek eksw screen bear iperf unzip unrar-free
-	stardict-ecdict rizin emacs-ivy cutter-rizin))
+	stardict-ecdict rizin emacs-ivy cutter-rizin clash))
 
 (packages->manifest %luhui-packages)
