@@ -46,10 +46,13 @@
                %base-user-accounts))
 
   (packages
-   (cons*
-    singularity
-    gnome-tweaks
-    %luhui-packages))
+   (append
+    (list
+     singularity
+     gnome-tweaks
+     btrfs-progs)
+    %luhui-packages
+    %base-packages))
 
   (services
    (cons*
@@ -57,8 +60,9 @@
     (service singularity-service-type)
     (service qemu-binfmt-service-type
              (qemu-binfmt-configuration
-              (platforms (lookup-qemu-platforms
-                          "arm" "aarch64" "riscv64"))))
+              (platforms
+               (lookup-qemu-platforms
+                "arm" "aarch64" "riscv64"))))
     (service gnome-desktop-service-type)
     (set-xorg-configuration
      (xorg-configuration
