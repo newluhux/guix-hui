@@ -3,3 +3,5 @@
 	name = Lu Hui
 [pull]
 	rebase = true
+[color]
+	ui = auto

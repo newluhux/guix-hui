@@ -17,7 +17,7 @@
       treemacs-space-between-root-nodes nil)
 
 ;; font
-(add-to-list 'default-frame-alist '(font . "unifont-10"))
+(add-to-list 'default-frame-alist '(font . "unifont-12"))
 
 ;; theme
 (load-theme 'modus-operandi)
