@@ -11,6 +11,7 @@
 
   (keyboard-layout (keyboard-layout "us" #:options '("ctrl:nocaps")))
 
+  (kernel-arguments (list "modprobe.blacklist=dvb_usb_rtl28xxu"))
   (bootloader (bootloader-configuration
                 (bootloader grub-bootloader)
                 (targets '("/dev/sda"))
@@ -64,6 +65,9 @@
                (lookup-qemu-platforms
                 "arm" "aarch64" "riscv64"))))
     (service gnome-desktop-service-type)
+    (udev-rules-service 'rtl-sdr rtl-sdr)
+    (udev-rules-service 'xfel xfel)
+    (udev-rules-service 'openocd openocd)
     (set-xorg-configuration
      (xorg-configuration
       (keyboard-layout keyboard-layout))
