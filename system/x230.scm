@@ -1,5 +1,5 @@
 (use-modules (gnu) (gnu system nss) (guix utils))
-(use-service-modules desktop xorg virtualization docker)
+(use-service-modules desktop xorg virtualization docker sddm)
 (use-package-modules certs gnome)
 
 (load "../manifests/luhui.scm")
@@ -64,14 +64,15 @@
               (platforms
                (lookup-qemu-platforms
                 "arm" "aarch64" "riscv64"))))
-    (service gnome-desktop-service-type)
     (udev-rules-service 'rtl-sdr rtl-sdr)
     (udev-rules-service 'xfel xfel)
     (udev-rules-service 'openocd openocd)
+    (service sddm-service-type)
     (set-xorg-configuration
      (xorg-configuration
       (keyboard-layout keyboard-layout))
-     gdm-service-type)
-    %desktop-services))
+     sddm-service-type)
+    (modify-services %desktop-services
+      (delete gdm-service-type))))
 
   (name-service-switch %mdns-host-lookup-nss))
