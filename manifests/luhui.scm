@@ -9,7 +9,7 @@
  ncurses virtualization glib file graphviz video ccache
  task-management image elf embedded build-tools cmake
  gnome engineering rust-apps freedesktop gnome-xyz qt
- screen xorg)
+ screen xorg java)
 
 (define load-list
   (list
@@ -41,6 +41,7 @@
 	blisp openocd xfel ripgrep emacs-ripgrep fzf emacs-fzf
 	neofetch ek eksw screen bear iperf unzip unrar-free
 	stardict-ecdict rizin emacs-ivy cutter-rizin clash
-	cwm xterm xinitrc-xsession xset xsetroot xkbset xrdb))
+	cwm xterm xinitrc-xsession xset xsetroot xkbset xrdb
+	(list openjdk "jdk")))
 
 (packages->manifest %luhui-packages)
