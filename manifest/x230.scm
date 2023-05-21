@@ -10,6 +10,7 @@
    "emacs.scm"
    "media.scm"
    "font.scm"
+   "game.scm"
    "monitor.scm"
    "radio.scm"
    "security.scm"
@@ -29,6 +30,7 @@
    %font-packages
    %media-packages
    %monitor-packages
+   %game-packages
    %radio-packages
    %security-packages
    %xorg-packages
