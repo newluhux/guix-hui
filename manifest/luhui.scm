@@ -1,4 +1,4 @@
-(use-modules (guix profiles))
+(use-modules (gnu) (guix profiles))
 (use-package-modules
  bash emacs emacs-xyz fontutils fonts wm gnuzilla
  version-control chromium image-viewers xdisorg android
