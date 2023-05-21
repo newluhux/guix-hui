@@ -1,8 +1,6 @@
 (use-modules (gnu) (gnu system nss) (guix utils))
 (use-service-modules desktop xorg virtualization docker sddm)
-(use-package-modules certs gnome)
-
-(load "../manifests/luhui.scm")
+(use-package-modules certs linux gnome wm radio admin embedded)
 
 (operating-system
   (host-name "x230")
@@ -51,8 +49,8 @@
     (list
      singularity
      gnome-tweaks
-     btrfs-progs)
-    %luhui-packages
+     btrfs-progs
+     xinitrc-xsession)
     %base-packages))
 
   (services
