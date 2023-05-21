@@ -6,6 +6,7 @@
    "archive.scm"
    "connect.scm"
    "develop.scm"
+   "dict.scm"
    "emacs.scm"
    "media.scm"
    "font.scm"
@@ -23,6 +24,7 @@
    %archive-packages
    %connect-packages
    %develop-packages
+   %dict-packages
    %emacs-packages
    %font-packages
    %media-packages
