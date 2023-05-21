@@ -4,10 +4,10 @@
              (gnu services)
              (guix gexp))
 
-(load "../manifest/luhui.scm")
+(load "../manifest/x230.scm")
 
 (home-environment
- (packages %luhui-packages)
+ (packages %x230-packages)
  (services
   (list
    (service home-bash-service-type

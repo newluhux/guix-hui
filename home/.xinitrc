@@ -3,5 +3,6 @@
 xset r rate 200 60
 xsetroot -solid gray
 setxkbmap -layout us -options ctrl:nocaps
+emacs --daemon
 
 cwm
