@@ -763,3 +763,41 @@ or for construction of DLLs and libraries.")
 file management, character-set translation, numeric and alphanumeric paging, and automation of file transfer
 and management, dialogs, and communication tasks through its built-in scripting language.")
     (license #f))) ; custom license
+
+(define-public ukermit
+  (let ((commit "3d58d558d02b5482e2d4d7bbda337cdb31925ac6")
+	(revision "0"))
+    (package
+      (name "ukermit")
+      (version (git-version "0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+	       (url "https://github.com/newluhux/ukermit")
+	       (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+	  (base32 "0bz98bz2wvg57hc3lf0h5xm6y3p8rkkyljggfn5m4p146dfry5jq"))))
+      (build-system gnu-build-system)
+      (arguments
+       `(#:tests? #f
+	 #:make-flags (list (string-append "CC="
+                                           ,(cc-for-target))
+                            (string-append "PREFIX="
+                                           (assoc-ref %outputs "out")))
+	 #:phases
+	 (modify-phases
+	  %standard-phases
+	  (delete 'configure)
+	  (replace
+	   'install
+	   (lambda* (#:key outputs #:allow-other-keys)
+		    (let* ((out (assoc-ref outputs "out"))
+			   (bin (string-append out "/bin")))
+		      (mkdir-p bin)
+		      (copy-file "ukermit" (string-append bin "/ukermit"))))))))
+      (home-page "https://github.com/newluhux/ukermit")
+      (synopsis "Simple kermit download program")
+      (description "Simple kermit download program, support 7bit prefix.")
+      (license license:expat))))
