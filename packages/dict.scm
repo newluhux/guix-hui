@@ -4,10 +4,12 @@
  (gnu packages compression)
  (guix packages)
  (guix build-system copy)
+ (guix build-system gnu)
  (guix gexp)
  ((guix licenses) #:prefix license:)
  (guix utils)
- (guix download))
+ (guix download)
+ (guix git-download))
 
 (define-public stardict-ecdict
   (package
@@ -34,3 +36,42 @@
     (synopsis "Free English to Chinese Dictionary Database")
     (description "Free English to Chinese Dictionary Database")
     (license license:expat)))
+
+(define-public ustardict
+  (let ((commit "db27432fe75d31cec77c5c30ba7da7e2ad73394e")
+	(revision "0"))
+    (package
+      (name "ustardict")
+      (version (git-version "0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+	       (url "https://github.com/newluhux/ustardict")
+	       (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+	  (base32 "0cip8lwlxggw99rigaslz6nlv8bk3a84nmbkf03w9hjimlxab1gh"))))
+      (build-system gnu-build-system)
+      (arguments
+       `(#:tests? #f
+	 #:make-flags (list (string-append "CC="
+                                           ,(cc-for-target))
+                            (string-append "PREFIX="
+                                           (assoc-ref %outputs "out")))
+	 #:phases
+	 (modify-phases
+	  %standard-phases
+	  (delete 'configure)
+	  (replace
+	   'install
+	   (lambda* (#:key outputs #:allow-other-keys)
+		    (let* ((out (assoc-ref outputs "out"))
+			   (bin (string-append out "/bin")))
+		      (mkdir-p bin)
+		      (copy-file "ustardict"
+				 (string-append bin "/ustardict"))))))))
+      (home-page "https://github.com/newluhux/ustardict")
+      (synopsis "Simple stardict program")
+      (description "Simple stardict program, writen by c")
+      (license license:expat))))
