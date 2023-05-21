@@ -27,9 +27,9 @@
 
    (simple-service 'my-config-file
                    home-files-service-type
-                   `(("emacs" ,(local-file ".emacs" "emacs"))
-                     ("Xdefaults" ,(local-file ".Xdefaults" "Xdefaults"))
-                     ("cwmrc" ,(local-file ".cwmrc" "cwmrc"))
-                     ("xinitrc" ,(local-file ".xinitrc" "xinitrc"
+                   `((".emacs" ,(local-file ".emacs" "emacs"))
+                     (".Xdefaults" ,(local-file ".Xdefaults" "Xdefaults"))
+                     (".cwmrc" ,(local-file ".cwmrc" "cwmrc"))
+                     (".xinitrc" ,(local-file ".xinitrc" "xinitrc"
                                              #:recursive? #t)))))))
 
