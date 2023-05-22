@@ -18,6 +18,6 @@
    python-extract-dtb cmake cutter-rizin
    rizin (list openjdk "jdk") abootimg
    binwalk strace ltrace perf ccache file
-   bvi bison flex dtc u-boot-tools))
+   bvi bison flex dtc u-boot-tools pluseview))
 
 (packages->manifest %develop-packages)
