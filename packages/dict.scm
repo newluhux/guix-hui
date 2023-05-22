@@ -38,7 +38,7 @@
     (license license:expat)))
 
 (define-public ustardict
-  (let ((commit "db27432fe75d31cec77c5c30ba7da7e2ad73394e")
+  (let ((commit "c8807d4d77f2a4262e5309d08d6d2b3f8fb64d94")
 	(revision "0"))
     (package
       (name "ustardict")
@@ -51,7 +51,7 @@
 	       (commit commit)))
          (file-name (git-file-name name version))
          (sha256
-	  (base32 "0cip8lwlxggw99rigaslz6nlv8bk3a84nmbkf03w9hjimlxab1gh"))))
+	  (base32 "0f1inhzk42yk6xjis038mjvzy01s9adz8363q5lwydcndx11yl56"))))
       (build-system gnu-build-system)
       (arguments
        `(#:tests? #f
@@ -63,14 +63,20 @@
 	 (modify-phases
 	  %standard-phases
 	  (delete 'configure)
+          (delete 'strip)
 	  (replace
-	   'install
-	   (lambda* (#:key outputs #:allow-other-keys)
-		    (let* ((out (assoc-ref outputs "out"))
-			   (bin (string-append out "/bin")))
-		      (mkdir-p bin)
-		      (copy-file "ustardict"
-				 (string-append bin "/ustardict"))))))))
+	      'install
+	    (lambda* (#:key outputs #:allow-other-keys)
+	      (let* ((out (assoc-ref outputs "out"))
+		     (bin (string-append out "/bin")))
+		(mkdir-p bin)
+                (for-each
+                 (lambda (file)
+                   (copy-file
+                    file (string-append bin "/" file)))
+                 (find-files
+                  "./"
+                  "^(ustardict|ustardict.exe)$"))))))))
       (home-page "https://github.com/newluhux/ustardict")
       (synopsis "Simple stardict program")
       (description "Simple stardict program, writen by c")
