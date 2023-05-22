@@ -26,10 +26,19 @@
              (gnu packages embedded)
              (gnu packages texinfo)
              (gnu packages gdb)
+	     (gnu packages glib)
              (gnu packages commencement)
              (gnu packages electronics)
              (gnu packages compression)
              (gnu packages crypto)
+	     (gnu packages libusb)
+	     (gnu packages libftdi)
+	     (gnu packages nettle)
+	     (gnu packages python)
+	     (gnu packages linux)
+	     (gnu packages documentation)
+	     (gnu packages boost)
+	     (gnu packages qt)
              (gnu packages ncurses))
 
 (define-public gkermit
@@ -783,7 +792,7 @@ and management, dialogs, and communication tasks through its built-in scripting 
       (arguments
        `(#:tests? #f
 	 #:make-flags (list (string-append "CC="
-                                           ,(cc-for-target))
+                                          ,(cc-for-target))
                             (string-append "PREFIX="
                                            (assoc-ref %outputs "out")))
 	 #:phases
@@ -801,3 +810,112 @@ and management, dialogs, and communication tasks through its built-in scripting 
       (synopsis "Simple kermit download program")
       (description "Simple kermit download program, support 7bit prefix.")
       (license license:expat))))
+
+(define-public libsigrok
+  (let ((commit "0db1b189bee3ffe5c6ea39d7ca2e62715856b538")
+	(revision "0"))
+    (package
+     (name "libsigrok")
+     (version (git-version "0" revision commit))
+     (source
+      (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url "git://sigrok.org/libsigrok")
+	     (commit commit)))
+       (file-name (git-file-name name version))
+       (sha256
+	(base32 "0mpnh28gsnd8z205sikc7is6kxwx180jrdkxxxfj6lm8rzb2ldah"))))
+     (build-system gnu-build-system)
+     (native-inputs (list autoconf automake m4 pkg-config
+			  libtool doxygen))
+     (inputs (list glib libzip libserialport libusb zlib libftdi
+		   nettle hidapi glibmm python bluez))
+     (home-page "http://sigrok.org/wiki/Libsigrok")
+     (synopsis "logic analyzer library")
+     (description "shared library written in C,
+hich provides the basic hardware access drivers for logic analyzers and
+other supported devices, as well as input/output file format support.")
+     (license license:gpl3))))
+
+(define-public libsigrokdecode
+  (let ((commit "73cb5461acdbd007f4aa9e81385940fad6607696")
+	(revision "0"))
+    (package
+     (name "libsigrokdecode")
+     (version (git-version "0" revision commit))
+     (source
+      (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url "git://sigrok.org/libsigrokdecode")
+	     (commit commit)))
+       (file-name (git-file-name name version))
+       (sha256
+	(base32 "1i4jpkhb9yqf1fmbvlzdifj9arkspspffn93q8yh4vq5zr27k085"))))
+     (build-system gnu-build-system)
+     (native-inputs (list autoconf automake m4 pkg-config
+			  libtool doxygen))
+     (inputs (list glib python))
+     (home-page "http://sigrok.org/wiki/Libsigrokdecode")
+     (synopsis "provides (streaming) protocol decoding functionality.")
+     (description "libsigrokdecode is a shared library which provides
+(streaming) protocol decoding functionality. ")
+     (license license:gpl3))))
+
+(define-public pluseview
+  (let ((commit "136995b831c50d3261143b1183c73af55c9ba3a5")
+	(revision "0"))
+    (package
+     (name "pluseview")
+     (version (git-version "0" revision commit))
+     (source
+      (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url "git://sigrok.org/pluseview")
+	     (commit commit)))
+       (file-name (git-file-name name version))
+       (sha256
+	(base32 "1m3cmp421qzgyj8bv13s4zraczjkrvwy58nxpwcwzb3c4w08919q"))))
+     (build-system cmake-build-system)
+     (native-inputs (list pkg-config libtool))
+     (inputs (list boost glib libsigrok libserialport libftdi hidapi qtbase
+		   bluez nettle glibmm libzip libsigrokdecode python qtsvg
+		   qttools))
+     (arguments `(#:tests? #f))
+     (home-page "http://sigrok.org/wiki/PulseView")
+     (synopsis "Qt based logic analyzer, oscilloscope and MSO GUI for sigrok.")
+     (description "It can acquire samples from a supported device and display
+them, load and display captures from existing sigrok *.sr files, as well as run
+protocol decoders and display their annotations. ")
+     (license license:gpl3))))
+
+(define-public sigrok-cli
+  (let ((commit "394fd9b7a456f16c7ac15f41b0e29081f1d951f8")
+	(revision "0"))
+    (package
+     (name "sigrok-cli")
+     (version (git-version "0" revision commit))
+     (source
+      (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url "git://sigrok.org/sigrok-cli")
+	     (commit commit)))
+       (file-name (git-file-name name version))
+       (sha256
+	(base32 "06m5c5h9j1ng6w9il1qcyaf3mq7cj80s65s66pnhc0lipzqmawqf"))))
+     (build-system gnu-build-system)
+     (native-inputs (list autoconf automake m4 pkg-config
+			  libtool))
+     (inputs (list glib libsigrok libsigrokdecode libserialport
+		   libftdi hidapi bluez nettle libzip))
+     (home-page "http://sigrok.org/wiki/Sigrok-cli")
+     (synopsis "a command-line frontend for sigrok. ")
+     (description "It supports sample acquisition from logic analyzer,
+oscilloscope, multimeter, and other hardware, as well as running protocol
+decoders over the sample data (either from hardware or loaded from files). ")
+     (license license:gpl3))))
+
+pluseview
