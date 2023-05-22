@@ -831,6 +831,22 @@ and management, dialogs, and communication tasks through its built-in scripting 
 			  libtool doxygen))
      (inputs (list glib libzip libserialport libusb zlib libftdi
 		   nettle hidapi glibmm python bluez))
+     (arguments
+      `(#:phases
+	(modify-phases
+	 %standard-phases
+         (add-after 'install 'install-udev-rules
+		    (lambda*
+		     (#:key outputs #:allow-other-keys)
+		     (let* ((udev (string-append
+				   (assoc-ref outputs "out") "/lib/udev/rules.d")))
+		       (mkdir-p udev)
+		       (copy-file "./contrib/60-libsigrok.rules"
+				  (string-append udev "/60-sigrok.rules"))
+		       (copy-file "./contrib/61-libsigrok-plugdev.rules"
+				  (string-append udev "/61-libsigrok-plugdev.rules"))
+		       (copy-file "./contrib/61-libsigrok-uaccess.rules"
+				  (string-append udev "/61-libsigrok-uaccess.rules"))))))))
      (home-page "http://sigrok.org/wiki/Libsigrok")
      (synopsis "logic analyzer library")
      (description "shared library written in C,
@@ -917,5 +933,3 @@ protocol decoders and display their annotations. ")
 oscilloscope, multimeter, and other hardware, as well as running protocol
 decoders over the sample data (either from hardware or loaded from files). ")
      (license license:gpl3))))
-
-pluseview
