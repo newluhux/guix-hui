@@ -2,6 +2,8 @@
 (use-service-modules desktop xorg virtualization docker sddm)
 (use-package-modules certs linux gnome wm radio admin embedded)
 
+(load "../packages/embedded.scm")
+
 (operating-system
   (host-name "x230")
   (timezone "Hongkong")
@@ -62,6 +64,7 @@
               (platforms
                (lookup-qemu-platforms
                 "arm" "aarch64" "riscv64"))))
+    (udev-rules-service 'libsigrok libsigrok)
     (udev-rules-service 'rtl-sdr rtl-sdr)
     (udev-rules-service 'xfel xfel)
     (udev-rules-service 'openocd openocd)
