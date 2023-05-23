@@ -896,9 +896,9 @@ other supported devices, as well as input/output file format support.")
 	(base32 "1m3cmp421qzgyj8bv13s4zraczjkrvwy58nxpwcwzb3c4w08919q"))))
      (build-system cmake-build-system)
      (native-inputs (list pkg-config libtool))
-     (inputs (list boost glib libsigrok libserialport libftdi hidapi qtbase
-		   bluez nettle glibmm libzip libsigrokdecode python qtsvg
-		   qttools))
+     (inputs (list boost glib libsigrok libserialport libftdi hidapi qtbase-5
+		   bluez nettle glibmm libzip libsigrokdecode python qtsvg-5
+		   qttools-5))
      (arguments `(#:tests? #f))
      (home-page "http://sigrok.org/wiki/PulseView")
      (synopsis "Qt based logic analyzer, oscilloscope and MSO GUI for sigrok.")
