@@ -3,19 +3,24 @@
 (use-package-modules certs linux gnome wm radio admin embedded)
 
 (load "../packages/embedded.scm")
+(load "../packages/linux.scm")
 
 (operating-system
+  (kernel linux-stable)
+  (kernel-loadable-modules (list rtl8812au-aircrack-ng-linux-module))
+  (firmware (list linux-firmware))
+  (kernel-arguments (list "modprobe.blacklist=dvb_usb_rtl28xxu"))
+
   (host-name "x230")
   (timezone "Hongkong")
   (locale "en_US.utf8")
 
   (keyboard-layout (keyboard-layout "us" #:options '("ctrl:nocaps")))
 
-  (kernel-arguments (list "modprobe.blacklist=dvb_usb_rtl28xxu"))
   (bootloader (bootloader-configuration
-                (bootloader grub-bootloader)
-                (targets '("/dev/sda"))
-                (keyboard-layout keyboard-layout)))
+               (bootloader grub-bootloader)
+               (targets '("/dev/sda"))
+               (keyboard-layout keyboard-layout)))
 
   (mapped-devices
    (list (mapped-device
