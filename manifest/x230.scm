@@ -16,6 +16,7 @@
    "security.scm"
    "proxy.scm"
    "xorg.scm"
+   "script.scm"
    "web.scm"))
 
 (map load load-list)
@@ -35,6 +36,7 @@
    %security-packages
    %xorg-packages
    %proxy-packages
+   %script-packages
    %web-packages))
 
 (packages->manifest %x230-packages)
