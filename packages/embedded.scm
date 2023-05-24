@@ -933,3 +933,43 @@ protocol decoders and display their annotations. ")
 oscilloscope, multimeter, and other hardware, as well as running protocol
 decoders over the sample data (either from hardware or loaded from files). ")
      (license license:gpl3))))
+
+(define-public ufbterm
+  (let ((commit "ddcce9d79c0c3578b95a0d1372ee86e8ec31944b")
+	(revision "0"))
+    (package
+      (name "ufbterm")
+      (version (git-version "0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+	       (url "https://github.com/newluhux/ufbterm")
+	       (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+	  (base32 "1sywafsvp40ksq0am8q50dfsa4j1k0grizy6c4sfil9bc97gwypq"))))
+      (build-system gnu-build-system)
+      (arguments
+       `(#:tests? #f
+	 #:make-flags (list (string-append "CC="
+                                          ,(cc-for-target))
+                            (string-append "PREFIX="
+                                           (assoc-ref %outputs "out")))
+	 #:phases
+	 (modify-phases
+	  %standard-phases
+	  (delete 'configure)
+	  (replace
+	   'install
+	   (lambda* (#:key outputs #:allow-other-keys)
+		    (let* ((out (assoc-ref outputs "out"))
+			   (bin (string-append out "/bin")))
+		      (mkdir-p bin)
+		      (copy-file "ufbterm" (string-append bin "/ufbterm"))))))))
+      (home-page "https://github.com/newluhux/ufbterm")
+      (synopsis "Simple terminal on framebuffer")
+      (description "Simple terminal on framebuffer (WIP)")
+      (license license:expat))))
+
+ufbterm
