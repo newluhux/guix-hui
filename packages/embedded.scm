@@ -774,7 +774,7 @@ and management, dialogs, and communication tasks through its built-in scripting 
     (license #f))) ; custom license
 
 (define-public ukermit
-  (let ((commit "3d58d558d02b5482e2d4d7bbda337cdb31925ac6")
+  (let ((commit "7c9100a3471ad98bd9c8c876be716e91554400a7")
 	(revision "0"))
     (package
       (name "ukermit")
@@ -787,7 +787,7 @@ and management, dialogs, and communication tasks through its built-in scripting 
 	       (commit commit)))
          (file-name (git-file-name name version))
          (sha256
-	  (base32 "0bz98bz2wvg57hc3lf0h5xm6y3p8rkkyljggfn5m4p146dfry5jq"))))
+	  (base32 "1fvxm10vgyl23phlfng2jpvrxyfzvjgs52gs8ldcmdwri63kpw0f"))))
       (build-system gnu-build-system)
       (arguments
        `(#:tests? #f
