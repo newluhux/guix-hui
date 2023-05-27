@@ -23,7 +23,7 @@
    (simple-service 'my-environment-variables
                    home-environment-variables-service-type
                    `(("PAGER" . "less")
-                     ("EDITOR" . "emacsclient")))
+                     ("EDITOR" . "vi")))
 
    (simple-service 'my-config-file
                    home-files-service-type
