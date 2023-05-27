@@ -79,6 +79,13 @@
       (keyboard-layout keyboard-layout))
      sddm-service-type)
     (modify-services %desktop-services
-      (delete gdm-service-type))))
+      (delete gdm-service-type)
+      (guix-service-type
+       config =>
+       (guix-configuration
+        (inherit config)
+        (substitute-urls
+         (append (list "https://mirrors.sjtug.sjtu.edu.cn/guix")
+                 %default-substitute-urls)))))))
 
   (name-service-switch %mdns-host-lookup-nss))
