@@ -841,6 +841,8 @@ and management, dialogs, and communication tasks through its built-in scripting 
 		     (let* ((udev (string-append
 				   (assoc-ref outputs "out") "/lib/udev/rules.d")))
 		       (mkdir-p udev)
+                       (substitute* "contrib/61-libsigrok-plugdev.rules"
+                         (("plugdev") "dialout"))
 		       (copy-file "./contrib/60-libsigrok.rules"
 				  (string-append udev "/60-sigrok.rules"))
 		       (copy-file "./contrib/61-libsigrok-plugdev.rules"
