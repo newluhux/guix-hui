@@ -76,6 +76,9 @@
        '(:server "127.0.0.1" :port 7891 :enable t
                  :type (:@type "proxyTypeSocks5"))))
 
+;; code style
+(setq c-default-style "linux")
+
 ;; lsp mode
 (setq lsp-keymap-prefix "s-l")
 (require 'lsp-mode)
