@@ -33,6 +33,8 @@
                    `((".emacs" ,(local-file ".emacs" "emacs"))
                      (".Xdefaults" ,(local-file ".Xdefaults" "Xdefaults"))
                      (".cwmrc" ,(local-file ".cwmrc" "cwmrc"))
+                     (".clang-format" ,(local-file ".clang-format"
+							"clang-format"))
                      (".xinitrc" ,(local-file ".xinitrc" "xinitrc"
                                              #:recursive? #t)))))))
 

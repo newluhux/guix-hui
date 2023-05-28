@@ -3,7 +3,7 @@
  man linux elf code version-control
  android admin build-tools cmake
  java ccache file hexedit bison flex
- bootloaders)
+ bootloaders llvm)
 
 (load "../packages/embedded.scm")
 (load "../packages/engineering.scm")
@@ -12,9 +12,9 @@
   (list
    (list glibc "static") mandoc man-pages
    linux-libre-headers patchelf
-   gdb gcc-toolchain cscope indent
+   gdb clang-toolchain cscope indent
    git gnu-make adb fastboot xfel
-   openocd blisp bear ccls openixcard
+   openocd blisp bear openixcard
    python-extract-dtb cmake cutter-rizin
    rizin (list openjdk "jdk") abootimg
    binwalk strace ltrace perf ccache file
