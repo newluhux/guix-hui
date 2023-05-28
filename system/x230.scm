@@ -1,5 +1,5 @@
 (use-modules (gnu) (gnu system nss) (guix utils))
-(use-service-modules desktop xorg virtualization docker sddm)
+(use-service-modules desktop xorg virtualization docker sddm networking)
 (use-package-modules certs linux gnome wm radio admin embedded)
 
 (load "../packages/embedded.scm")
@@ -73,6 +73,12 @@
     (udev-rules-service 'rtl-sdr rtl-sdr)
     (udev-rules-service 'xfel xfel)
     (udev-rules-service 'openocd openocd)
+    (service tor-service-type
+             (tor-configuration
+              (config-file (plain-file "tor-config"
+                                       "\n
+HTTPTunnelPort 127.0.0.1:9250\n
+Socks5Proxy 127.0.0.1:7891\n"))))
     (service sddm-service-type)
     (set-xorg-configuration
      (xorg-configuration
