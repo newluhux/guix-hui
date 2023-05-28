@@ -3,3 +3,4 @@ XTerm*metaSendsEscape: true
 XTerm*faceName: Unifont-10
 XTerm*scrollBar: true
 XTerm*saveLines: 32768
+XTerm*inputMethod: fcitx

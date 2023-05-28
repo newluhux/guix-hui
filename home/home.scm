@@ -23,7 +23,10 @@
    (simple-service 'my-environment-variables
                    home-environment-variables-service-type
                    `(("PAGER" . "less")
-                     ("EDITOR" . "vi")))
+                     ("EDITOR" . "vi")
+                     ("XMODIFIERS" . "@im=fcitx")
+                     ("GTK_IM_MODULE" . "xim")
+                     ("QT_IM_MODULE" . "xim")))
 
    (simple-service 'my-config-file
                    home-files-service-type
