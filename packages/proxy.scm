@@ -960,21 +960,6 @@ the handle.  Changing namespaces requires elevated privileges, so in most cases
 this code needs to be run as root.")
     (license license:asl2.0)))
 
-(define-public go-golang-org-x-net-0.10.0
-  (package
-    (inherit go-golang-org-x-net)
-    (name "go-golang-org-x-net")
-    (version "0.10.0")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://go.googlesource.com/net")
-                    (commit (string-append "v" version))))
-              (file-name (git-file-name name version))
-              (sha256
-               (base32
-                "1m27i5hpk2bdljz6zk8p6270bk6yrn6n5rnynr71ff2rh18s4h8y"))))))
-
 (define-public go-github-com-dreamacro-clash
   (package
     (name "go-github-com-dreamacro-clash")
@@ -1025,7 +1010,7 @@ this code needs to be run as root.")
                          ("go-gopkg-in-yaml-v3" ,go-gopkg-in-yaml-v3)
                          ("go-golang-org-x-sys" ,go-golang-org-x-sys)
                          ("go-golang-org-x-sync" ,go-golang-org-x-sync)
-                         ("go-golang-org-x-net" ,go-golang-org-x-net-0.10.0)
+                         ("go-golang-org-x-net" ,go-golang-org-x-net)
                          ("go-golang-org-x-crypto" ,go-golang-org-x-crypto)
                          ("go-go-uber-org-automaxprocs" ,go-go-uber-org-automaxprocs)
                          ("go-go-uber-org-atomic" ,go-go-uber-org-atomic)
