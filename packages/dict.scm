@@ -58,9 +58,9 @@
       (build-system gnu-build-system)
       (arguments
        `(#:tests? #f
-	 #:make-flags (if ,(string-match "mingw" (%current-target-system))
-	       (list "-lwsock32")
-	       (list))
+	 #:make-flags (if ,(string-match "mingw" (if (%current-target-system) (%current-target-system) (%current-system)))
+	       (list "-Ofast" "-static" "-lwsock32")
+	       (list "-Ofast" "-static"))
 	 #:phases
 	 (modify-phases
 	  %standard-phases
