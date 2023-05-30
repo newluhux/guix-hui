@@ -9,7 +9,10 @@
  ((guix licenses) #:prefix license:)
  (guix utils)
  (guix download)
- (guix git-download))
+ (guix git-download)
+ (srfi srfi-26)
+ (ice-9 regex))
+
 
 (define-public stardict-ecdict
   (package
@@ -38,7 +41,7 @@
     (license license:expat)))
 
 (define-public ustardict
-  (let ((commit "c8807d4d77f2a4262e5309d08d6d2b3f8fb64d94")
+  (let ((commit "34ce566169397ce1485f7da40abf8969239cc631")
 	(revision "0"))
     (package
       (name "ustardict")
@@ -51,19 +54,23 @@
 	       (commit commit)))
          (file-name (git-file-name name version))
          (sha256
-	  (base32 "0f1inhzk42yk6xjis038mjvzy01s9adz8363q5lwydcndx11yl56"))))
+	  (base32 "1nldmkf2h3x57dfn0n3r5kwi196anw09xr09fi8y8829a0w3529r"))))
       (build-system gnu-build-system)
       (arguments
        `(#:tests? #f
-	 #:make-flags (list (string-append "CC="
-                                           ,(cc-for-target))
-                            (string-append "PREFIX="
-                                           (assoc-ref %outputs "out")))
+	 #:make-flags (if ,(string-match "mingw" (%current-target-system))
+	       (list "-lwsock32")
+	       (list))
 	 #:phases
 	 (modify-phases
 	  %standard-phases
 	  (delete 'configure)
           (delete 'strip)
+	  (replace
+           'build
+	   (lambda* (#:key make-flags #:allow-other-keys)
+		    (apply invoke ,(cc-for-target) "ustardict.c" "-o"
+			   "ustardict" make-flags)))
 	  (replace
 	      'install
 	    (lambda* (#:key outputs #:allow-other-keys)
@@ -81,3 +88,5 @@
       (synopsis "Simple stardict program")
       (description "Simple stardict program, writen by c")
       (license license:expat))))
+
+ustardict
