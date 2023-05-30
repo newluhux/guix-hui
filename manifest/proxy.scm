@@ -4,6 +4,6 @@
 (load "../packages/proxy.scm")
 
 (define-public %proxy-packages
-  (list proxychains-ng clash))
+  (list proxychains-ng go-github-com-dreamacro-clash))
 
 (packages->manifest %proxy-packages)
