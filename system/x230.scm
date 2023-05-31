@@ -7,7 +7,10 @@
 
 (operating-system
   (kernel linux-stable)
-  (kernel-loadable-modules (list rtl8812au-aircrack-ng-linux-module))
+  (kernel-loadable-modules
+   (list
+    rtl8812au-aircrack-ng-linux-module
+    ch341-i2c-spi-gpio-linux-module))
   (firmware (list linux-firmware))
   (kernel-arguments (list "modprobe.blacklist=dvb_usb_rtl28xxu"))
 

@@ -19,6 +19,6 @@
    rizin (list openjdk "jdk") abootimg
    binwalk strace ltrace perf ccache file
    bvi bison flex dtc u-boot-tools pluseview
-   ufbterm wine64 licensecheck))
+   ufbterm wine64 licensecheck mtd-utils))
 
 (packages->manifest %develop-packages)
