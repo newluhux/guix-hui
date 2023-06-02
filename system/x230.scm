@@ -95,6 +95,10 @@ Socks5Proxy 127.0.0.1:7891\n"))))
         (inherit config)
         (substitute-urls
          (append (list "https://mirrors.sjtug.sjtu.edu.cn/guix")
-                 %default-substitute-urls)))))))
+                 %default-substitute-urls))))
+      (elogind-service-type
+       config =>
+       (elogind-configuration
+        (handle-lid-switch 'ignore))))))
 
   (name-service-switch %mdns-host-lookup-nss))
