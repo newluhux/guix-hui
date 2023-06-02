@@ -57,8 +57,8 @@
   (packages
    (append
     (list
+     nss-certs le-certs
      singularity
-     gnome-tweaks
      btrfs-progs
      xinitrc-xsession)
     %base-packages))
