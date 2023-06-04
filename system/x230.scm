@@ -1,6 +1,6 @@
 (use-modules (gnu) (gnu system nss) (guix utils))
 (use-service-modules desktop xorg virtualization docker sddm networking)
-(use-package-modules certs linux gnome wm radio admin embedded)
+(use-package-modules certs linux gnome wm radio admin embedded rsync)
 
 (load "../packages/embedded.scm")
 (load "../packages/linux.scm")
@@ -59,6 +59,7 @@
     (list
      nss-certs le-certs
      singularity
+     rsync
      btrfs-progs
      xinitrc-xsession)
     %base-packages))
