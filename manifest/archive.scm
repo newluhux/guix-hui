@@ -2,6 +2,6 @@
 (use-package-modules compression)
 
 (define-public %archive-packages
-  (list unzip unrar-free p7zip))
+  (list unzip unrar-free p7zip squashfs-tools))
 
 (packages->manifest %archive-packages)
