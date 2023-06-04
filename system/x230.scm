@@ -40,7 +40,11 @@
                        (file-system
                          (device (uuid "b45765a5-9995-4147-8eae-d123775ec99b"))
                          (mount-point "/boot")
-                         (type "ext4")))
+                         (type "ext4"))
+                       (file-system
+                         (device "tmpfs")
+                         (mount-point "/tmp")
+                         (type "tmpfs")))
                  %base-file-systems))
 
   (swap-devices (list (swap-space
