@@ -1,5 +1,5 @@
 (use-modules (gnu) (gnu system nss) (guix utils))
-(use-service-modules desktop xorg virtualization docker sddm networking)
+(use-service-modules desktop xorg virtualization docker sddm networking linux)
 (use-package-modules certs linux gnome wm radio admin embedded rsync)
 
 (load "../packages/embedded.scm")
