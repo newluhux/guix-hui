@@ -40,11 +40,7 @@
                        (file-system
                          (device (uuid "b45765a5-9995-4147-8eae-d123775ec99b"))
                          (mount-point "/boot")
-                         (type "ext4"))
-                       (file-system
-                         (device "tmpfs")
-                         (mount-point "/tmp")
-                         (type "tmpfs")))
+                         (type "ext4")))
                  %base-file-systems))
 
   (swap-devices (list (swap-space
@@ -92,6 +88,11 @@ Socks5Proxy 127.0.0.1:7891\n"))))
      (xorg-configuration
       (keyboard-layout keyboard-layout))
      sddm-service-type)
+    (service zram-device-service-type
+             (zram-device-configuration
+              (size "2G")
+              (compression-algorithm 'zstd)
+              (priority 100)))
     (modify-services %desktop-services
       (delete gdm-service-type)
       (guix-service-type
