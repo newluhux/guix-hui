@@ -15,7 +15,7 @@
   (package
     (inherit linux-libre-6.3)
     (name "linux-stable")
-    (version "6.3.3")
+    (version "6.3.5")
     (source
      (origin
        (method url-fetch)
@@ -25,7 +25,7 @@
              ".tar.xz"))
        (sha256
         (base32
-         "1ra4kr9bp1s9d7amvz6ik1q3chwps5lysn37b28770pfdim22xc9"))))))
+         "0pl2zypsmrnna69850jadccffxwg9xdfkldg0sv8m44b7n64gkgm"))))))
 
 (define-public linux-firmware
   (package
