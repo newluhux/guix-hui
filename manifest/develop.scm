@@ -3,7 +3,7 @@
  man linux elf code version-control
  android admin build-tools cmake
  java ccache file hexedit bison flex
- bootloaders llvm wine license)
+ bootloaders llvm wine license disk)
 
 (load "../packages/embedded.scm")
 (load "../packages/engineering.scm")
@@ -19,6 +19,6 @@
    rizin (list openjdk "jdk") abootimg
    binwalk strace ltrace perf ccache file
    bvi bison flex dtc u-boot-tools pluseview
-   ufbterm wine64 licensecheck mtd-utils))
+   ufbterm wine64 licensecheck mtd-utils bmaptools))
 
 (packages->manifest %develop-packages)
