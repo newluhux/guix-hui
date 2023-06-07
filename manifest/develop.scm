@@ -1,7 +1,7 @@
 (use-modules (gnu) (guix profiles))
 (use-package-modules
  man linux elf code version-control
- android admin build-tools cmake
+ android admin build-tools cmake haskell-apps
  java ccache file hexedit bison flex
  bootloaders llvm wine license disk)
 
@@ -13,7 +13,7 @@
    (list glibc "static") mandoc man-pages
    linux-libre-headers patchelf
    gdb clang-toolchain cscope indent
-   git gnu-make adb fastboot xfel
+   git gnu-make adb fastboot xfel shellcheck
    openocd blisp bear openixcard
    python-extract-dtb cmake cutter-rizin
    rizin (list openjdk "jdk") abootimg
