@@ -730,15 +730,20 @@ or for construction of DLLs and libraries.")
     (license license:bsd-3)))
 
 (define-public ckermit
-  (package
+  (let ((commit "64ae06b6eab943b78b75de8e65282017fcf9b759")
+        (revision "0"))
+      (package
     (name "ckermit")
-    (version "9.0.302")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append "http://www.columbia.edu/kermit/ftp/archives/cku302.tar.gz"))
-              (sha256
-               (base32
-                "06r7vrhmi76qvg30bynqfpyq958j8xwsjvrmm25k72q6w0gqihx7"))))
+    (version (git-version "0" revision commit))
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url "https://github.com/KermitProject/ckermit")
+	     (commit commit)))
+       (file-name (git-file-name name version))
+       (sha256
+	(base32 "00xnavdvpjq4w34a518cp2jm0h3na4a0zsdld41sg5hj7qx52ixi"))))
     (build-system gnu-build-system)
     (inputs (list ncurses))
     (arguments
@@ -771,7 +776,7 @@ or for construction of DLLs and libraries.")
  transport-independent, cross-platform approach to connection establishment, terminal sessions, file transfer,
 file management, character-set translation, numeric and alphanumeric paging, and automation of file transfer
 and management, dialogs, and communication tasks through its built-in scripting language.")
-    (license #f))) ; custom license
+    (license #f)))) ; custom license
 
 (define-public ukermit
   (let ((commit "7c9100a3471ad98bd9c8c876be716e91554400a7")
