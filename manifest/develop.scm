@@ -2,7 +2,7 @@
 (use-package-modules
  man linux elf code version-control
  android admin build-tools cmake haskell-apps
- java ccache file hexedit bison flex
+ java ccache file hexedit bison flex hexedit
  bootloaders llvm wine license disk)
 
 (load "../packages/embedded.scm")
@@ -18,7 +18,7 @@
    python-extract-dtb cmake cutter-rizin
    rizin (list openjdk "jdk") abootimg
    binwalk strace ltrace perf ccache file
-   bvi bison flex dtc u-boot-tools pluseview
+   bvi bison flex dtc u-boot-tools pluseview hexedit
    ufbterm wine64 licensecheck mtd-utils bmaptools))
 
 (packages->manifest %develop-packages)
