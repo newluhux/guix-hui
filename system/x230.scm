@@ -1,6 +1,6 @@
 (use-modules (gnu) (gnu system nss) (guix utils))
 (use-service-modules desktop xorg virtualization docker sddm networking linux)
-(use-package-modules certs linux gnome wm radio admin embedded rsync)
+(use-package-modules certs linux gnome wm radio admin embedded rsync shells)
 
 (load "../packages/embedded.scm")
 (load "../packages/linux.scm")
@@ -50,6 +50,7 @@
                 (name "luhui")
                 (comment "Lu Hui")
                 (group "users")
+                (shell (file-append zsh "/bin/zsh"))
                 (supplementary-groups '("wheel" "netdev" "cdrom" "docker"
                                         "audio" "video" "dialout" "kvm")))
                %base-user-accounts))
