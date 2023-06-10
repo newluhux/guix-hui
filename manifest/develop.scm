@@ -2,7 +2,7 @@
 (use-package-modules
  man linux elf code version-control
  android admin build-tools cmake haskell-apps
- java ccache file hexedit bison flex hexedit
+ java ccache file hexedit bison flex hexedit scheme
  bootloaders llvm wine license disk shells shellutils)
 
 (load "../packages/embedded.scm")
@@ -20,6 +20,6 @@
    binwalk strace ltrace perf ccache file
    bvi bison flex dtc u-boot-tools pluseview hexedit
    ufbterm wine64 licensecheck mtd-utils bmaptools
-   zsh zsh-completions))
+   zsh zsh-completions sicp))
 
 (packages->manifest %develop-packages)
