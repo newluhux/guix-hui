@@ -1,0 +1,221 @@
+From 2a502d86616c4c0d15263eaa363b3efdc71d3963 Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Sat, 10 Jun 2023 00:07:02 +0800
+Subject: [PATCH] gnu: riscv64-unknown-elf-toolchain: New Variable
+
+* gnu/packages/embedded.scm (riscv64-unknown-elf-toolchain): New Variable.
+---
+ gnu/packages/embedded.scm | 186 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 186 insertions(+)
+
+diff --git a/gnu/packages/embedded.scm b/gnu/packages/embedded.scm
+index 215007dd31..701bf6bff8 100644
+--- a/gnu/packages/embedded.scm
++++ b/gnu/packages/embedded.scm
+@@ -12,6 +12,7 @@
+ ;;; Copyright © 2021 Morgan Smith <Morgan.J.Smith@outlook.com>
+ ;;; Copyright © 2022 Mathieu Othacehe <othacehe@gnu.org>
+ ;;; Copyright © 2022 Maxim Cournoyer <maxim.cournoyer@gmail.com>
++;;; Copyright © 2023 Lu Hui <luhux76@gmail.com>
+ ;;;
+ ;;; This file is part of GNU Guix.
+ ;;;
+@@ -49,6 +50,7 @@ (define-module (gnu packages embedded)
+   #:use-module (gnu packages boost)
+   #:use-module (gnu packages check)
+   #:use-module (gnu packages compression)
++  #:use-module (gnu packages commencement)
+   #:use-module (gnu packages cross-base)
+   #:use-module (gnu packages dejagnu)
+   #:use-module (gnu packages flex)
+@@ -1745,3 +1747,187 @@ (define-public ts4900-utils
+ @item tssilomon
+ @end itemize")
+       (license license:bsd-2))))
++
++(define-public riscv64-unknown-elf-binutils
++  (let ((xbinutils (cross-binutils "riscv64-unknown-elf")))
++    (package
++      (inherit xbinutils)
++      (name "riscv64-unknown-elf-binutils")
++      (arguments
++       `(,@(substitute-keyword-arguments (package-arguments xbinutils)
++             ((#:configure-flags flags)
++              `(cons "--enable-multilib" ,flags))))))))
++
++(define-public riscv64-unknown-elf-gcc
++  (let ((xgcc (cross-gcc "riscv64-unknown-elf"
++                         #:xbinutils riscv64-unknown-elf-binutils)))
++    (package
++      (inherit xgcc)
++      (name "riscv64-unknown-elf-gcc")
++      (arguments
++       (substitute-keyword-arguments (package-arguments xgcc)
++         ((#:phases phases)
++          #~(modify-phases #$phases
++              (add-after 'set-paths 'augment-CPLUS_INCLUDE_PATH
++                (lambda* (#:key inputs #:allow-other-keys)
++                  (let ((gcc (assoc-ref inputs  "gcc")))
++                    ;; Remove the default compiler from CPLUS_INCLUDE_PATH to
++                    ;; prevent header conflict with the GCC from native-inputs.
++                    (setenv "CPLUS_INCLUDE_PATH"
++                            (string-join
++                             (delete (string-append gcc "/include/c++")
++                                     (string-split (getenv "CPLUS_INCLUDE_PATH")
++                                                   #\:))
++                             ":"))
++                    (format #t
++                            "environment variable `CPLUS_INCLUDE_PATH' changed to ~a~%"
++                            (getenv "CPLUS_INCLUDE_PATH")))))
++              (add-after 'unpack 'fix-genmultilib
++                (lambda _
++                  (substitute* "gcc/genmultilib"
++                    (("#!/bin/sh") (string-append "#!" (which "sh"))))))))
++         ((#:configure-flags flags)
++          #~(append (list "--enable-multilib"
++                          "--with-newlib"
++                          "--with-host-libstdcxx=-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm"
++                          "--enable-plugins"
++                          "--disable-decimal-float"
++                          "--disable-libffi"
++                          "--disable-libgomp"
++                          "--disable-libmudflap"
++                          "--disable-libquadmath"
++                          "--disable-libssp"
++                          "--disable-libstdcxx-pch"
++                          "--disable-nls"
++                          "--disable-shared"
++                          "--disable-threads"
++                          "--disable-tls")
++                    (delete "--disable-multilib" #$flags)))))
++      (native-search-paths
++       (list (search-path-specification
++              (variable "CROSS_C_INCLUDE_PATH")
++              (files '("riscv64-unknown-elf/include")))
++             (search-path-specification
++              (variable "CROSS_CPLUS_INCLUDE_PATH")
++              (files '("riscv64-unknown-elf/include"
++                       "riscv64-unknown-elf/include/c++"
++                       "riscv64-unknown-elf/include/c++/riscv64-unknown-elf")))
++             (search-path-specification
++              (variable "CROSS_LIBRARY_PATH")
++              (files '("riscv64-unknown-elf/lib"))))))))
++
++(define-public riscv64-unknown-elf-newlib
++  (let ((commit "e301a74a6f111df4553b50b813a589589d1708b1")
++        (revision "0"))
++    (package
++      (inherit newlib-arm-none-eabi)
++      (name "riscv64-unknown-elf-newlib")
++      (version (git-version "0" revision commit))
++      (source
++       (origin
++         (method git-fetch)
++         (uri (git-reference
++               (url "http://sourceware.org/git/newlib-cygwin.git")
++               (commit commit)))
++         (file-name (git-file-name "newlib" commit))
++         (sha256
++          (base32
++           "0ylibsavxqbwnl6yqxql3j2dzax843wahy93fncqlnmm3cfnz9i0"))))
++      (arguments
++       `(#:out-of-source? #t
++         #:configure-flags '("--target=riscv64-unknown-elf"
++                             "--enable-multilib"
++                             "--enable-newlib-io-long-long"
++                             "--enable-newlib-io-c99-formats"
++                             "--enable-newlib-register-fini"
++                             "--enable-newlib-retargetable-locking"
++                             "--disable-newlib-supplied-syscalls"
++                             "--disable-nls")))
++      (native-inputs
++       `(("xbinutils" ,(cross-binutils "riscv64-unknown-elf"))
++         ("xgcc" ,riscv64-unknown-elf-gcc)
++         ("texinfo" ,texinfo))))))
++
++(define-public riscv64-unknown-elf-newlib-nano
++  (package (inherit riscv64-unknown-elf-newlib)
++           (name "riscv64-unknown-elf-newlib-nano")
++           (arguments
++            `(#:out-of-source? #t
++              #:configure-flags
++              '("--target=riscv64-unknown-elf"
++                "--enable-multilib"
++                "--disable-newlib-supplied-syscalls"
++                "--enable-newlib-reent-small"
++                "--disable-newlib-fvwrite-in-streamio"
++                "--disable-newlib-fseek-optimization"
++                "--disable-newlib-wide-orient"
++                "--enable-newlib-nano-malloc"
++                "--disable-newlib-unbuf-stream-opt"
++                "--enable-lite-exit"
++                "--enable-newlib-global-atexit"
++                "--enable-newlib-nano-formatted-io"
++                "--disable-nls")
++              #:phases
++              (modify-phases %standard-phases
++                (delete 'strip)
++                (add-after 'install 'hardlink-newlib
++                  (lambda* (#:key outputs #:allow-other-keys)
++                    (let ((out (assoc-ref outputs "out")))
++                      ;; The nano.specs file says that newlib-nano files should end
++                      ;; in "_nano.a" instead of just ".a".  Note that this applies
++                      ;; to all the multilib folders too.
++                      (for-each
++                       (lambda (file)
++                         (link
++                          file
++                          (string-append
++                           ;; Strip ".a" off the end
++                           (substring file 0 (- (string-length file) 2))
++                           ;; Add "_nano.a" onto the end
++                           "_nano.a")))
++                       (find-files
++                        out
++                        "^(libc.a|libm.a|libg.a|libgloss.a|libsemihost.a|libnosys.a|librdimon.a|libstdc\\+\\+.a|libsupc\\+\\+.a)$"))
++                      (mkdir-p (string-append out "/riscv64-unknown-elf/include/newlib-nano"))
++                      (symlink
++                       "../newlib.h"
++                       (string-append out "/riscv64-unknown-elf/include/newlib-nano/newlib.h"))
++                      #t))))))
++           (synopsis "Newlib variant for small systems with limited memory")))
++
++(define-public riscv64-unknown-elf-gdb
++  (package
++    (inherit gdb)
++    (name "riscv64-unknown-elf-gdb")
++    (arguments
++     `(#:configure-flags '("--target=riscv64-unknown-elf"
++                           "--enable-multilib"
++                           "--enable-interwork"
++                           "--enable-languages=c,c++"
++                           "--disable-nls")
++       ,@(package-arguments gdb)))))
++
++(define-public riscv64-unknown-elf-toolchain
++  (package
++    (name "riscv64-unknown-elf-toolchain")
++    (version (package-version riscv64-unknown-elf-gcc))
++    (source #f)
++    (build-system trivial-build-system)
++    (propagated-inputs
++     (list riscv64-unknown-elf-binutils riscv64-unknown-elf-gcc
++           riscv64-unknown-elf-newlib riscv64-unknown-elf-newlib-nano))
++    (arguments
++     '(#:modules ((guix build union))
++       #:builder
++       (begin
++         (use-modules (ice-9 match)
++                      (guix build union))
++         (match %build-inputs
++           (((names . directories) ...)
++            (union-build (assoc-ref %outputs "out")
++                         directories)
++            #t)))))
++    (home-page (package-home-page gcc-toolchain))
++    (synopsis (package-synopsis gcc-toolchain))
++    (description (package-description gcc-toolchain))
++    (license (package-license gcc-toolchain))))
+-- 
+2.40.1
+
