@@ -1,9 +1,13 @@
-(use-modules (gnu) (gnu system nss) (guix utils))
+(use-modules
+ (gnu)
+ (gnu system nss)
+ (guix utils)
+ (hui packages embedded)
+ (hui services proxy)
+ (hui packages linux)
+ (hui packages proxy))
 (use-service-modules desktop xorg virtualization docker sddm networking linux)
 (use-package-modules certs linux gnome wm radio admin embedded rsync shells)
-
-(load "../packages/embedded.scm")
-(load "../packages/linux.scm")
 
 (operating-system
   (kernel-loadable-modules
@@ -53,6 +57,9 @@
 
   (services
    (cons*
+    (service clash-service-type
+             (clash-configuration
+              (config-file "/etc/clash/config.yaml")))
     (service docker-service-type)
     (service singularity-service-type)
     (service qemu-binfmt-service-type

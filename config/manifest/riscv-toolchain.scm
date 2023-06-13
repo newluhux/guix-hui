@@ -1,6 +1,5 @@
-(use-modules (guix profiles))
+(use-modules (guix profiles) (hui packages embedded))
 
-(load "../packages/embedded.scm")
 (define-public %riscv-toolchain
   (list
    riscv64-unknown-elf-toolchain

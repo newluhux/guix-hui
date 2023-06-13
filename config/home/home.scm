@@ -1,8 +1,9 @@
-(use-modules (gnu home)
-             (gnu home services)
-             (gnu home services shells)
-             (gnu services)
-             (guix gexp))
+(use-modules
+ (gnu home)
+ (gnu home services)
+ (gnu home services shells)
+ (gnu services)
+ (guix gexp))
 
 (load "../manifest/x230.scm")
 
@@ -19,7 +20,7 @@
                 ("GTK_IM_MODULE" . "xim")
                 ("QT_IM_MODULE" . "xim")))
              (zshrc
-               (list (local-file ".zshrc" "zshrc")))))
+              (list (local-file ".zshrc" "zshrc")))))
 
    (simple-service 'my-config-file
                    home-files-service-type
@@ -27,7 +28,7 @@
                      (".Xdefaults" ,(local-file ".Xdefaults" "Xdefaults"))
                      (".cwmrc" ,(local-file ".cwmrc" "cwmrc"))
                      (".clang-format" ,(local-file ".clang-format"
-							"clang-format"))
+						   "clang-format"))
                      (".xinitrc" ,(local-file ".xinitrc" "xinitrc"
-                                             #:recursive? #t)))))))
+                                              #:recursive? #t)))))))
 

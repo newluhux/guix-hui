@@ -1,12 +1,11 @@
-(use-modules (gnu) (guix profiles))
+(use-modules (gnu) (guix profiles)
+ (hui packages embedded)
+ (hui packages engineering))
 (use-package-modules
- man linux elf code version-control
- android admin build-tools cmake haskell-apps
- java ccache file hexedit bison flex hexedit scheme
+ man linux elf code version-control gdb embedded
+ engineering android admin build-tools cmake haskell-apps
+ java ccache file hexedit bison flex hexedit scheme python-xyz
  bootloaders llvm wine license disk shells shellutils)
-
-(load "../packages/embedded.scm")
-(load "../packages/engineering.scm")
 
 (define-public %develop-packages
   (list

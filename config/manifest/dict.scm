@@ -1,6 +1,4 @@
-(use-modules (gnu) (guix profiles))
-
-(load "../packages/dict.scm")
+(use-modules (gnu) (guix profiles) (hui packages dict))
 
 (define-public %dict-packages
   (list ustardict stardict-ecdict))

@@ -1,7 +1,5 @@
-(use-modules (gnu) (guix profiles))
+(use-modules (gnu) (guix profiles) (hui packages telegram))
 (use-package-modules image-viewers xdisorg video linux kde-multimedia)
-
-(load "../packages/telegram.scm")
 
 (define-public %media-packages
   (list

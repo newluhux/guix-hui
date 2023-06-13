@@ -1,18 +1,21 @@
-(use-modules
- (gnu services)
- (gnu services configuration)
- (gnu services shepherd)
- (gnu system shadow)
- ((gnu system file-systems) #:select (file-system-mapping))
- (gnu build linux-container)
- (guix least-authority)
- (guix gexp)
- (guix modules)
- (guix packages)
- (guix records)
- (ice-9 match))
-
-(load "../packages/proxy.scm")
+(define-module (hui services proxy)
+  #:use-module (gnu services)
+  #:use-module (gnu services configuration)
+  #:use-module (gnu services shepherd)
+  #:use-module (gnu packages admin)
+  #:use-module (hui packages proxy)
+  #:use-module (gnu system shadow)
+  #:use-module ((gnu system file-systems) #:select (file-system-mapping))
+  #:use-module (gnu build linux-container)
+  #:autoload   (guix least-authority) (least-authority-wrapper)
+  #:use-module (guix gexp)
+  #:use-module (guix modules)
+  #:use-module (guix packages)
+  #:use-module (guix records)
+  #:use-module (ice-9 match)
+  #:export (clash-configuration
+            clash-configuration?
+            clash-service-type))
 
 (define %clash-accounts
   (list
@@ -32,7 +35,7 @@
   clash-configuration?
   (package clash-configuration-clash
            (default go-github-com-dreamacro-clash))
-  (config-file clash-configuration-file
+  (config-file clash-configuration-config-file
                (default #f)))
 
 (define clash-shepherd-service
@@ -71,8 +74,8 @@
             (list
              #$clash
              #$@(if config-file
-                    `("-f" config-file)
-                    '()))
+                    (list "-f" config-file)
+                    (list)))
             #:user "clash" #:group "clash"))
         (stop #~(make-kill-destructor))
         (respawn? #t))))))
@@ -87,7 +90,7 @@
           (mkdir-p directory)
           (chown directory (passwd:uid user) (passwd:gid user))))))
 
-(define-public clash-service-type
+(define clash-service-type
   (service-type
    (name 'clash)
    (description "clash daemon")

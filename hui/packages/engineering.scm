@@ -1,15 +1,14 @@
-(use-modules
- (gnu)
- (gnu packages)
- (gnu packages engineering)
- (gnu packages qt)
- (gnu packages tls)
- (guix packages)
- (guix build-system cmake)
- (guix gexp)
- ((guix licenses) #:prefix license:)
- (guix utils)
- (guix download))
+(define-module (hui packages engineering)
+  #:use-module (gnu packages)
+  #:use-module (gnu packages engineering)
+  #:use-module (gnu packages qt)
+  #:use-module (gnu packages tls)
+  #:use-module (guix packages)
+  #:use-module (guix build-system cmake)
+  #:use-module (guix gexp)
+  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (guix utils)
+  #:use-module (guix download))
 
 (define-public cutter-rizin
   (package

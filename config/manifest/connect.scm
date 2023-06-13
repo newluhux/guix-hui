@@ -1,7 +1,5 @@
-(use-modules (gnu) (guix profiles))
+(use-modules (gnu) (guix profiles) (hui packages embedded))
 (use-package-modules ssh terminals admin screen tmux networking)
-
-(load "../packages/embedded.scm")
 
 (define-public %connect-packages
   (list
