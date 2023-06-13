@@ -8,7 +8,6 @@
 (operating-system
   (kernel-loadable-modules
    (list
-    rtl8812au-aircrack-ng-linux-module
     ch341-i2c-spi-gpio-linux-module))
   (kernel-arguments (list "modprobe.blacklist=dvb_usb_rtl28xxu"))
 
@@ -68,9 +67,7 @@
     (service tor-service-type
              (tor-configuration
               (config-file (plain-file "tor-config"
-                                       "\n
-HTTPTunnelPort 127.0.0.1:9250\n
-Socks5Proxy 127.0.0.1:7891\n"))))
+                                       "Socks5Proxy 127.0.0.1:7891\n"))))
     (service sddm-service-type)
     (set-xorg-configuration
      (xorg-configuration
