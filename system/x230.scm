@@ -6,12 +6,10 @@
 (load "../packages/linux.scm")
 
 (operating-system
-  (kernel linux-stable)
   (kernel-loadable-modules
    (list
     rtl8812au-aircrack-ng-linux-module
     ch341-i2c-spi-gpio-linux-module))
-  (firmware (list linux-firmware))
   (kernel-arguments (list "modprobe.blacklist=dvb_usb_rtl28xxu"))
 
   (host-name "x230")
@@ -25,22 +23,11 @@
                (targets '("/dev/sda"))
                (keyboard-layout keyboard-layout)))
 
-  (mapped-devices
-   (list (mapped-device
-          (source (uuid "dd506c9b-ae0b-40dc-a3bd-9677a7410e53"))
-          (target "x230-root")
-          (type luks-device-mapping))))
-
   (file-systems (append
                  (list (file-system
-                         (device (uuid "0765e38f-ca19-4d8e-af99-3299f8ccfdf0"))
+                         (device (uuid "d3b00ed3-660d-48c5-92ea-aa1e883bb02f"))
                          (mount-point "/")
-                         (type "btrfs")
-                         (dependencies mapped-devices))
-                       (file-system
-                         (device (uuid "b45765a5-9995-4147-8eae-d123775ec99b"))
-                         (mount-point "/boot")
-                         (type "ext4")))
+                         (type "btrfs")))
                  %base-file-systems))
 
   (swap-devices (list (swap-space
