@@ -31,14 +31,16 @@
      `(#:import-path "github.com/Dreamacro/protobytes"
        #:go ,go-1.20
        #:tests? #f))
-    (propagated-inputs `(("go-gopkg-in-yaml-v3" ,go-gopkg-in-yaml-v3)
-                         ("go-github-com-pmezard-go-difflib" ,go-github-com-pmezard-go-difflib)
-                         ("go-github-com-davecgh-go-spew" ,go-github-com-davecgh-go-spew)
-                         ("go-github-com-stretchr-testify" ,go-github-com-stretchr-testify)))
+    (propagated-inputs
+     `(("go-gopkg-in-yaml-v3" ,go-gopkg-in-yaml-v3)
+       ("go-github-com-pmezard-go-difflib" ,go-github-com-pmezard-go-difflib)
+       ("go-github-com-davecgh-go-spew" ,go-github-com-davecgh-go-spew)
+       ("go-github-com-stretchr-testify" ,go-github-com-stretchr-testify)))
     (home-page "https://github.com/Dreamacro/protobytes")
-    (synopsis #f)
-    (description #f)
-    (license #f)))
+    (synopsis "Protobytes is a Go library inspired by Rust's crate bytes. ")
+    (description "provides a series of methods for big-endian and little-endian
+number operations")
+    (license #f))) ; have not license in this project
 
 (define-public go-github-com-go-chi-cors
   (package
@@ -59,8 +61,8 @@
     (home-page "https://github.com/go-chi/cors")
     (synopsis "CORS net/http middleware")
     (description
-     "cors package is net/http handler to handle CORS related requests as defined by
-@@url{http://www.w3.org/TR/cors/,http://www.w3.org/TR/cors/}")
+     "cors package is net/http handler to handle CORS related requests as
+defined by @@url{http://www.w3.org/TR/cors/,http://www.w3.org/TR/cors/}")
     (license license:expat)))
 
 (define-public go-github-com-go-chi-render
@@ -81,9 +83,11 @@
      '(#:import-path "github.com/go-chi/render"))
     (propagated-inputs `(("go-github-com-ajg-form" ,go-github-com-ajg-form)))
     (home-page "https://github.com/go-chi/render")
-    (synopsis "render")
+    (synopsis "easily manage HTTP request / response payloads of Go HTTP
+services")
     (description
-     "The @@code{render} package helps manage HTTP request / response payloads.")
+     "The @@code{render} package helps manage HTTP request / response
+payloads.")
     (license license:expat)))
 
 (define-public go-github-com-gofrs-uuid-v5
@@ -103,7 +107,8 @@
     (arguments
      '(#:import-path "github.com/gofrs/uuid/v5"))
     (home-page "https://github.com/gofrs/uuid")
-    (synopsis "UUID")
+    (synopsis "Package uuid provides a pure Go implementation of Universally
+Unique Identifiers (UUID) variant as defined in RFC-4122.")
     (description
      "Package uuid provides implementations of the Universally Unique Identifier
 (UUID), as specified in RFC-4122 and the Peabody RFC Draft (revision 03).")
@@ -127,10 +132,9 @@
      '(#:import-path "github.com/fanliao/go-promise"
        #:tests? #f))
     (home-page "https://github.com/fanliao/go-promise")
-    (synopsis "Installation")
+    (synopsis "A library implement futrue and promise ")
     (description
-     "Package promise provides a complete promise and future implementation.  A quick
-start sample:")
+     "Package promise provides a complete promise and future implementation.")
     (license license:expat)))
 
 (define-public go-github-com-hugelgupf-socketpair
@@ -150,9 +154,11 @@ start sample:")
     (arguments
      '(#:import-path "github.com/hugelgupf/socketpair"))
     (home-page "https://github.com/hugelgupf/socketpair")
-    (synopsis "socketpair")
-    (description
-     "Package socketpair provides bidirectionally connected net.Conns.")
+    (synopsis "socketpair is currently mostly used in testing Go protocol
+libraries.")
+    (description "socketpair is a Go library that provides bidirectionally
+connected net.Conns, net.PacketConns made from socketpair(2) as well as
+bidirectionally connected net.TCPConns.")
     (license license:bsd-3)))
 
 (define-public go-github-com-cilium-ebpf
@@ -180,8 +186,10 @@ start sample:")
                          ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)
                          ("go-github-com-frankban-quicktest" ,go-github-com-frankban-quicktest)))
     (home-page "https://github.com/cilium/ebpf")
-    (synopsis "eBPF")
-    (description "Package ebpf is a toolkit for working with eBPF programs.")
+    (synopsis "ebpf-go is a pure Go library that provides utilities for
+loading, compiling, and debugging eBPF programs.")
+    (description "It has minimal external dependencies and is intended to be
+used in long running processes.")
     (license license:expat)))
 
 (define-public go-github-com-jsimonetti-rtnetlink
@@ -201,21 +209,23 @@ start sample:")
     (arguments
      `(#:import-path "github.com/jsimonetti/rtnetlink"
        #:go ,go-1.20))
-    (propagated-inputs `(("go-golang-org-x-sync" ,go-golang-org-x-sync)
-                         ("go-golang-org-x-net" ,go-golang-org-x-net)
-                         ("go-github-com-mdlayher-socket" ,go-github-com-mdlayher-socket)
-                         ("go-github-com-josharian-native" ,go-github-com-josharian-native)
-                         ("go-golang-org-x-sys" ,go-golang-org-x-sys)
-                         ("go-github-com-mdlayher-netlink" ,go-github-com-mdlayher-netlink)
-                         ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)
-                         ("go-github-com-cilium-ebpf" ,go-github-com-cilium-ebpf)))
+    (propagated-inputs
+     `(("go-golang-org-x-sync" ,go-golang-org-x-sync)
+       ("go-golang-org-x-net" ,go-golang-org-x-net)
+       ("go-github-com-mdlayher-socket" ,go-github-com-mdlayher-socket)
+       ("go-github-com-josharian-native" ,go-github-com-josharian-native)
+       ("go-golang-org-x-sys" ,go-golang-org-x-sys)
+       ("go-github-com-mdlayher-netlink" ,go-github-com-mdlayher-netlink)
+       ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)
+       ("go-github-com-cilium-ebpf" ,go-github-com-cilium-ebpf)))
     (home-page "https://github.com/jsimonetti/rtnetlink")
-    (synopsis "rtnetlink")
+    (synopsis "Package rtnetlink allows the kernel's routing tables to be read
+and altered.")
     (description
-     "Package rtnetlink allows the kernel's routing tables to be read and altered.
-Network routes, IP addresses, Link parameters, Neighbor setups, Queueing
-disciplines, Traffic classes and Packet classifiers may all be controlled.  It
-is based on netlink messages.")
+     "Package rtnetlink allows the kernel's routing tables to be read and
+altered. Network routes, IP addresses, Link parameters, Neighbor setups,
+Queueing, disciplines, Traffic classes and Packet classifiers may all be
+controlled.  It is based on netlink messages.")
     (license license:expat)))
 
 (define-public go-github-com-mdlayher-packet
@@ -236,14 +246,15 @@ is based on netlink messages.")
      `(#:import-path "github.com/mdlayher/packet"
        #:go ,go-1.20
        #:tests? #f))
-    (propagated-inputs `(("go-golang-org-x-sync" ,go-golang-org-x-sync)
-                         ("go-golang-org-x-sys" ,go-golang-org-x-sys)
-                         ("go-golang-org-x-net" ,go-golang-org-x-net)
-                         ("go-github-com-mdlayher-socket" ,go-github-com-mdlayher-socket)
-                         ("go-github-com-josharian-native" ,go-github-com-josharian-native)
-                         ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)))
+    (propagated-inputs
+     `(("go-golang-org-x-sync" ,go-golang-org-x-sync)
+       ("go-golang-org-x-sys" ,go-golang-org-x-sys)
+       ("go-golang-org-x-net" ,go-golang-org-x-net)
+       ("go-github-com-mdlayher-socket" ,go-github-com-mdlayher-socket)
+       ("go-github-com-josharian-native" ,go-github-com-josharian-native)
+       ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)))
     (home-page "https://github.com/mdlayher/packet")
-    (synopsis "packet")
+    (synopsis "Package packet provides access to Linux packet sockets")
     (description
      "Package packet provides access to Linux packet sockets (AF_PACKET).")
     (license license:expat)))
@@ -265,8 +276,8 @@ is based on netlink messages.")
     (arguments
      '(#:import-path "github.com/jtolds/gls"))
     (home-page "https://github.com/jtolds/gls")
-    (synopsis "gls")
-    (description "Package gls implements goroutine-local storage.")
+    (synopsis "Package gls implements goroutine-local storage.")
+    (description "")
     (license license:expat)))
 
 (define-public go-github-com-smartystreets-assertions
