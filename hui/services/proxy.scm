@@ -75,7 +75,8 @@
              #$clash
              #$@(if config-file
                     (list "-f" config-file)
-                    (list)))
+                    (list))
+             "-d" "/var/lib/clash/.config/clash/")
             #:user "clash" #:group "clash"))
         (stop #~(make-kill-destructor))
         (respawn? #t))))))
