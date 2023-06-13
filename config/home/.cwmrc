@@ -1,7 +1,0 @@
-fontname unifont-10
-
-command terminal xterm
-command scrot "scrot -s"
-command icecat icecat
-command chromium chromium
-command emacsclient "emacsclient -c"
