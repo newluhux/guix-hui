@@ -36,11 +36,13 @@
   (package clash-configuration-clash
            (default go-github-com-dreamacro-clash))
   (config-file clash-configuration-config-file
-               (default #f)))
+               (default #f))
+  (data-dir clash-configuration-data-dir
+            (default "/var/lib/clash/")))
 
 (define clash-shepherd-service
   (match-lambda
-    (($ <clash-configuration> package config-file)
+    (($ <clash-configuration> package config-file data-dir)
      (let ((clash
             (least-authority-wrapper
              (file-append package "/bin/clash")
@@ -55,7 +57,7 @@
                              (list))
                          (list
                           (file-system-mapping
-                           (source "/var/lib/clash")
+                           (source data-dir)
                            (target source)
                            (writable? #t))))
              #:namespaces
@@ -76,7 +78,7 @@
              #$@(if config-file
                     (list "-f" config-file)
                     (list))
-             "-d" "/var/lib/clash/.config/clash/")
+             "-d" #$data-dir)
             #:user "clash" #:group "clash"))
         (stop #~(make-kill-destructor))
         (respawn? #t))))))
