@@ -3,6 +3,7 @@
   #:use-module (gnu packages golang)
   #:use-module (gnu packages syncthing)
   #:use-module (gnu packages databases)
+  #:use-module (gnu packages check)
   #:use-module (guix packages)
   #:use-module (guix build-system copy)
   #:use-module (guix build-system go)
@@ -85,8 +86,7 @@ defined by @@url{http://www.w3.org/TR/cors/,http://www.w3.org/TR/cors/}")
     (synopsis "easily manage HTTP request / response payloads of Go HTTP
 services")
     (description
-     "The @@code{render} package helps manage HTTP request / response
-payloads.")
+     "offering a few simple helpers and interfaces to provide a simple pattern for managing payload encoding and decoding.")
     (license license:expat)))
 
 (define-public go-github-com-gofrs-uuid-v5
@@ -106,11 +106,17 @@ payloads.")
     (arguments
      '(#:import-path "github.com/gofrs/uuid/v5"))
     (home-page "https://github.com/gofrs/uuid")
-    (synopsis "Package uuid provides a pure Go implementation of Universally
-Unique Identifiers (UUID) variant as defined in RFC-4122.")
+    (synopsis "Golang UUID implementation (RFC-4122)")
     (description
-     "Package uuid provides implementations of the Universally Unique Identifier
-(UUID), as specified in RFC-4122 and the Peabody RFC Draft (revision 03).")
+     "provides a pure Go implementation of Universally Unique Identifiers (UUID)
+variant as defined in RFC-4122.
+This package supports the following UUID versions:
+
+    Version 1, based on timestamp and MAC address (RFC-4122)
+    Version 3, based on MD5 hashing of a named value (RFC-4122)
+    Version 4, based on random numbers (RFC-4122)
+    Version 5, based on SHA-1 hashing of a named value (RFC-4122)
+")
     (license license:expat)))
 
 (define-public go-github-com-fanliao-go-promise
@@ -185,10 +191,9 @@ bidirectionally connected net.TCPConns.")
                          ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)
                          ("go-github-com-frankban-quicktest" ,go-github-com-frankban-quicktest)))
     (home-page "https://github.com/cilium/ebpf")
-    (synopsis "ebpf-go is a pure Go library that provides utilities for
+    (synopsis "provide some utils for eBPF programs")
+    (description "ebpf-go is a pure Go library that provides utilities for
 loading, compiling, and debugging eBPF programs.")
-    (description "It has minimal external dependencies and is intended to be
-used in long running processes.")
     (license license:expat)))
 
 (define-public go-github-com-jsimonetti-rtnetlink
@@ -218,8 +223,7 @@ used in long running processes.")
        ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)
        ("go-github-com-cilium-ebpf" ,go-github-com-cilium-ebpf)))
     (home-page "https://github.com/jsimonetti/rtnetlink")
-    (synopsis "Package rtnetlink allows the kernel's routing tables to be read
-and altered.")
+    (synopsis "read and altered kernel's routing tables")
     (description
      "Package rtnetlink allows the kernel's routing tables to be read and
 altered. Network routes, IP addresses, Link parameters, Neighbor setups,
@@ -253,58 +257,9 @@ controlled.  It is based on netlink messages.")
        ("go-github-com-josharian-native" ,go-github-com-josharian-native)
        ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)))
     (home-page "https://github.com/mdlayher/packet")
-    (synopsis "Package packet provides access to Linux packet sockets")
+    (synopsis "access to Linux packet sockets")
     (description
-     "Package packet provides access to Linux packet sockets (AF_PACKET).")
-    (license license:expat)))
-
-(define-public go-github-com-jtolds-gls
-  (package
-    (name "go-github-com-jtolds-gls")
-    (version "v4.20.0")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/jtolio/gls")
-                    (commit (go-version->git-ref version))))
-              (file-name (git-file-name name version))
-              (sha256
-               (base32
-                "1k7xd2q2ysv2xsh373qs801v6f359240kx0vrl0ydh7731lngvk6"))))
-    (build-system go-build-system)
-    (arguments
-     '(#:import-path "github.com/jtolds/gls"))
-    (home-page "https://github.com/jtolds/gls")
-    (synopsis "Package gls implements goroutine-local storage.")
-    (description "")
-    (license license:expat)))
-
-(define-public go-github-com-smartystreets-assertions
-  (package
-    (name "go-github-com-smartystreets-assertions")
-    (version "1.13.1")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/smartystreets/assertions")
-                    (commit (string-append "v" version))))
-              (file-name (git-file-name name version))
-              (sha256
-               (base32
-                "02jkx1xi6y7zfqhzk1pkrpxn5fcv5fh7lw6q7pn9vfj8zsjfd7l3"))))
-    (build-system go-build-system)
-    (arguments
-     `(#:import-path "github.com/smartystreets/assertions"
-       #:go ,go-1.20))
-    (home-page "https://github.com/smartystreets/assertions")
-    (synopsis
-     "SMARTY DISCLAIMER: Subject to the terms of the associated license agreement, this software is freely available for your use. This software is FREE, AS IN PUPPIES, and is a gift. Enjoy your new responsibility. This means that while we may consider enhancement requests, we may or may not choose to entertain requests at our sole and absolute discretion.")
-    (description
-     "Package assertions contains the implementations for all assertions which are
-referenced in goconvey's `convey` package
-(github.com/smartystreets/goconvey/convey) and gunit
-(github.com/smartystreets/gunit) for use with the So(...) method.  They can also
-be used in traditional Go test functions and even in applications.")
+     "This package provides access to Linux packet sockets (AF_PACKET) in Go")
     (license license:expat)))
 
 (define-public go-github-com-neelance-astrewrite
@@ -367,8 +322,8 @@ be used in traditional Go test functions and even in applications.")
      `(#:import-path "github.com/shurcooL/go/browser"
        #:unpack-path "github.com/shurcooL/go"))
     (home-page "https://github.com/shurcooL/go")
-    (synopsis "go")
-    (description "Common Go code.")
+    (synopsis "Open web browser in Go")
+    (description "Open web browser by xdg-open or other method")
     (license license:expat)))
 
 (define-public go-github-com-shurcool-go-gddo
@@ -377,7 +332,9 @@ be used in traditional Go test functions and even in applications.")
     (name "go-github-com-shurcool-go-vfs")
     (arguments
      `(#:import-path "github.com/shurcooL/go/gddo"
-       #:unpack-path "github.com/shurcooL/go"))))
+       #:unpack-path "github.com/shurcooL/go"))
+    (synopsis "library for accessing godoc.org")
+    (description "Simple client library for access godoc.org API")))
 
 (define-public go-github-com-shurcool-httpfs-filter
   (package
@@ -398,10 +355,11 @@ be used in traditional Go test functions and even in applications.")
        #:unpack-path "github.com/shurcooL/httpfs"
        #:tests? #f))
     (home-page "https://github.com/shurcooL/httpfs")
-    (synopsis "httpfs")
+    (synopsis "some wrapper for http.FileSystem")
     (description
-     "Collection of Go packages for working with the
-@@url{https://godoc.org/net/http#FileSystem,(code http.FileSystem)} interface.")
+     "some wrapper for htpp.FilSystem provode:
+1. keep or skip files
+2. io utility function")
     (license license:expat)))
 
 (define-public go-github-com-shurcool-httpfs-vfsutil
@@ -430,8 +388,8 @@ be used in traditional Go test functions and even in applications.")
     (arguments
      '(#:import-path "github.com/inconshreveable/mousetrap"))
     (home-page "https://github.com/inconshreveable/mousetrap")
-    (synopsis "mousetrap")
-    (description "mousetrap is a tiny library that answers a single question.")
+    (synopsis "tiny library use for answer a single question")
+    (description "Only for Windows, but some Go library need this")
     (license license:asl2.0)))
 
 (define-public go-github-com-shurcool-vfsgen
@@ -454,10 +412,16 @@ be used in traditional Go test functions and even in applications.")
      '(#:import-path "github.com/shurcooL/vfsgen"
        #:tests? #f))
     (home-page "https://github.com/shurcooL/vfsgen")
-    (synopsis "vfsgen")
+    (synopsis "takes an http.FileSystem and generates Go code that statically implements the provided http.FileSystem.")
     (description
-     "Package vfsgen takes an http.FileSystem (likely at `go generate` time) and
-generates Go code that statically implements the provided http.FileSystem.")
+     "Features:
+1..Efficient generated code without unneccessary overhead.
+2.Uses gzip compression internally (selectively, only for files that
+compress well).
+3.Enables direct access to internal gzip compressed bytes via an optional
+interface.
+4.Outputs gofmted Go code.
+")
     (license license:expat)))
 
 (define-public go-github-com-gopherjs-gopherjs
@@ -478,22 +442,32 @@ generates Go code that statically implements the provided http.FileSystem.")
      '(#:import-path "github.com/gopherjs/gopherjs"))
     (propagated-inputs `(("go-golang-org-x-xerrors" ,go-golang-org-x-xerrors)
                          ("go-golang-org-x-term" ,go-golang-org-x-term)
-                         ("go-github-com-sirupsen-logrus" ,go-github-com-sirupsen-logrus)
-                         ("go-github-com-shurcool-vfsgen" ,go-github-com-shurcool-vfsgen)
-                         ("go-github-com-inconshreveable-mousetrap" ,go-github-com-inconshreveable-mousetrap)
-                         ("go-golang-org-x-tools" ,go-golang-org-x-tools)
+                         ("go-github-com-sirupsen-logrus"
+                          ,go-github-com-sirupsen-logrus)
+                         ("go-github-com-shurcool-vfsgen"
+                          ,go-github-com-shurcool-vfsgen)
+                         ("go-github-com-inconshreveable-mousetrap"
+                          ,go-github-com-inconshreveable-mousetrap)
+                         ("go-golang-org-x-tools",go-golang-org-x-tools)
                          ("go-golang-org-x-sys" ,go-golang-org-x-sys)
                          ("go-golang-org-x-sync" ,go-golang-org-x-sync)
                          ("go-golang-org-x-crypto" ,go-golang-org-x-crypto)
-                         ("go-github-com-spf13-pflag" ,go-github-com-spf13-pflag)
-                         ("go-github-com-spf13-cobra" ,go-github-com-spf13-cobra)
+                         ("go-github-com-spf13-pflag"
+                          ,go-github-com-spf13-pflag)
+                         ("go-github-com-spf13-cobra"
+                          ,go-github-com-spf13-cobra)
                          ("go-github-com-shurcool-httpfs-filter"
                           ,go-github-com-shurcool-httpfs-filter)
-                         ("go-github-com-shurcool-go-browser" ,go-github-com-shurcool-go-browser)
-                         ("go-github-com-neelance-sourcemap" ,go-github-com-neelance-sourcemap)
-                         ("go-github-com-neelance-astrewrite" ,go-github-com-neelance-astrewrite)
-                         ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)
-                         ("go-github-com-fsnotify-fsnotify" ,go-github-com-fsnotify-fsnotify)))
+                         ("go-github-com-shurcool-go-browser"
+                          ,go-github-com-shurcool-go-browser)
+                         ("go-github-com-neelance-sourcemap"
+                          ,go-github-com-neelance-sourcemap)
+                         ("go-github-com-neelance-astrewrite"
+                          ,go-github-com-neelance-astrewrite)
+                         ("go-github-com-google-go-cmp"
+                          ,go-github-com-google-go-cmp)
+                         ("go-github-com-fsnotify-fsnotify"
+                          ,go-github-com-fsnotify-fsnotify)))
     (home-page "https://github.com/gopherjs/gopherjs")
     (synopsis "GopherJS - A compiler from Go to JavaScript")
     (description
@@ -501,39 +475,6 @@ generates Go code that statically implements the provided http.FileSystem.")
 JavaScript code.  Its main purpose is to give you the opportunity to write
 front-end code in Go which will still run in all browsers.")
     (license license:bsd-2)))
-
-(define-public go-github-com-smartystreets-goconvey
-  (package
-    (name "go-github-com-smartystreets-goconvey")
-    (version "1.8.0")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/smartystreets/goconvey")
-                    (commit (string-append "v" version))))
-              (file-name (git-file-name name version))
-              (sha256
-               (base32
-                "1fyg66mpza18f3x9inh9hnxnr86py83sqnav3s8airdf66nyh1r6"))))
-    (build-system go-build-system)
-    (arguments
-     `(#:import-path "github.com/smartystreets/goconvey"
-       #:go ,go-1.20))
-    (propagated-inputs `(("go-golang-org-x-sys" ,go-golang-org-x-sys)
-                         ("go-golang-org-x-mod" ,go-golang-org-x-mod)
-                         ("go-github-com-gopherjs-gopherjs" ,go-github-com-gopherjs-gopherjs)
-                         ("go-golang-org-x-tools" ,go-golang-org-x-tools)
-                         ("go-github-com-smartystreets-assertions" ,go-github-com-smartystreets-assertions)
-                         ("go-github-com-jtolds-gls" ,go-github-com-jtolds-gls)))
-    (home-page "https://github.com/smartystreets/goconvey")
-    (synopsis
-     "SMARTY DISCLAIMER: Subject to the terms of the associated license agreement, this software is freely available for your use. This software is FREE, AS IN PUPPIES, and is a gift. Enjoy your new responsibility. This means that while we may consider enhancement requests, we may or may not choose to entertain requests at our sole and absolute discretion.")
-    (description
-     "This executable provides an HTTP server that watches for file system changes to
-.go files within the working directory (and all nested go packages).  Navigating
-to the configured host and port in a web browser will display the latest results
-of running `go test` in each go package.")
-    (license license:expat)))
 
 (define-public go-github-com-insomniacslk-dhcp-dhcpv4
   (package
@@ -555,29 +496,45 @@ of running `go test` in each go package.")
        #:go ,go-1.20))
     (propagated-inputs `(("go-gopkg-in-yaml-v3" ,go-gopkg-in-yaml-v3)
                          ("go-golang-org-x-sync" ,go-golang-org-x-sync)
-                         ("go-github-com-stretchr-objx" ,go-github-com-stretchr-objx)
-                         ("go-github-com-smartystreets-goconvey" ,go-github-com-smartystreets-goconvey)
-                         ("go-github-com-pmezard-go-difflib" ,go-github-com-pmezard-go-difflib)
-                         ("go-github-com-pierrec-lz4-v4" ,go-github-com-pierrec-lz4-v4)
-                         ("go-github-com-mdlayher-socket" ,go-github-com-mdlayher-socket)
-                         ("go-github-com-josharian-native" ,go-github-com-josharian-native)
-                         ("go-github-com-davecgh-go-spew" ,go-github-com-davecgh-go-spew)
+                         ("go-github-com-stretchr-objx"
+                          ,go-github-com-stretchr-objx)
+                         ("go-github.com-smartystreets-goconvey"
+                          ,go-github.com-smartystreets-goconvey)
+                         ("go-github-com-pmezard-go-difflib"
+                          ,go-github-com-pmezard-go-difflib)
+                         ("go-github-com-pierrec-lz4-v4"
+                          ,go-github-com-pierrec-lz4-v4)
+                         ("go-github-com-mdlayher-socket"
+                          ,go-github-com-mdlayher-socket)
+                         ("go-github-com-josharian-native"
+                          ,go-github-com-josharian-native)
+                         ("go-github-com-davecgh-go-spew"
+                          ,go-github-com-davecgh-go-spew)
                          ("go-golang-org-x-sys" ,go-golang-org-x-sys)
                          ("go-golang-org-x-net" ,go-golang-org-x-net)
-                         ("go-github-com-u-root-uio-rand" ,go-github-com-u-root-uio-rand)
-                         ("go-github-com-u-root-uio-uio" ,go-github-com-u-root-uio-uio)
-                         ("go-github-com-stretchr-testify" ,go-github-com-stretchr-testify)
-                         ("go-github-com-mdlayher-packet" ,go-github-com-mdlayher-packet)
-                         ("go-github-com-mdlayher-netlink" ,go-github-com-mdlayher-netlink)
-                         ("go-github-com-jsimonetti-rtnetlink" ,go-github-com-jsimonetti-rtnetlink)
-                         ("go-github-com-hugelgupf-socketpair" ,go-github-com-hugelgupf-socketpair)
-                         ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)
-                         ("go-github-com-fanliao-go-promise" ,go-github-com-fanliao-go-promise)))
+                         ("go-github-com-u-root-uio-rand"
+                          ,go-github-com-u-root-uio-rand)
+                         ("go-github-com-u-root-uio-uio"
+                          ,go-github-com-u-root-uio-uio)
+                         ("go-github-com-stretchr-testify"
+                          ,go-github-com-stretchr-testify)
+                         ("go-github-com-mdlayher-packet"
+                          ,go-github-com-mdlayher-packet)
+                         ("go-github-com-mdlayher-netlink"
+                          ,go-github-com-mdlayher-netlink)
+                         ("go-github-com-jsimonetti-rtnetlink"
+                          ,go-github-com-jsimonetti-rtnetlink)
+                         ("go-github-com-hugelgupf-socketpair"
+                          ,go-github-com-hugelgupf-socketpair)
+                         ("go-github-com-google-go-cmp"
+                          ,go-github-com-google-go-cmp)
+                         ("go-github-com-fanliao-go-promise"
+                          ,go-github-com-fanliao-go-promise)))
     (home-page "https://github.com/insomniacslk/dhcp")
-    (synopsis "dhcp")
+    (synopsis "implementation of DHCPv4 packet, client and server")
     (description
-     "DHCPv4 and DHCPv6 decoding/encoding library with client and server code, written
-in Go.")
+     "DHCPv4 decoding/encoding library with client and server code,
+written in Go.")
     (license license:bsd-3)))
 
 (define-public go-github-com-insomniacslk-dhcp-iana
@@ -587,7 +544,10 @@ in Go.")
     (arguments
      `(#:import-path "github.com/insomniacslk/dhcp/iana"
        #:unpack-path "github.com/insomniacslk/dhcp/"
-       #:go ,go-1.20))))
+       #:go ,go-1.20))
+    (synopsis "several IANA constants and helpers")
+    (description
+     "several IANA constants, and helpers used by dhcpv6 and dhcpv4")))
 
 (define-public go-github-com-insomniacslk-dhcp-interfaces
   (package
@@ -596,7 +556,10 @@ in Go.")
     (arguments
      `(#:import-path "github.com/insomniacslk/dhcp/interfaces"
        #:unpack-path "github.com/insomniacslk/dhcp/"
-       #:go ,go-1.20))))
+       #:go ,go-1.20))
+    (synopsis "wrappers around network interfaces")
+    (description
+     "a thin layer of wrappers around network interfaces")))
 
 (define-public go-github-com-insomniacslk-dhcp-rfc1035label
   (package
@@ -605,7 +568,10 @@ in Go.")
     (arguments
      `(#:import-path "github.com/insomniacslk/dhcp/rfc1035label"
        #:unpack-path "github.com/insomniacslk/dhcp/"
-       #:go ,go-1.20))))
+       #:go ,go-1.20))
+    (synopsis "simple implementation of RFC1035 labels")
+    (description
+     "simple implementation of RFC1035 labels, used by dhcpv6 and dhcpv4")))
 
 (define-public go-github-com-mdlayher-netlink
   (package
@@ -628,13 +594,17 @@ in Go.")
     (propagated-inputs `(("go-golang-org-x-sync" ,go-golang-org-x-sync)
                          ("go-golang-org-x-sys" ,go-golang-org-x-sys)
                          ("go-golang-org-x-net" ,go-golang-org-x-net)
-                         ("go-github-com-mdlayher-socket" ,go-github-com-mdlayher-socket)
-                         ("go-github-com-josharian-native" ,go-github-com-josharian-native)
-                         ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)))
+                         ("go-github-com-mdlayher-socket"
+                          ,go-github-com-mdlayher-socket)
+                         ("go-github-com-josharian-native"
+                          ,go-github-com-josharian-native)
+                         ("go-github-com-google-go-cmp"
+                          ,go-github-com-google-go-cmp)))
     (home-page "https://github.com/mdlayher/netlink")
-    (synopsis "netlink")
+    (synopsis "provide low-level access to Linux netlink sockets in Go")
     (description
-     "Package netlink provides low-level access to Linux netlink sockets (AF_NETLINK).")
+     "Package netlink provides low-level access to Linux netlink sockets
+(AF_NETLINK).")
     (license license:expat)))
 
 (define-public go-github-com-miekg-dns
@@ -660,12 +630,13 @@ in Go.")
                          ("go-golang-org-x-sync" ,go-golang-org-x-sync)
                          ("go-golang-org-x-net" ,go-golang-org-x-net)))
     (home-page "https://github.com/miekg/dns")
-    (synopsis "Alternative (more granular) approach to a DNS library")
+    (synopsis "DNS library for Go")
     (description
-     "Package dns implements a full featured interface to the Domain Name System.
-Both server- and client-side programming is supported.  The package allows
-complete control over what is sent out to the DNS. The API follows the
-less-is-more principle, by presenting a small, clean interface.")
+     "Complete and usable DNS library. All Resource Records are supported,
+including the DNSSEC types. It follows a lean and mean philosophy.
+If there is stuff you should know as a DNS programmer there isn't a
+convenience function for it. Server side and client side programming
+is supported, i.e. you can build servers and resolvers with it.")
     (license license:bsd-3)))
 
 (define-public go-github-com-samber-lo
@@ -1005,33 +976,48 @@ this code needs to be run as root.")
                          ("go-golang-org-x-text" ,go-golang-org-x-text)
                          ("go-golang-org-x-mod" ,go-golang-org-x-mod)
                          ("go-golang-org-x-exp" ,go-golang-org-x-exp)
-                         ("go-github-com-vishvananda-netns" ,go-github-com-vishvananda-netns)
-                         ("go-github-com-u-root-uio-uio" ,go-github-com-u-root-uio-uio)
-                         ("go-github-com-pmezard-go-difflib" ,go-github-com-pmezard-go-difflib)
-                         ("go-github-com-pierrec-lz4-v4" ,go-github-com-pierrec-lz4-v4)
+                         ("go-github-com-vishvananda-netns"
+                          ,go-github-com-vishvananda-netns)
+                         ("go-github-com-u-root-uio-uio"
+                          ,go-github-com-u-root-uio-uio)
+                         ("go-github-com-pmezard-go-difflib"
+                          ,go-github-com-pmezard-go-difflib)
+                         ("go-github-com-pierrec-lz4-v4"
+                          ,go-github-com-pierrec-lz4-v4)
                          ("go-github-com-oschwald-maxminddb-golang"
                           ,go-github-com-oschwald-maxminddb-golang)
-                         ("go-github-com-mdlayher-socket" ,go-github-com-mdlayher-socket)
+                         ("go-github-com-mdlayher-socket"
+                          ,go-github-com-mdlayher-socket)
                          ("go-github-com-kr-text" ,go-github-com-kr-text)
-                         ("go-github-com-josharian-native" ,go-github-com-josharian-native)
-                         ("go-github-com-google-go-cmp" ,go-github-com-google-go-cmp)
-                         ("go-github-com-davecgh-go-spew" ,go-github-com-davecgh-go-spew)
+                         ("go-github-com-josharian-native"
+                          ,go-github-com-josharian-native)
+                         ("go-github-com-google-go-cmp"
+                          ,go-github-com-google-go-cmp)
+                         ("go-github-com-davecgh-go-spew"
+                          ,go-github-com-davecgh-go-spew)
                          ("go-github-com-ajg-form" ,go-github-com-ajg-form)
                          ("go-gopkg-in-yaml-v3" ,go-gopkg-in-yaml-v3)
                          ("go-golang-org-x-sys" ,go-golang-org-x-sys)
                          ("go-golang-org-x-sync" ,go-golang-org-x-sync)
                          ("go-golang-org-x-net" ,go-golang-org-x-net)
                          ("go-golang-org-x-crypto" ,go-golang-org-x-crypto)
-                         ("go-go-uber-org-automaxprocs" ,go-go-uber-org-automaxprocs)
+                         ("go-go-uber-org-automaxprocs"
+                          ,go-go-uber-org-automaxprocs)
                          ("go-go-uber-org-atomic" ,go-go-uber-org-atomic)
                          ("go-go-etcd-io-bbolt" ,go-go-etcd-io-bbolt)
-                         ("go-github-com-vishvananda-netlink" ,go-github-com-vishvananda-netlink)
-                         ("go-github-com-stretchr-testify" ,go-github-com-stretchr-testify)
-                         ("go-github-com-sirupsen-logrus" ,go-github-com-sirupsen-logrus)
-                         ("go-github-com-samber-lo" ,go-github-com-samber-lo)
-                         ("go-github-com-oschwald-geoip2-golang" ,go-github-com-oschwald-geoip2-golang)
+                         ("go-github-com-vishvananda-netlink"
+                          ,go-github-com-vishvananda-netlink)
+                         ("go-github-com-stretchr-testify"
+                          ,go-github-com-stretchr-testify)
+                         ("go-github-com-sirupsen-logrus"
+                          ,go-github-com-sirupsen-logrus)
+                         ("go-github-com-samber-lo"
+                          ,go-github-com-samber-lo)
+                         ("go-github-com-oschwald-geoip2-golang"
+                          ,go-github-com-oschwald-geoip2-golang)
                          ("go-github-com-miekg-dns" ,go-github-com-miekg-dns)
-                         ("go-github-com-mdlayher-netlink" ,go-github-com-mdlayher-netlink)
+                         ("go-github-com-mdlayher-netlink"
+                          ,go-github-com-mdlayher-netlink)
                          ("go-github-com-insomniacslk-dhcp-dhcpv4"
                           ,go-github-com-insomniacslk-dhcp-dhcpv4)
                          ("go-github-com-insomniacslk-dhcp-iana"
@@ -1040,12 +1026,18 @@ this code needs to be run as root.")
                           ,go-github-com-insomniacslk-dhcp-interfaces)
                          ("go-github-com-insomniacslk-dhcp-rfc1035label"
                           ,go-github-com-insomniacslk-dhcp-rfc1035label)
-                         ("go-github-com-gorilla-websocket" ,go-github-com-gorilla-websocket)
-                         ("go-github-com-gofrs-uuid-v5" ,go-github-com-gofrs-uuid-v5)
-                         ("go-github-com-go-chi-render" ,go-github-com-go-chi-render)
-                         ("go-github-com-go-chi-cors" ,go-github-com-go-chi-cors)
-                         ("go-github-com-go-chi-chi-v5" ,go-github-com-go-chi-chi-v5)
-                         ("go-github-com-dreamacro-protobytes" ,go-github-com-dreamacro-protobytes)))
+                         ("go-github-com-gorilla-websocket"
+                          ,go-github-com-gorilla-websocket)
+                         ("go-github-com-gofrs-uuid-v5"
+                          ,go-github-com-gofrs-uuid-v5)
+                         ("go-github-com-go-chi-render"
+                          ,go-github-com-go-chi-render)
+                         ("go-github-com-go-chi-cors"
+                          ,go-github-com-go-chi-cors)
+                         ("go-github-com-go-chi-chi-v5"
+                          ,go-github-com-go-chi-chi-v5)
+                         ("go-github-com-dreamacro-protobytes"
+                          ,go-github-com-dreamacro-protobytes)))
     (home-page "https://github.com/Dreamacro/clash")
     (synopsis "Features")
     (description
@@ -1053,3 +1045,4 @@ this code needs to be run as root.")
     (license license:gpl3)))
 
 go-github-com-dreamacro-clash
+
