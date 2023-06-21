@@ -8,7 +8,8 @@
   #:use-module (guix build-system linux-module)
   #:use-module (guix git-download)
   #:use-module ((guix licenses) #:prefix licenses:)
-  #:use-module (guix download))
+  #:use-module (guix download)
+  #:use-module (srfi srfi-1))
 
 (define-public ch341-i2c-spi-gpio-linux-module
   (let ((commit "e90d2300535bcab9c26e938cf9dd4ca7672dfb0a")
@@ -50,3 +51,29 @@
       (description "The CH341 is declined in several flavors, and may support
 one or more of UART, SPI, I2C and GPIO.")
       (license licenses:gpl2))))
+
+;; not working, need pack thead xuantie toolchain
+(define-public linux-lpi4a
+  (let ((commit "7a1ebd4adb2fbf73db0c6d0ce114b2fff7a4f7bb")
+        (revision "0"))
+    (package
+      (inherit linux-libre-riscv64-generic)
+      (name "linux-lpi4a")
+      (version (git-version "0.0.0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/revyos/thead-kernel")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0g0y3a5v0shilbs9274ryhqrxs8y42bbv7ygcnb927ysvqrd8bw7"))))
+      (native-inputs
+       `(("kconfig" ,(local-file "aux-files/lpi4a.config"))
+         ,@(alist-delete "kconfig"
+                         (package-native-inputs
+                          linux-libre-riscv64-generic)))))))
+
+linux-lpi4a
