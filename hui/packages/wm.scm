@@ -15,8 +15,14 @@
        #:make-flags
        (list
         (string-append "CC=" ,(cc-for-target))
-        (string-append "PREFIX=" (assoc-ref %outputs "out"))
-        (string-append "CFLAGS=" "-DWAYLAND -lxcb -lxcb-icccm")) ; enable xwayland
+        (string-append "PREFIX=" (assoc-ref %outputs "out")))
        #:phases
        (modify-phases %standard-phases
-         (delete 'configure))))))
+         (delete 'configure)
+         (add-before 'build 'enable-xwayland
+           (lambda _
+             (substitute* "config.mk"
+               (("^XWAYLAND = $") "")
+               (("^XLIB = $") "")
+               (("^#XWAYLAND") "XWAYLAND")
+               (("^#XLIBS") "XLIBS")))))))))
