@@ -4,12 +4,24 @@
   #:use-module (guix packages)
   #:use-module (guix gexp)
   #:use-module (guix utils)
+  #:use-module (guix git-download)
   #:use-module (guix build-system gnu))
 
 (define-public dwl-hui
   (package
     (inherit dwl)
     (name "dwl-hui")
+    (version "0.4")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/djpohly/dwl")
+                    (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "0pj0h3zd2f60hxpavpmgzid1sj7hf9m5cgclbackljqq4gpwlvir"))
+              (patches (list (local-file "aux-files/dwl/0001-config.def.h-default-use-floating-layout.patch")))))
     (arguments
      `(#:tests? #f                      ; no tests
        #:make-flags

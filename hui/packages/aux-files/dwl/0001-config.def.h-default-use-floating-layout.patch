@@ -1,0 +1,37 @@
+From 9ff9267c4c4b7de839c4b7c4b2a743ef901140e9 Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Fri, 23 Jun 2023 10:44:11 +0800
+Subject: [PATCH] config.def.h: default use floating layout
+
+---
+ config.def.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index 447ba00..fa64497 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -21,8 +21,8 @@ static const Rule rules[] = {
+ /* layout(s) */
+ static const Layout layouts[] = {
+ 	/* symbol     arrange function */
+-	{ "[]=",      tile },
+ 	{ "><>",      NULL },    /* no layout function means floating behavior */
++	{ "[]=",      tile },
+ 	{ "[M]",      monocle },
+ };
+ 
+@@ -120,8 +120,8 @@ static const Key keys[] = {
+ 	{ MODKEY,                    XKB_KEY_Return,     zoom,           {0} },
+ 	{ MODKEY,                    XKB_KEY_Tab,        view,           {0} },
+ 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_C,          killclient,     {0} },
+-	{ MODKEY,                    XKB_KEY_t,          setlayout,      {.v = &layouts[0]} },
+-	{ MODKEY,                    XKB_KEY_f,          setlayout,      {.v = &layouts[1]} },
++	{ MODKEY,                    XKB_KEY_f,          setlayout,      {.v = &layouts[0]} },
++	{ MODKEY,                    XKB_KEY_t,          setlayout,      {.v = &layouts[1]} },
+ 	{ MODKEY,                    XKB_KEY_m,          setlayout,      {.v = &layouts[2]} },
+ 	{ MODKEY,                    XKB_KEY_space,      setlayout,      {0} },
+ 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_space,      togglefloating, {0} },
+-- 
+2.40.1
+
