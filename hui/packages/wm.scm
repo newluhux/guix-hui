@@ -33,8 +33,12 @@
          (delete 'configure)
          (add-before 'build 'enable-xwayland
            (lambda _
+             (substitute* "config.def.h"
+               (("\"foot\"") "\"sakura\""))
              (substitute* "config.mk"
                (("^XWAYLAND = $") "")
                (("^XLIB = $") "")
                (("^#XWAYLAND") "XWAYLAND")
                (("^#XLIBS") "XLIBS")))))))))
+
+dwl-hui
