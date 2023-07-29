@@ -5,6 +5,7 @@
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system python)
   #:use-module (guix build-system trivial)
+  #:use-module (guix build-system cargo)
   #:use-module (guix git-download)
   #:use-module (guix download)
   #:use-module ((guix licenses) #:prefix license:)
@@ -40,7 +41,10 @@
   #:use-module (gnu packages documentation)
   #:use-module (gnu packages boost)
   #:use-module (gnu packages qt)
-  #:use-module (gnu packages ncurses))
+  #:use-module (gnu packages ncurses)
+  #:use-module (gnu packages crates-io)
+  #:use-module (gnu packages crates-graphics)
+  #:use-module (gnu packages shells))
 
 (define-public gkermit
   (package
@@ -850,3 +854,405 @@ decoders over the sample data (either from hardware or loaded from files). ")
       (synopsis "Simple terminal on framebuffer")
       (description "Simple terminal on framebuffer (WIP)")
       (license license:expat))))
+
+(define-public rust-syn-2
+  (package
+    (name "rust-syn")
+    (version "2.0.27")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "syn" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1q25pa0d0i66dnq5b9c1vbr3bm4nlmkayzb5ijf5n9d88hznf3xn"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-proc-macro2" ,rust-proc-macro2-1)
+                       ("rust-quote" ,rust-quote-1)
+                       ("rust-unicode-ident" ,rust-unicode-ident-1))))
+    (home-page "https://github.com/dtolnay/syn")
+    (synopsis "Parser for Rust source code")
+    (description "Parser for Rust source code")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-quote-1
+  (package
+    (name "rust-quote")
+    (version "1.0.32")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "quote" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "0rarx33n4sp7ihsiasrjip5qxh01f5sn80daxc6m885pryfb7wsh"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-proc-macro2" ,rust-proc-macro2-1))))
+    (home-page "https://github.com/dtolnay/quote")
+    (synopsis "Quasi-quoting macro quote!(...)")
+    (description "Quasi-quoting macro quote!(...)")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-proc-macro2-1
+  (package
+    (name "rust-proc-macro2")
+    (version "1.0.66")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "proc-macro2" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1ngawak3lh5p63k5x2wk37qy65q1yylk1phwhbmb5pcv7zdk3yqq"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-unicode-ident" ,rust-unicode-ident-1))))
+    (home-page "https://github.com/dtolnay/proc-macro2")
+    (synopsis
+     "A substitute implementation of the compiler's `proc_macro` API to decouple token-based libraries from the procedural macro use case.")
+    (description
+     "This package provides a substitute implementation of the compiler's `proc_macro`
+API to decouple token-based libraries from the procedural macro use case.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-thiserror-impl-1
+  (package
+    (name "rust-thiserror-impl")
+    (version "1.0.44")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "thiserror-impl" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "15nwh6qfwxlwimgij1p6ajb377p4rlvvc6sx7amiz11h959rh089"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-proc-macro2" ,rust-proc-macro2-1)
+                       ("rust-quote" ,rust-quote-1)
+                       ("rust-syn" ,rust-syn-2))))
+    (home-page "https://github.com/dtolnay/thiserror")
+    (synopsis "Implementation detail of the `thiserror` crate")
+    (description "Implementation detail of the `thiserror` crate")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-thiserror-1
+  (package
+    (name "rust-thiserror")
+    (version "1.0.44")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "thiserror" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "143zzmardcq447va2pw09iq9rajvr48v340riljghf84iah40431"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-thiserror-impl" ,rust-thiserror-impl-1))))
+    (home-page "https://github.com/dtolnay/thiserror")
+    (synopsis "derive(Error)")
+    (description "derive(Error)")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-simplelog-0.12
+  (package
+    (name "rust-simplelog")
+    (version "0.12.1")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "simplelog" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "0sa3hjdifxhcb9lnlg549fr2cc7vz89nygwbih2dbqsx3h20ivmc"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-ansi-term" ,rust-ansi-term-0.12)
+                       ("rust-log" ,rust-log-0.4)
+                       ("rust-paris" ,rust-paris-1)
+                       ("rust-termcolor" ,rust-termcolor-1)
+                       ("rust-time" ,rust-time-0.3))))
+    (home-page "https://github.com/drakulix/simplelog.rs")
+    (synopsis "A simple and easy-to-use logging facility for Rust's log crate")
+    (description
+     "This package provides a simple and easy-to-use logging facility for Rust's log
+crate")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-libusb1-sys-0.6
+  (package
+    (name "rust-libusb1-sys")
+    (version "0.6.4")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "libusb1-sys" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "09sznaf1lkahb6rfz2j0zbrcm2viz1d1wl8qlk4z4ia2rspy5l7r"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-cc" ,rust-cc-1)
+                       ("rust-libc" ,rust-libc-0.2)
+                       ("rust-pkg-config" ,rust-pkg-config-0.3)
+                       ("rust-vcpkg" ,rust-vcpkg-0.2))))
+    (home-page "https://github.com/a1ien/rusb")
+    (synopsis "FFI bindings for libusb.")
+    (description "FFI bindings for libusb.")
+    (license license:expat)))
+
+(define-public rust-rusb-0.9
+  (package
+    (name "rust-rusb")
+    (version "0.9.2")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "rusb" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1lf5hpvka5rr19bpww3mk8gi75xkr54gl79cf6za7cgr2ilw7a24"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-libc" ,rust-libc-0.2)
+                       ("rust-libusb1-sys" ,rust-libusb1-sys-0.6))))
+    (home-page "https://github.com/a1ien/rusb")
+    (synopsis "Rust library for accessing USB devices.")
+    (description "Rust library for accessing USB devices.")
+    (license license:expat)))
+
+(define-public rust-wasmparser-0.102
+  (package
+    (name "rust-wasmparser")
+    (version "0.102.0")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "wasmparser" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "0jqh6p7w5kng9vz1k1bblwfx6l4fbnqr2sxgksmik0jrszils4s8"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-indexmap" ,rust-indexmap-1)
+                       ("rust-url" ,rust-url-2))))
+    (home-page
+     "https://github.com/bytecodealliance/wasm-tools/tree/main/crates/wasmparser")
+    (synopsis
+     "A simple event-driven library for parsing WebAssembly binary files.
+")
+    (description
+     "This package provides a simple event-driven library for parsing
+@code{WebAssembly} binary files.")
+    (license (list license:asl2.0))))
+
+(define-public rust-ruzstd-0.3
+  (package
+    (name "rust-ruzstd")
+    (version "0.3.1")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "ruzstd" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1zkz8s4ws2h1ccmjrlm22v0hm31klqimvzll6hgw5npry1hyc5cs"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-byteorder" ,rust-byteorder-1)
+                       ("rust-thiserror" ,rust-thiserror-1)
+                       ("rust-twox-hash" ,rust-twox-hash-1))))
+    (home-page "https://github.com/KillingSpark/zstd-rs")
+    (synopsis "A decoder for the zstd compression format")
+    (description
+     "This package provides a decoder for the zstd compression format")
+    (license license:expat)))
+
+(define-public rust-hashbrown-0.13
+  (package
+    (name "rust-hashbrown")
+    (version "0.13.2")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "hashbrown" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "03ji3n19j4b6mf2wlla81vsixcmlivglp6hgk79d1pcxfcrw38s3"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-ahash" ,rust-ahash-0.8)
+                       ("rust-bumpalo" ,rust-bumpalo-3)
+                       ("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
+                       ("rust-rayon" ,rust-rayon-1)
+                       ("rust-rustc-std-workspace-alloc" ,rust-rustc-std-workspace-alloc-1)
+                       ("rust-rustc-std-workspace-core" ,rust-rustc-std-workspace-core-1)
+                       ("rust-serde" ,rust-serde-1))))
+    (home-page "https://github.com/rust-lang/hashbrown")
+    (synopsis "A Rust port of Google's SwissTable hash map")
+    (description
+     "This package provides a Rust port of Google's @code{SwissTable} hash map")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-object-0.31
+  (package
+    (name "rust-object")
+    (version "0.31.1")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "object" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1lb670wallm2i6rzrx2hz1afya4bfjzz6n9zhfw52l1bkxyndnlb"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
+                       ("rust-crc32fast" ,rust-crc32fast-1)
+                       ("rust-flate2" ,rust-flate2-1)
+                       ("rust-hashbrown" ,rust-hashbrown-0.13)
+                       ("rust-indexmap" ,rust-indexmap-1)
+                       ("rust-memchr" ,rust-memchr-2)
+                       ("rust-rustc-std-workspace-alloc" ,rust-rustc-std-workspace-alloc-1)
+                       ("rust-rustc-std-workspace-core" ,rust-rustc-std-workspace-core-1)
+                       ("rust-ruzstd" ,rust-ruzstd-0.3)
+                       ("rust-wasmparser" ,rust-wasmparser-0.102))))
+    (home-page "https://github.com/gimli-rs/object")
+    (synopsis
+     "A unified interface for reading and writing object file formats.")
+    (description
+     "This package provides a unified interface for reading and writing object file
+formats.")
+    (license (list license:asl2.0 license:expat))))
+
+(define-public rust-nu-ansi-term-0.47
+  (package
+    (name "rust-nu-ansi-term")
+    (version "0.47.0")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "nu-ansi-term" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "0xmghm1knrk3j4f79cwhgb0vci38fxrk3gg9cb1399mw2zhk3w0x"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-serde" ,rust-serde-1)
+                       ("rust-windows-sys" ,rust-windows-sys-0.45))))
+    (home-page "https://github.com/nushell/nu-ansi-term")
+    (synopsis "Library for ANSI terminal colors and styles (bold, underline)")
+    (description
+     "Library for ANSI terminal colors and styles (bold, underline)")
+    (license license:expat)))
+
+(define-public rust-nu-pretty-hex-0.81
+  (package
+    (name "rust-nu-pretty-hex")
+    (version "0.81.0")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "nu-pretty-hex" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1vwwvszry4gq8r1yiyj02mlypparq3blw55zwyyg7b4lwx1bnmfc"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-nu-ansi-term" ,rust-nu-ansi-term-0.47))))
+    (home-page
+     "https://github.com/nushell/nushell/tree/main/crates/nu-pretty-hex")
+    (synopsis "Pretty hex dump of bytes slice in the common style.")
+    (description "Pretty hex dump of bytes slice in the common style.")
+    (license license:expat)))
+
+(define-public rust-ihex-3
+  (package
+    (name "rust-ihex")
+    (version "3.0.0")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "ihex" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1wlzfyy5fsqgpki5vdapw0jjczqdm6813fgd3661wf5vfi3phnin"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t))
+    (home-page "http://github.com/martinmroz/ihex")
+    (synopsis
+     "A Rust library for parsing and generating Intel HEX (or IHEX) objects. This format is commonly used for representing compiled program code and data to be loaded into a microcontroller, flash memory or ROM.")
+    (description
+     "This package provides a Rust library for parsing and generating Intel HEX (or
+IHEX) objects.  This format is commonly used for representing compiled program
+code and data to be loaded into a microcontroller, flash memory or ROM.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-bitfield-0.14
+  (package
+    (name "rust-bitfield")
+    (version "0.14.0")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "bitfield" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1b26k9acwss4qvrl60lf9n83l17d4hj47n5rmpd3iigf9j9n0zid"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t))
+    (home-page "https://github.com/dzamlo/rust-bitfield")
+    (synopsis "This crate provides macros to generate bitfield-like struct.")
+    (description
+     "This crate provides macros to generate bitfield-like struct.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-wlink-0.0.4
+  (package
+    (name "rust-wlink")
+    (version "0.0.4")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "wlink" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1q1z69dmvjb3xxb3m23v17bymaz4nqh1xjmf846g3xh45l59xp1d"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-anyhow" ,rust-anyhow-1)
+                       ("rust-bitfield" ,rust-bitfield-0.14)
+                       ("rust-clap" ,rust-clap-4)
+                       ("rust-hex" ,rust-hex-0.4)
+                       ("rust-ihex" ,rust-ihex-3)
+                       ("rust-log" ,rust-log-0.4)
+                       ("rust-nu-pretty-hex" ,rust-nu-pretty-hex-0.81)
+                       ("rust-object" ,rust-object-0.31)
+                       ("rust-rusb" ,rust-rusb-0.9)
+                       ("rust-simplelog" ,rust-simplelog-0.12)
+                       ("rust-thiserror" ,rust-thiserror-1))))
+    (home-page "https://github.com/ch32-rs/wlink")
+    (synopsis
+     "WCH-Link flash tool for WCH's RISC-V MCUs(CH32V, CH56X, CH57X, CH58X)")
+    (description
+     "WCH-Link flash tool for WCH's RISC-V MCUs(CH32V, CH56X, CH57X, CH58X)")
+    (license (list license:expat license:asl2.0))))
