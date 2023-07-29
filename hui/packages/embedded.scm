@@ -688,11 +688,11 @@ and management, dialogs, and communication tasks through its built-in scripting 
       (description "Simple kermit download program, support 7bit prefix.")
       (license license:expat))))
 
-(define-public libsigrok
+(define-public libsigrok-next
   (let ((commit "0db1b189bee3ffe5c6ea39d7ca2e62715856b538")
 	(revision "0"))
     (package
-     (name "libsigrok")
+     (name "libsigrok-next")
      (version (git-version "0" revision commit))
      (source
       (origin
@@ -733,11 +733,11 @@ hich provides the basic hardware access drivers for logic analyzers and
 other supported devices, as well as input/output file format support.")
      (license license:gpl3))))
 
-(define-public libsigrokdecode
+(define-public libsigrokdecode-next
   (let ((commit "73cb5461acdbd007f4aa9e81385940fad6607696")
 	(revision "0"))
     (package
-     (name "libsigrokdecode")
+     (name "libsigrokdecode-next")
      (version (git-version "0" revision commit))
      (source
       (origin
@@ -758,11 +758,11 @@ other supported devices, as well as input/output file format support.")
 (streaming) protocol decoding functionality. ")
      (license license:gpl3))))
 
-(define-public pluseview
+(define-public pluseview-next
   (let ((commit "136995b831c50d3261143b1183c73af55c9ba3a5")
 	(revision "0"))
     (package
-     (name "pluseview")
+     (name "pluseview-next")
      (version (git-version "0" revision commit))
      (source
       (origin
@@ -775,9 +775,9 @@ other supported devices, as well as input/output file format support.")
 	(base32 "1m3cmp421qzgyj8bv13s4zraczjkrvwy58nxpwcwzb3c4w08919q"))))
      (build-system cmake-build-system)
      (native-inputs (list pkg-config libtool))
-     (inputs (list boost glib libsigrok libserialport libftdi hidapi qtbase-5
-		   bluez nettle glibmm libzip libsigrokdecode python qtsvg-5
-		   qttools-5))
+     (inputs (list boost glib libsigrok-next libserialport libftdi hidapi
+                   qtbase-5 bluez nettle glibmm libzip libsigrokdecode-next
+                   python qtsvg-5 qttools-5))
      (arguments `(#:tests? #f))
      (home-page "http://sigrok.org/wiki/PulseView")
      (synopsis "Qt based logic analyzer, oscilloscope and MSO GUI for sigrok.")
@@ -786,11 +786,11 @@ them, load and display captures from existing sigrok *.sr files, as well as run
 protocol decoders and display their annotations. ")
      (license license:gpl3))))
 
-(define-public sigrok-cli
+(define-public sigrok-cli-next
   (let ((commit "394fd9b7a456f16c7ac15f41b0e29081f1d951f8")
 	(revision "0"))
     (package
-     (name "sigrok-cli")
+     (name "sigrok-cli-next")
      (version (git-version "0" revision commit))
      (source
       (origin
