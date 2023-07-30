@@ -1728,3 +1728,25 @@ formats.")
      "This package provides a command-line implementation of WCHISPTool, for flashing
 ch32 MCUs")
     (license license:gpl2)))
+
+(define-public chrpath
+  (let ((commit "3afa271bd0fe7e6399ef32f4975f463ac07f1ca2")
+        (revision "0"))
+    (package
+      (name "chrpath")
+      (version (git-version "0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+	       (url "https://github.com/jwilk-mirrors/chrpath")
+	       (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+	  (base32 "1xfnqbyc1d3v7xh1i9k8kmps3hhn87pf925bccc4c204rwm1gg8w"))))
+      (build-system gnu-build-system)
+      (native-inputs (list automake autoconf m4))
+      (home-page "https://github.com/jwilk-mirrors/chrpath")
+      (synopsis "edit rpath in ELF binaries")
+      (description "like patchelf")
+      (license license:gpl2))))
