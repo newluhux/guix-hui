@@ -44,7 +44,10 @@
   #:use-module (gnu packages ncurses)
   #:use-module (gnu packages crates-io)
   #:use-module (gnu packages crates-graphics)
-  #:use-module (gnu packages shells))
+  #:use-module (gnu packages shells)
+  #:use-module (gnu packages perl)
+  #:use-module (gnu packages bison)
+  #:use-module (gnu packages flex))
 
 (define-public gkermit
   (package
@@ -1750,3 +1753,74 @@ ch32 MCUs")
       (synopsis "edit rpath in ELF binaries")
       (description "like patchelf")
       (license license:gpl2))))
+
+(define-public thead-riscv64-unknown-elf-binutils-gdb
+  (let ((commit "3638a1d5884e56a7eb1eb6770ddecdbcc8e6712b")
+        (revision "0")
+        (xbinutils riscv64-unknown-elf-binutils))
+    (package
+      (inherit xbinutils)
+      (name "thead-riscv64-unknown-elf-binutils-gdb")
+      (version (git-version "0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+	       (url "https://github.com/T-head-Semi/binutils-gdb")
+	       (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+	  (base32 "0lkd1j337hkjwqllblpvsz6yj7rixsgp16ccy4p1dlbzr86bc6hk"))))
+      (native-inputs (append (list perl bison flex texinfo)
+                             (package-native-inputs xbinutils)))
+      (arguments
+       `(#:tests? #f ,@(package-arguments xbinutils))))))
+
+(define-public thead-riscv64-unknown-elf-gcc
+  (let ((commit "64458a228d6cd007f239fcc7f9b3995df304c9b8")
+        (revision "0")
+        (xgcc (cross-gcc "riscv64-unknown-elf"
+                         #:xbinutils thead-riscv64-unknown-elf-binutils-gdb)))
+    (package
+      (inherit xgcc)
+      (name "thead-riscv64-unknown-elf-gcc")
+      (version (git-version "0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+	       (url "https://github.com/T-head-Semi/gcc.git")
+	       (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+	  (base32 "1j1318zzafbdjsssx2a6r9alqdipl4kw7mdfjhg0bzrji19zw3fa"))))
+      (native-inputs
+       (append
+        `(("flex" ,flex) ("bison" ,bison))
+        (package-native-inputs xgcc))))))
+
+(define-public thead-riscv64-unknown-elf-toolchain
+  (package
+    (name "thead-riscv64-unknown-elf-toolchain")
+    (version (package-version thead-riscv64-unknown-elf-gcc))
+    (source #f)
+    (build-system trivial-build-system)
+    (propagated-inputs
+     (list thead-riscv64-unknown-elf-binutils-gdb
+           thead-riscv64-unknown-elf-gcc
+           riscv64-unknown-elf-newlib riscv64-unknown-elf-newlib-nano))
+    (arguments
+     '(#:modules ((guix build union))
+       #:builder
+       (begin
+         (use-modules (ice-9 match)
+                      (guix build union))
+         (match %build-inputs
+           (((names . directories) ...)
+            (union-build (assoc-ref %outputs "out")
+                         directories)
+            #t)))))
+    (home-page (package-home-page gcc-toolchain))
+    (synopsis (package-synopsis gcc-toolchain))
+    (description (package-description gcc-toolchain))
+    (license (package-license gcc-toolchain))))
