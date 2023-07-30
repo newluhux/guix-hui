@@ -1793,7 +1793,10 @@ ch32 MCUs")
 	       (commit commit)))
          (file-name (git-file-name name version))
          (sha256
-	  (base32 "1j1318zzafbdjsssx2a6r9alqdipl4kw7mdfjhg0bzrji19zw3fa"))))
+	  (base32 "1j1318zzafbdjsssx2a6r9alqdipl4kw7mdfjhg0bzrji19zw3fa"))
+         (patches
+          (append
+           (origin-patches (package-source riscv64-unknown-elf-gcc))))))
       (native-inputs
        (append
         `(("flex" ,flex) ("bison" ,bison))
