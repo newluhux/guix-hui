@@ -52,12 +52,12 @@
 one or more of UART, SPI, I2C and GPIO.")
       (license licenses:gpl2))))
 
-(define-public linux-lpi4a
+(define-public linux-thead
   (let ((commit "8631d2c44f1160e75a940718c11d678b8e314710")
         (revision "0"))
     (package
       (inherit linux-libre-riscv64-generic)
-      (name "linux-lpi4a")
+      (name "linux-thead")
       (version (git-version "0.0.0" revision commit))
       (source
        (origin
@@ -69,5 +69,21 @@ one or more of UART, SPI, I2C and GPIO.")
          (sha256
           (base32
            "1nyrinvrgsnrry13qwx0mcxsii5m2qsi5kfyxmdvvdsvy4rjkdi4"))
-         (patches (list "aux-files/thead-kernel/0001-drivers-soc-thead-fix-depend.patch"
-                        "aux-files/thead-kernel/0002-arch-riscv-Kconfig.socs-select-THEAD-by-default.patch")))))))
+         (patches
+          (list
+           (local-file
+            "aux-files/thead-kernel/0001-drivers-soc-thead-fix-depend.patch")
+	   (local-file
+            "aux-files/thead-kernel/0002-arch-riscv-Kconfig.socs-select-THEAD-by-default.patch")))))
+      (arguments
+       (substitute-keyword-arguments (package-arguments linux-libre-riscv64-generic)
+         ((#:phases phases)
+          #~(modify-phases #$phases
+              (add-before 'build 'use-revyos-defconfig
+                (lambda _
+                  (delete-file "arch/riscv/configs/defconfig")
+                  (copy-file "arch/riscv/configs/revyos_defconfig"
+                             "arch/riscv/configs/defconfig"))))))))))
+
+linux-thead
+
