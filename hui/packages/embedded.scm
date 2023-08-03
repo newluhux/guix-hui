@@ -1800,7 +1800,58 @@ ch32 MCUs")
       (native-inputs
        (append
         `(("flex" ,flex) ("bison" ,bison))
-        (package-native-inputs xgcc))))))
+        (package-native-inputs xgcc)))
+      (arguments
+       (substitute-keyword-arguments (package-arguments xgcc)
+         ((#:phases phases)
+          #~(modify-phases #$phases
+              (add-after 'set-paths 'augment-CPLUS_INCLUDE_PATH
+                (lambda* (#:key inputs #:allow-other-keys)
+                  (let ((gcc (assoc-ref inputs  "gcc")))
+                    ;; Remove the default compiler from CPLUS_INCLUDE_PATH to
+                    ;; prevent header conflict with the GCC from native-inputs.
+                    (setenv "CPLUS_INCLUDE_PATH"
+                            (string-join
+                             (delete (string-append gcc "/include/c++")
+                                     (string-split (getenv "CPLUS_INCLUDE_PATH")
+                                                   #\:))
+                             ":"))
+                    (format #t
+                            "environment variable `CPLUS_INCLUDE_PATH' changed to ~a~%"
+                            (getenv "CPLUS_INCLUDE_PATH")))))
+              (add-after 'unpack 'fix-genmultilib
+                (lambda _
+                  (substitute* "gcc/genmultilib"
+                    (("#!/bin/sh") (string-append "#!" (which "sh"))))))))
+         ((#:configure-flags flags)
+          #~(append (list "--enable-multilib"
+                          "--with-newlib"
+                          "--with-host-libstdcxx=-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm"
+                          "--enable-plugins"
+                          "--disable-decimal-float"
+                          "--disable-libffi"
+                          "--disable-libgomp"
+                          "--disable-libmudflap"
+                          "--disable-libquadmath"
+                          "--disable-libssp"
+                          "--disable-libstdcxx-pch"
+                          "--disable-nls"
+                          "--disable-shared"
+                          "--disable-threads"
+                          "--disable-tls")
+                    (delete "--disable-multilib" #$flags)))))
+      (native-search-paths
+       (list (search-path-specification
+              (variable "CROSS_C_INCLUDE_PATH")
+              (files '("riscv64-unknown-elf/include")))
+             (search-path-specification
+              (variable "CROSS_CPLUS_INCLUDE_PATH")
+              (files '("riscv64-unknown-elf/include"
+                       "riscv64-unknown-elf/include/c++"
+                       "riscv64-unknown-elf/include/c++/riscv64-unknown-elf")))
+             (search-path-specification
+              (variable "CROSS_LIBRARY_PATH")
+              (files '("riscv64-unknown-elf/lib"))))))))
 
 (define-public thead-riscv64-unknown-elf-toolchain
   (package
@@ -1827,3 +1878,5 @@ ch32 MCUs")
     (synopsis (package-synopsis gcc-toolchain))
     (description (package-description gcc-toolchain))
     (license (package-license gcc-toolchain))))
+
+thead-riscv64-unknown-elf-toolchain
