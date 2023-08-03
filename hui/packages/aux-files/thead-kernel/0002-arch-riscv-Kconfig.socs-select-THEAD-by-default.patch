@@ -1,0 +1,24 @@
+From fed8d91a26a0f8d48bcb229f15ba04c0cbd4d528 Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Thu, 3 Aug 2023 22:48:13 +0800
+Subject: [PATCH 2/2] arch: riscv: Kconfig.socs: select THEAD by default
+
+---
+ arch/riscv/Kconfig.socs | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/riscv/Kconfig.socs b/arch/riscv/Kconfig.socs
+index 7718166b0..10274f965 100644
+--- a/arch/riscv/Kconfig.socs
++++ b/arch/riscv/Kconfig.socs
+@@ -51,6 +51,7 @@ config SOC_KENDRYTE_K210_DTB_BUILTIN
+ config SOC_THEAD
+ 	bool "T-HEAD SoCs"
+ 	select SIFIVE_PLIC
++	default y
+ 	help
+ 	  This enables support for T-HEAD SoC platform hardware.
+ 
+-- 
+2.41.0
+

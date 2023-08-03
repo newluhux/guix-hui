@@ -1,0 +1,24 @@
+From 98cab5775e5775639360a21c559c61ee3fb333b2 Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Thu, 3 Aug 2023 22:47:52 +0800
+Subject: [PATCH 1/2] drivers: soc: thead: fix depend
+
+---
+ drivers/soc/thead/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/soc/thead/Kconfig b/drivers/soc/thead/Kconfig
+index b595d42d7..f929d3317 100644
+--- a/drivers/soc/thead/Kconfig
++++ b/drivers/soc/thead/Kconfig
+@@ -19,6 +19,7 @@ config LIGHT_SUSPEND
+ config LIGHT_REBOOTMODE
+ 	bool "Thead light rebootmode support"
+ 	default y
++	depends on LIGHT_AON
+ 	help
+ 	 This driver supports check rebootmode feature in Light FM platform
+ 
+-- 
+2.41.0
+

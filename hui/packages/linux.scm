@@ -52,9 +52,8 @@
 one or more of UART, SPI, I2C and GPIO.")
       (license licenses:gpl2))))
 
-;; not working, need pack thead xuantie toolchain
 (define-public linux-lpi4a
-  (let ((commit "7a1ebd4adb2fbf73db0c6d0ce114b2fff7a4f7bb")
+  (let ((commit "8631d2c44f1160e75a940718c11d678b8e314710")
         (revision "0"))
     (package
       (inherit linux-libre-riscv64-generic)
@@ -69,11 +68,6 @@ one or more of UART, SPI, I2C and GPIO.")
          (file-name (git-file-name name version))
          (sha256
           (base32
-           "0g0y3a5v0shilbs9274ryhqrxs8y42bbv7ygcnb927ysvqrd8bw7"))))
-      (native-inputs
-       `(("kconfig" ,(local-file "aux-files/lpi4a.config"))
-         ,@(alist-delete "kconfig"
-                         (package-native-inputs
-                          linux-libre-riscv64-generic)))))))
-
-linux-lpi4a
+           "1nyrinvrgsnrry13qwx0mcxsii5m2qsi5kfyxmdvvdsvy4rjkdi4"))
+         (patches (list "aux-files/thead-kernel/0001-drivers-soc-thead-fix-depend.patch"
+                        "aux-files/thead-kernel/0002-arch-riscv-Kconfig.socs-select-THEAD-by-default.patch")))))))
