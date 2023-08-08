@@ -53,37 +53,21 @@ one or more of UART, SPI, I2C and GPIO.")
       (license licenses:gpl2))))
 
 (define-public linux-thead
-  (let ((commit "8631d2c44f1160e75a940718c11d678b8e314710")
-        (revision "0"))
-    (package
-      (inherit linux-libre-riscv64-generic)
-      (name "linux-thead")
-      (version (git-version "0.0.0" revision commit))
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/revyos/thead-kernel")
-               (commit commit)))
-         (file-name (git-file-name name version))
-         (sha256
-          (base32
-           "1nyrinvrgsnrry13qwx0mcxsii5m2qsi5kfyxmdvvdsvy4rjkdi4"))
-         (patches
-          (list
-           (local-file
-            "aux-files/thead-kernel/0001-drivers-soc-thead-fix-depend.patch")
-	   (local-file
-            "aux-files/thead-kernel/0002-arch-riscv-Kconfig.socs-select-THEAD-by-default.patch")))))
-      (arguments
-       (substitute-keyword-arguments (package-arguments linux-libre-riscv64-generic)
-         ((#:phases phases)
-          #~(modify-phases #$phases
-              (add-before 'build 'use-revyos-defconfig
-                (lambda _
-                  (delete-file "arch/riscv/configs/defconfig")
-                  (copy-file "arch/riscv/configs/revyos_defconfig"
-                             "arch/riscv/configs/defconfig"))))))))))
+  (customize-linux
+   #:name "linux-thead"
+   #:linux linux-libre-riscv64-generic
+   #:source
+   (origin
+     (method git-fetch)
+     (uri (git-reference
+           (url "https://github.com/revyos/thead-kernel")
+           (commit "8631d2c44f1160e75a940718c11d678b8e314710")))
+     (file-name (string-append "linux-thead-git"))
+     (sha256
+      (base32
+       "1nyrinvrgsnrry13qwx0mcxsii5m2qsi5kfyxmdvvdsvy4rjkdi4")))
+   #:defconfig "revyos_defconfig"
+   #:extra-version "thead"))
 
 linux-thead
 
