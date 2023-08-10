@@ -66,10 +66,7 @@ and for XDosEmu.")
            (lambda* (#:key outputs #:allow-other-keys)
              (let* ((ttf (string-append (assoc-ref outputs "out")
                                         "/share/fonts/truetype/")))
-               (install-file "unscii-16-full.ttf" ttf)
-               (install-file "unscii-16.ttf" ttf)
-               (install-file "unscii-8-thin.ttf" ttf)
-               (install-file "unscii-8.ttf" ttf)))))))
+               (install-file "unscii-16.ttf" ttf)))))))
     (synopsis
      "Unscii is a set of bitmapped Unicode fonts based on classic system fonts")
     (description
