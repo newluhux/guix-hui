@@ -12,6 +12,7 @@
   #:use-module (guix packages)
   #:use-module (guix utils)
   #:use-module (guix gexp)
+  #:use-module (gnu packages busybox)
   #:use-module (gnu packages cpp)
   #:use-module (gnu packages textutils)
   #:use-module (gnu packages autotools)
@@ -1879,4 +1880,13 @@ ch32 MCUs")
     (description (package-description gcc-toolchain))
     (license (package-license gcc-toolchain))))
 
-thead-riscv64-unknown-elf-toolchain
+(define-public toybox-static
+  (package
+    (inherit toybox)
+    (name "toybox-static")
+    (arguments
+     (substitute-keyword-arguments (package-arguments toybox)
+       ((#:make-flags flags)
+        #~(cons "LDFLAGS=--static" #$flags))))))
+
+toybox-static
