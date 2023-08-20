@@ -127,4 +127,26 @@ one or more of UART, SPI, I2C and GPIO.")
                        (copy-file
                         file (string-append out "/" (basename file)))) kernels)))))))))))
 
-linux-mi439-downstream
+(define-public linux-allwinner-f1c100s
+  (package
+    (inherit
+     (customize-linux
+      #:name "linux-allwinner-f1c100s"
+      #:linux linux-libre-arm-generic
+      #:source
+      (origin
+        (method git-fetch)
+        (uri (git-reference
+              (url "https://github.com/torvalds/linux")
+              (commit "a785fd28d31f76d50004712b6e0b409d5a8239d8")))
+        (sha256
+         (base32
+          "15vxpgp40sf06gwl845jd25mpi6mxnj3fd5vkpm5pgs481b7s6xb"))
+        (patches
+         (list
+          (local-file "aux-files/linux-f1c100s/0001-arch-arm-boot-dts-allwinner-suniv-f1c100s-licheepi-n.patch")
+          (local-file "aux-files/linux-f1c100s/0002-arch-arm-configs-allwinner_f1c100s_defconfig-add-con.patch"))))
+      #:defconfig "allwinner_f1c100s_defconfig"))
+    (version "6.5.0-rc5")))
+
+linux-allwinner-f1c100s
