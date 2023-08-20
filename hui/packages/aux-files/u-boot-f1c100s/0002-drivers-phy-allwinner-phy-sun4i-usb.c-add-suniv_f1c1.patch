@@ -1,0 +1,59 @@
+From e6e7d972d786489f2c2eacab53ed46fce520d1cd Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Thu, 20 Jul 2023 20:46:04 +0800
+Subject: [PATCH 2/8] drivers/phy/allwinner/phy-sun4i-usb.c: add
+ suniv_f1c100s's config
+
+---
+ drivers/phy/allwinner/phy-sun4i-usb.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/phy/allwinner/phy-sun4i-usb.c b/drivers/phy/allwinner/phy-sun4i-usb.c
+index 6428163c18..670d7c3c30 100644
+--- a/drivers/phy/allwinner/phy-sun4i-usb.c
++++ b/drivers/phy/allwinner/phy-sun4i-usb.c
+@@ -83,6 +83,7 @@ enum sun4i_usb_phy_type {
+ 	sun8i_v3s_phy,
+ 	sun50i_a64_phy,
+ 	sun50i_h6_phy,
++	suniv_f1c100s_phy,
+ };
+ 
+ struct sun4i_usb_phy_cfg {
+@@ -372,7 +373,8 @@ static int sun4i_usb_phy_xlate(struct phy *phy,
+ {
+ 	struct sun4i_usb_phy_data *data = dev_get_priv(phy->dev);
+ 
+-	if (args->args_count >= data->cfg->num_phys)
++        // suniv_f1c100s's num_phys is 1, so use > instead >=
++	if (args->args_count > data->cfg->num_phys)
+ 		return -EINVAL;
+ 
+ 	if (data->cfg->missing_phys & BIT(args->args[0]))
+@@ -645,6 +647,15 @@ static const struct sun4i_usb_phy_cfg sun50i_h6_cfg = {
+ 	.missing_phys = BIT(1) | BIT(2),
+ };
+ 
++static const struct sun4i_usb_phy_cfg suniv_f1c100s_cfg = {
++	.num_phys = 1,
++	.type = suniv_f1c100s_phy,
++	.disc_thresh = 3,
++	.phyctl_offset = REG_PHYCTL_A10,
++	.dedicated_clocks = true,
++};
++
++
+ static const struct udevice_id sun4i_usb_phy_ids[] = {
+ 	{ .compatible = "allwinner,sun4i-a10-usb-phy", .data = (ulong)&sun4i_a10_cfg },
+ 	{ .compatible = "allwinner,sun5i-a13-usb-phy", .data = (ulong)&sun5i_a13_cfg },
+@@ -659,6 +670,7 @@ static const struct udevice_id sun4i_usb_phy_ids[] = {
+ 	{ .compatible = "allwinner,sun20i-d1-usb-phy", .data = (ulong)&sun20i_d1_cfg },
+ 	{ .compatible = "allwinner,sun50i-a64-usb-phy", .data = (ulong)&sun50i_a64_cfg},
+ 	{ .compatible = "allwinner,sun50i-h6-usb-phy", .data = (ulong)&sun50i_h6_cfg},
++	{ .compatible = "allwinner,suniv-f1c100s-usb-phy", .data = (ulong)&suniv_f1c100s_cfg},
+ 	{ }
+ };
+ 
+-- 
+2.41.0
+

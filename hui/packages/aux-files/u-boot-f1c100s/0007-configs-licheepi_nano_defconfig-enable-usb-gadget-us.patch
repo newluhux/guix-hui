@@ -1,0 +1,33 @@
+From ead262e1ab0713304018f3f946231d7f9e23bab5 Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Thu, 20 Jul 2023 21:13:06 +0800
+Subject: [PATCH 7/8] configs/licheepi_nano_defconfig: enable usb gadget & usb
+ acm
+
+---
+ configs/licheepi_nano_defconfig | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/configs/licheepi_nano_defconfig b/configs/licheepi_nano_defconfig
+index b25c9ba77c..4a29a1679a 100644
+--- a/configs/licheepi_nano_defconfig
++++ b/configs/licheepi_nano_defconfig
+@@ -10,3 +10,15 @@ CONFIG_SPL_SPI_SUNXI=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_SPI_FLASH_XTX=y
+ CONFIG_SPI=y
++CONFIG_PHY_SUN4I_USB=y
++CONFIG_USB_MUSB_GADGET=y
++CONFIG_USB_MUSB_SUNXI=y
++CONFIG_USB_GADGET=y
++# how to use usb acm, type command on uboot:
++# => setenv stdin serial,usbacm
++# => setenv stdout serial,usbacm
++# => setenv stderr serial,usbacm
++# then you will found a usbacm device on your host.
++# connect it, you can type uboot command on usbacm.
++CONFIG_USB_FUNCTION_ACM=y
++CONFIG_CONSOLE_MUX=y
+-- 
+2.41.0
+

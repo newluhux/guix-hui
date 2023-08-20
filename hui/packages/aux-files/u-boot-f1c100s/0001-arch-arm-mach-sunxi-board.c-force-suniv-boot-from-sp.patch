@@ -1,0 +1,25 @@
+From 2033d85aad356f58ddf1682dca173db35ba57745 Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Wed, 19 Jul 2023 23:23:06 +0800
+Subject: [PATCH 1/8] arch/arm/mach-sunxi/board.c: force suniv boot from spi
+
+---
+ arch/arm/mach-sunxi/board.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/mach-sunxi/board.c b/arch/arm/mach-sunxi/board.c
+index 391a65a549..756833a456 100644
+--- a/arch/arm/mach-sunxi/board.c
++++ b/arch/arm/mach-sunxi/board.c
+@@ -245,7 +245,7 @@ static int sunxi_get_boot_source(void)
+ 	 */
+ 	if (IS_ENABLED(CONFIG_MACH_SUNIV) &&
+ 	    !IS_ENABLED(CONFIG_SPL_BUILD))
+-		return SUNXI_BOOTED_FROM_MMC0;
++		return SUNXI_BOOTED_FROM_SPI;
+ 
+ 	if (IS_ENABLED(CONFIG_MACH_SUNIV))
+ 		return suniv_get_boot_source();
+-- 
+2.41.0
+

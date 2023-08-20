@@ -1,0 +1,47 @@
+From efaa3d725db8c87d5d211ed0bea58ec18fd7303f Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Thu, 20 Jul 2023 20:51:53 +0800
+Subject: [PATCH 4/8] board/sunxi/board.c: add usb gadget initial at bootup
+
+---
+ board/sunxi/board.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/board/sunxi/board.c b/board/sunxi/board.c
+index f321cd58a6..f8bbbd2628 100644
+--- a/board/sunxi/board.c
++++ b/board/sunxi/board.c
+@@ -861,12 +861,29 @@ int misc_init_r(void)
+ 	return 0;
+ }
+ 
++#ifdef CONFIG_USB_GADGET
++int usb_gadget_init(void)
++{
++	struct udevice *usb_dev;
++
++	uclass_first_device(UCLASS_USB_GADGET_GENERIC, &usb_dev);
++	if (!usb_dev) {
++		pr_err("No USB device found\n");
++		return -ENODEV;
++	}
++
++	return 0;
++}
++#endif
++
++
+ int board_late_init(void)
+ {
+ #ifdef CONFIG_USB_ETHER
+ 	usb_ether_init();
++#elif CONFIG_USB_GADGET
++       usb_gadget_init();
+ #endif
+-
+ 	return 0;
+ }
+ 
+-- 
+2.41.0
+

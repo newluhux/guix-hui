@@ -1,0 +1,26 @@
+From 386cd6e0f453d197841ac929a38464295f1fd829 Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Thu, 20 Jul 2023 20:55:27 +0800
+Subject: [PATCH 6/8] arch/arm/dts/suniv-f1c100s-licheepi-nano.dts: change
+ dr_mode to peripheral
+
+---
+ arch/arm/dts/suniv-f1c100s-licheepi-nano.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/dts/suniv-f1c100s-licheepi-nano.dts b/arch/arm/dts/suniv-f1c100s-licheepi-nano.dts
+index 43896723a9..fa2060ffb0 100644
+--- a/arch/arm/dts/suniv-f1c100s-licheepi-nano.dts
++++ b/arch/arm/dts/suniv-f1c100s-licheepi-nano.dts
+@@ -63,7 +63,7 @@
+ };
+ 
+ &usb_otg {
+-	dr_mode = "otg";
++	dr_mode = "peripheral";
+ 	status = "okay";
+ };
+ 
+-- 
+2.41.0
+

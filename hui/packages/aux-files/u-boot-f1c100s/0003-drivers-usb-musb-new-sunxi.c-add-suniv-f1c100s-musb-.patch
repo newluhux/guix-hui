@@ -1,0 +1,26 @@
+From c5b381905b16875dc8976f37ea9823de3c534e6c Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Thu, 20 Jul 2023 20:48:02 +0800
+Subject: [PATCH 3/8] drivers/usb/musb-new/sunxi.c: add suniv-f1c100s-musb
+ compatible
+
+---
+ drivers/usb/musb-new/sunxi.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/usb/musb-new/sunxi.c b/drivers/usb/musb-new/sunxi.c
+index 485b9dce15..c7ec744d93 100644
+--- a/drivers/usb/musb-new/sunxi.c
++++ b/drivers/usb/musb-new/sunxi.c
+@@ -526,6 +526,8 @@ static const struct udevice_id sunxi_musb_ids[] = {
+ 			.data = (ulong)&sun6i_a31_cfg },
+ 	{ .compatible = "allwinner,sun8i-h3-musb",
+ 			.data = (ulong)&sun8i_h3_cfg },
++	{ .compatible = "allwinner,suniv-f1c100s-musb",
++			.data = (ulong)&sun4i_a10_cfg },
+ 	{ }
+ };
+ 
+-- 
+2.41.0
+

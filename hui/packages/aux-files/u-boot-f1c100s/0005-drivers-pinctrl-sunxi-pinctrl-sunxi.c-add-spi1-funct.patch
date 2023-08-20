@@ -1,0 +1,25 @@
+From b593e5a502ec75b477e5b081ca940c7cd72ba412 Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Thu, 20 Jul 2023 20:54:04 +0800
+Subject: [PATCH 5/8] drivers/pinctrl/sunxi/pinctrl-sunxi.c: add spi1 function
+ in suniv_f1c100s_pinctrl_functions
+
+---
+ drivers/pinctrl/sunxi/pinctrl-sunxi.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.c b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+index e510218090..c448e40ab0 100644
+--- a/drivers/pinctrl/sunxi/pinctrl-sunxi.c
++++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+@@ -240,6 +240,7 @@ static const struct sunxi_pinctrl_function suniv_f1c100s_pinctrl_functions[] = {
+ 	{ "mmc0",	2 },	/* PF0-PF5 */
+ 	{ "mmc1",	3 },	/* PC0-PC2 */
+ 	{ "spi0",	2 },	/* PC0-PC3 */
++	{ "spi1",	6 },	/* PA0-PA3 */
+ #if IS_ENABLED(CONFIG_UART0_PORT_F)
+ 	{ "uart0",	3 },	/* PF2-PF4 */
+ #else
+-- 
+2.41.0
+
