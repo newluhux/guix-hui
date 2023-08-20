@@ -1,0 +1,28 @@
+From d2a761a11682d6e5edc8598201ba67feeed68674 Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Thu, 17 Aug 2023 06:00:05 +0800
+Subject: [PATCH 01/10] arch: arm64: configs: lineageos_mi439_defconfig:
+ disable 32bit compat
+
+---
+ arch/arm64/configs/lineageos_mi439_defconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/configs/lineageos_mi439_defconfig b/arch/arm64/configs/lineageos_mi439_defconfig
+index c91de6857..14f611328 100644
+--- a/arch/arm64/configs/lineageos_mi439_defconfig
++++ b/arch/arm64/configs/lineageos_mi439_defconfig
+@@ -79,8 +79,8 @@ CONFIG_RANDOMIZE_BASE=y
+ CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE=y
+ CONFIG_BUILD_ARM64_DT_OVERLAY=y
+ # CONFIG_CORE_DUMP_DEFAULT_ELF_HEADERS is not set
+-CONFIG_COMPAT=y
+-CONFIG_COMPAT_VDSO=y
++# CONFIG_COMPAT is not set
++# CONFIG_COMPAT_VDSO is not set
+ CONFIG_PM_WAKELOCKS=y
+ CONFIG_PM_WAKELOCKS_LIMIT=0
+ # CONFIG_PM_WAKELOCKS_GC is not set
+-- 
+2.41.0
+

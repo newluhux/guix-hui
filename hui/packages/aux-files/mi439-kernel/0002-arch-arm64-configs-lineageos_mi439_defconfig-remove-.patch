@@ -1,0 +1,36 @@
+From 203929b84d2560eb0d191db6a4e24ab4d6f8e563 Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Thu, 17 Aug 2023 06:07:06 +0800
+Subject: [PATCH 02/10] arch: arm64: configs: lineageos_mi439_defconfig: remove
+ mismatching configurations
+
+---
+ arch/arm64/configs/lineageos_mi439_defconfig | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/arch/arm64/configs/lineageos_mi439_defconfig b/arch/arm64/configs/lineageos_mi439_defconfig
+index 14f611328..8b3909d05 100644
+--- a/arch/arm64/configs/lineageos_mi439_defconfig
++++ b/arch/arm64/configs/lineageos_mi439_defconfig
+@@ -45,7 +45,6 @@ CONFIG_EMBEDDED=y
+ # CONFIG_COMPAT_BRK is not set
+ CONFIG_PROFILING=y
+ CONFIG_CC_STACKPROTECTOR_STRONG=y
+-CONFIG_ARCH_MMAP_RND_COMPAT_BITS=16
+ CONFIG_MODULES=y
+ CONFIG_MODULE_UNLOAD=y
+ CONFIG_MODVERSIONS=y
+@@ -68,10 +67,6 @@ CONFIG_ZSMALLOC=y
+ CONFIG_PROCESS_RECLAIM=y
+ CONFIG_SECCOMP=y
+ # CONFIG_MITIGATE_SPECTRE_BRANCH_HISTORY is not set
+-CONFIG_ARMV8_DEPRECATED=y
+-CONFIG_SWP_EMULATION=y
+-CONFIG_CP15_BARRIER_EMULATION=y
+-CONFIG_SETEND_EMULATION=y
+ CONFIG_ARM64_SW_TTBR0_PAN=y
+ # CONFIG_ARM64_VHE is not set
+ CONFIG_RANDOMIZE_BASE=y
+-- 
+2.41.0
+

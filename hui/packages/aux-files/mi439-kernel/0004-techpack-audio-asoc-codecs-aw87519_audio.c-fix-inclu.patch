@@ -1,0 +1,26 @@
+From dd7c226c79dbcf5cd4a778c4824c6779d28e101b Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Thu, 17 Aug 2023 06:33:53 +0800
+Subject: [PATCH 04/10] techpack: audio: asoc: codecs: aw87519_audio.c: fix
+ include
+
+---
+ techpack/audio/asoc/codecs/aw87519_audio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/techpack/audio/asoc/codecs/aw87519_audio.c b/techpack/audio/asoc/codecs/aw87519_audio.c
+index 1efc52f53..10fc163f8 100644
+--- a/techpack/audio/asoc/codecs/aw87519_audio.c
++++ b/techpack/audio/asoc/codecs/aw87519_audio.c
+@@ -37,7 +37,7 @@
+ #include <linux/timer.h>
+ #include <linux/workqueue.h>
+ #include <linux/hrtimer.h>
+-#include <aw87519_audio.h>
++#include "aw87519_audio.h"
+ 
+ /*******************************************************************************
+  * aw87519 marco
+-- 
+2.41.0
+

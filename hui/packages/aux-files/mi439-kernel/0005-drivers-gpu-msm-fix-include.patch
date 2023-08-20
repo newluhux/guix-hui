@@ -1,0 +1,37 @@
+From cdd63cc9f28fdf48a8e5c25499f6b0547aa2f6c2 Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Sat, 19 Aug 2023 01:17:33 +0800
+Subject: [PATCH 05/10] drivers: gpu: msm: fix include
+
+---
+ drivers/gpu/msm/Makefile      | 2 +-
+ drivers/gpu/msm/kgsl_events.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/msm/Makefile b/drivers/gpu/msm/Makefile
+index 005822672..2633267ab 100644
+--- a/drivers/gpu/msm/Makefile
++++ b/drivers/gpu/msm/Makefile
+@@ -1,4 +1,4 @@
+-ccflags-y := -Iinclude/linux
++ccflags-y := -Iinclude/linux -I$(src)
+ 
+ msm_kgsl_core-y = \
+ 	kgsl.o \
+diff --git a/drivers/gpu/msm/kgsl_events.c b/drivers/gpu/msm/kgsl_events.c
+index 47582daf8..bd2bdaa8a 100644
+--- a/drivers/gpu/msm/kgsl_events.c
++++ b/drivers/gpu/msm/kgsl_events.c
+@@ -15,8 +15,8 @@
+ #include <linux/list.h>
+ #include <linux/workqueue.h>
+ #include <linux/debugfs.h>
+-#include <kgsl_device.h>
+ 
++#include "kgsl_device.h"
+ #include "kgsl_debugfs.h"
+ #include "kgsl_trace.h"
+ 
+-- 
+2.41.0
+

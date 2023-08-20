@@ -69,5 +69,62 @@ one or more of UART, SPI, I2C and GPIO.")
    #:defconfig "revyos_defconfig"
    #:extra-version "thead"))
 
-linux-thead
+(define-public linux-mi439-downstream-without-dtbs
+  (package
+    (inherit
+     (customize-linux
+      #:name "linux-mi439-downstream-without-dtbs"
+      #:linux linux-libre-arm64-generic
+      #:source
+      (origin
+        (method git-fetch)
+        (uri (git-reference
+              (url "https://github.com/LineageOS/android_kernel_xiaomi_sdm439")
+              (commit "d17d32421fc95bff4df60a5c684e531295889ade")))
+        (file-name (string-append "linux-mi439-git"))
+        (sha256
+         (base32
+          "004jja6cb3655njh81dp71770djnxfyryallfwnrybknigbjynw8"))
+        (patches
+         (list
+          (local-file "aux-files/mi439-kernel/0001-arch-arm64-configs-lineageos_mi439_defconfig-disable.patch")
+          (local-file "aux-files/mi439-kernel/0002-arch-arm64-configs-lineageos_mi439_defconfig-remove-.patch")
+          (local-file "aux-files/mi439-kernel/0003-drivers-bluetooth-btfm_slim.c-fix-include.patch")
+          (local-file "aux-files/mi439-kernel/0004-techpack-audio-asoc-codecs-aw87519_audio.c-fix-inclu.patch")
+          (local-file "aux-files/mi439-kernel/0005-drivers-gpu-msm-fix-include.patch")
+          (local-file "aux-files/mi439-kernel/0006-drivers-media-platform-camera_v2-fix-build.patch")
+          (local-file "aux-files/mi439-kernel/0007-include-trace-events-msm_cam.h-fix-include-drity-fix.patch")
+          (local-file "aux-files/mi439-kernel/0008-drivers-platform-msm-ipa-ipa_clients-fix-include.patch")
+          (local-file "aux-files/mi439-kernel/0009-drivers-usb-gadget-configfs-fix-include.patch")
+          (local-file "aux-files/mi439-kernel/0010-Makefile-disable-techpack.patch"))))
+      #:defconfig "lineageos_mi439_defconfig"
+      #:extra-version "mi439"))
+    (version "4.9.337")))
 
+(define-public linux-mi439-downstream
+  (let* ((kernel linux-mi439-downstream-without-dtbs))
+    (package
+      (inherit kernel)
+      (name "linux-mi439-downstream")
+      (arguments
+       (substitute-keyword-arguments (package-arguments kernel)
+         ((#:phases phases)
+          #~(modify-phases #$phases
+              (delete 'strip)
+              (add-after 'install 'install-extran
+                (lambda* (#:key outputs #:allow-other-keys)
+                  (let* ((out (assoc-ref outputs "out"))
+                         (dtbs (find-files "arch" "\\.dtb$"))
+                         (dtbs-installdir (string-append out "/lib/dtbs"))
+                         (kernels (find-files "." "^(Image.gz|Image.gz-dtb|vmlinux)$")))
+                    (mkdir-p out)
+                    (mkdir-p dtbs-installdir)
+                    (for-each
+                     (lambda (file)
+                       (copy-file file (string-append dtbs-installdir "/" (basename file)))) dtbs)
+                    (for-each
+                     (lambda (file)
+                       (copy-file
+                        file (string-append out "/" (basename file)))) kernels)))))))))))
+
+linux-mi439-downstream

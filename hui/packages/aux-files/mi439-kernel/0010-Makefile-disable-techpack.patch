@@ -1,0 +1,25 @@
+From 4f6548fde441f79804a7de5b931a2d38ef60611d Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Sat, 19 Aug 2023 16:44:17 +0800
+Subject: [PATCH 10/10] Makefile: disable techpack
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 9547dca1f..74c82bd54 100644
+--- a/Makefile
++++ b/Makefile
+@@ -601,7 +601,7 @@ scripts: scripts_basic include/config/auto.conf include/config/tristate.conf \
+ 
+ # Objects we will link into vmlinux / subdirs we need to visit
+ init-y		:= init/
+-drivers-y	:= drivers/ sound/ firmware/ techpack/
++drivers-y	:= drivers/ sound/ firmware/
+ net-y		:= net/
+ libs-y		:= lib/
+ core-y		:= usr/
+-- 
+2.41.0
+
