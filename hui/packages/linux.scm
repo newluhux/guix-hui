@@ -52,23 +52,6 @@
 one or more of UART, SPI, I2C and GPIO.")
       (license licenses:gpl2))))
 
-(define-public linux-thead
-  (customize-linux
-   #:name "linux-thead"
-   #:linux linux-libre-riscv64-generic
-   #:source
-   (origin
-     (method git-fetch)
-     (uri (git-reference
-           (url "https://github.com/revyos/thead-kernel")
-           (commit "8631d2c44f1160e75a940718c11d678b8e314710")))
-     (file-name (string-append "linux-thead-git"))
-     (sha256
-      (base32
-       "1nyrinvrgsnrry13qwx0mcxsii5m2qsi5kfyxmdvvdsvy4rjkdi4")))
-   #:defconfig "revyos_defconfig"
-   #:extra-version "thead"))
-
 (define-public linux-mi439-downstream-without-dtbs
   (package
     (inherit
