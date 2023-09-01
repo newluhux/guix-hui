@@ -1,4 +1,4 @@
-(define-module (hui packages nfs)
+(define-module (hui packages plan9)
   #:use-module (gnu packages)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages popt)
