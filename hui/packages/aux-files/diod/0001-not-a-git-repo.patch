@@ -1,0 +1,26 @@
+From 725bece508a53cb883946f073eed2267c7e4e0fa Mon Sep 17 00:00:00 2001
+From: Lu Hui <luhux76@gmail.com>
+Date: Fri, 1 Sep 2023 21:03:05 +0800
+Subject: [PATCH] not a git repo
+
+---
+ configure.ac | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 419056e..87ce4bf 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1,8 +1,7 @@
+ ##
+ # Prologue
+ ##
+-AC_INIT([diod],
+-        m4_esyscmd([git describe --always | awk '/.*/ {sub(/^v/, ""); printf "%s",$1; exit}']))
++AC_INIT([diod], 0)
+ AC_CONFIG_AUX_DIR([config])
+ AC_CONFIG_MACRO_DIR([config])
+ AC_CONFIG_SRCDIR([NEWS])
+-- 
+2.41.0
+
