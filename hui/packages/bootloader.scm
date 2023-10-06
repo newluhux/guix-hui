@@ -34,21 +34,3 @@
           (local-file "aux-files/u-boot-f1c100s/0006-arch-arm-dts-suniv-f1c100s-licheepi-nano.dts-change-.patch")
           (local-file "aux-files/u-boot-f1c100s/0007-configs-licheepi_nano_defconfig-enable-usb-gadget-us.patch")
           (local-file "aux-files/u-boot-f1c100s/0008-configs-licheepi_nano_defconfig-store-env-data-in-sp.patch")))))))))
-
-(define-public u-boot-mt7628-rfb
-  (let* ((u-boot (make-u-boot-package "mt7628_rfb" "mipsel-linux-gnu")))
-    (package
-      (inherit u-boot)
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/u-boot/u-boot.git")
-               (commit "68dcbdd594d4172632ca6b122c56ec87ca551cf4")))
-         (sha256
-          (base32
-           "13lp31iqadafncaa5b1pkisk3da3dy9hqbjyq9z4mbg8dqbvf7s1"))
-         (patches
-           (origin-patches (package-source u-boot))))))))
-
-u-boot-mt7628-rfb
