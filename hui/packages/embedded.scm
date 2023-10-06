@@ -330,7 +330,7 @@ Dump, Unpack, Flash Allwinner IMG Files on Linux")
   (let ((commit "e301a74a6f111df4553b50b813a589589d1708b1")
         (revision "0"))
     (package
-      (inherit newlib-arm-none-eabi)
+      (inherit newlib-arm-none-eabi-7-2018-q2-update)
       (name "riscv64-unknown-elf-newlib")
       (version (git-version "0" revision commit))
       (source
@@ -1764,4 +1764,4 @@ ch32 MCUs")
        ((#:make-flags flags)
         #~(cons "LDFLAGS=--static" #$flags))))))
 
-toybox-static
+riscv64-unknown-elf-newlib
